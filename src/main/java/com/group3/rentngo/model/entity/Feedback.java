@@ -6,23 +6,30 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "role")
-public class Role {
+@Table(name = "feedback")
+public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String name;
+    @Column(nullable = false)
+    private int ratings;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    @Column(nullable = false)
+    private String content;
+
+    @Column(nullable = false)
+    private Date dateTime;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "booking_no")
+    private Booking booking;
 }
