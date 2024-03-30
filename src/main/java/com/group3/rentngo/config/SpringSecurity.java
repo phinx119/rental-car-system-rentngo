@@ -16,14 +16,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SpringSecurity {
 
-    private final UserDetailsService userDetailsService;
-
     @Autowired
-    public SpringSecurity(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
-
+    private UserDetailsService userDetailsService;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -34,19 +28,22 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/index").permitAll()
-                                .requestMatchers("/users").hasRole("ADMIN")
+                                authorize.requestMatchers("/register/**").permitAll()
+                                        .requestMatchers("/hello").permitAll()
+                        //.requestMatchers("/users").hasRole("ADMIN")
                 ).formLogin(
                         form -> form
                                 .loginPage("/home")
-                                .loginProcessingUrl("/login-security")
-                                .defaultSuccessUrl("/users")
+                                .loginProcessingUrl("/login")
+                                .defaultSuccessUrl("/hello")
                                 .permitAll()
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .permitAll()
+                ).exceptionHandling(
+                        httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
+                                                                    .accessDeniedPage("/hello")
                 );
         return http.build();
     }

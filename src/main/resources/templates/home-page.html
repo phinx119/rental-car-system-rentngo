@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RentN'Go</title>
+    <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -11,8 +12,17 @@
 
 <header th:replace="fragments/header :: navbar"></header>
 
+
+<div th:if="${param.error}">
+    <div class="alert alert-danger">Invalid Email or Password</div>
+</div>
+<div th:if="${param.logout}">
+    <div class="alert alert-success"> You have been logged out.</div>
+</div>
+
 <!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -23,24 +33,26 @@
             </div>
             <div class="modal-body">
                 <!-- Login form here -->
-                <form>
+                <form method="post" role="form" th:action="@{/login}">
                     <div class="form-group">
-                        <label for="loginEmail">Email address</label>
-                        <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                        <label for="loginUsername" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="loginUsername" name="username" placeholder="Username">
                     </div>
                     <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                        <label for="loginPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" name="password"  placeholder="Password">
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="text-center w-100">
-                    Don't have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#signupModal">Register now</a>
+                    Don't have an account? <a href="#" data-dismiss="modal" data-toggle="modal"
+                                              data-target="#signupModal">Register now</a>
                 </div>
                 <div class="text-center w-100">
-                    <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#forgotPasswordModal"> Forget your password? </a>
+                    <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#forgotPasswordModal"> Forget your
+                        password? </a>
                 </div>
             </div>
         </div>
@@ -48,7 +60,8 @@
 </div>
 
 <!-- Signup Modal -->
-<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -62,15 +75,18 @@
                 <form>
                     <div class="form-group">
                         <label for="signupName">Name</label>
-                        <input type="text" class="form-control" id="signupName" aria-describedby="signupName" placeholder="Enter Name">
+                        <input type="text" class="form-control" id="signupName" aria-describedby="signupName"
+                               placeholder="Enter Name">
                     </div>
                     <div class="form-group">
                         <label for="signupEmail">Email address</label>
-                        <input type="email" class="form-control" id="signupEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                        <input type="email" class="form-control" id="signupEmail" aria-describedby="emailHelp"
+                               placeholder="Enter email">
                     </div>
                     <div class="form-group">
                         <label for="signupPhoneNumber">Phone number</label>
-                        <input type="text" class="form-control" id="signupPhoneNumber" aria-describedby="signupPhoneNumber" placeholder="Enter Phone number">
+                        <input type="text" class="form-control" id="signupPhoneNumber"
+                               aria-describedby="signupPhoneNumber" placeholder="Enter Phone number">
                     </div>
                     <div class="form-group">
                         <label for="signupPassword">Password</label>
@@ -83,13 +99,15 @@
                     <div class="form-row">
                         <div class="col">
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="rentCarRadio" name="userType" value="renter">
+                                <input type="radio" class="form-check-input" id="rentCarRadio" name="userType"
+                                       value="renter">
                                 <label class="form-check-label" for="rentCarRadio">I want to rent a car</label>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="carOwnerRadio" name="userType" value="owner">
+                                <input type="radio" class="form-check-input" id="carOwnerRadio" name="userType"
+                                       value="owner">
                                 <label class="form-check-label" for="carOwnerRadio">I am a car owner</label>
                             </div>
                         </div>
@@ -102,7 +120,8 @@
                 </form>
                 <div class="modal-footer">
                     <div class="text-center w-100">
-                        Already have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Login</a>
+                        Already have an account? <a href="#" data-dismiss="modal" data-toggle="modal"
+                                                    data-target="#loginModal">Login</a>
                     </div>
                 </div>
             </div>
@@ -111,7 +130,8 @@
 </div>
 
 <!-- Forgot Password Modal -->
-<div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -124,11 +144,13 @@
                 <form>
                     <div class="form-group">
                         <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                               placeholder="Enter email">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" aria-describedby="emailHelp" placeholder="Enter Password">
+                        <input type="password" class="form-control" id="password" aria-describedby="emailHelp"
+                               placeholder="Enter Password">
                     </div>
                     <button type="submit" class="btn btn-primary">Reset Password</button>
                 </form>
@@ -164,7 +186,8 @@
                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
                     <i class="fas fa-money-bill-wave fa-3x mb-3"></i>
                     <h5 class="card-title">Save Money</h5>
-                    <p class="card-text text-center">Our service offers competitive pricing to help you save money on your rental.</p>
+                    <p class="card-text text-center">Our service offers competitive pricing to help you save money on
+                        your rental.</p>
                 </div>
             </div>
         </div>
@@ -174,7 +197,8 @@
                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
                     <i class="fas fa-car fa-3x mb-3"></i>
                     <h5 class="card-title">Convenient</h5>
-                    <p class="card-text text-center">Rent a car conveniently and easily with our user-friendly platform.</p>
+                    <p class="card-text text-center">Rent a car conveniently and easily with our user-friendly
+                        platform.</p>
                 </div>
             </div>
         </div>
@@ -184,7 +208,8 @@
                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
                     <i class="fas fa-clipboard-check fa-3x mb-3"></i>
                     <h5 class="card-title">Legal and Insurance</h5>
-                    <p class="card-text text-center">Our rentals are legally compliant and come with insurance coverage for peace of mind.</p>
+                    <p class="card-text text-center">Our rentals are legally compliant and come with insurance coverage
+                        for peace of mind.</p>
                 </div>
             </div>
         </div>
@@ -194,7 +219,8 @@
                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
                     <i class="fas fa-headset fa-3x mb-3"></i>
                     <h5 class="card-title">24/7 Support</h5>
-                    <p class="card-text text-center">Get support around the clock from our dedicated customer service team.</p>
+                    <p class="card-text text-center">Get support around the clock from our dedicated customer service
+                        team.</p>
                 </div>
             </div>
         </div>
@@ -333,14 +359,13 @@
     </div>
 </div>
 
+
 <footer th:replace="fragments/footer :: footer"></footer>
 
 
-
-<script src="../static/js/script.js"></script>
+<!--<script src="../static/js/script.js"></script>-->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </body>
 </html>
