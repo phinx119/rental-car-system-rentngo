@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentN'Go</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<header th:replace="fragments/header :: navbar"></header>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Login form here -->
+                <form>
+                    <div class="form-group">
+                        <label for="loginEmail">Email address</label>
+                        <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="text-center w-100">
+                    Don't have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#signupModal">Register now</a>
+                </div>
+                <div class="text-center w-100">
+                    <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#forgotPasswordModal"> Forget your password? </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Signup Modal -->
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Signup form here -->
+                <form>
+                    <div class="form-group">
+                        <label for="signupName">Name</label>
+                        <input type="text" class="form-control" id="signupName" aria-describedby="signupName" placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email address</label>
+                        <input type="email" class="form-control" id="signupEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPhoneNumber">Phone number</label>
+                        <input type="text" class="form-control" id="signupPhoneNumber" aria-describedby="signupPhoneNumber" placeholder="Enter Phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" class="form-control" id="signupPassword" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" id="rentCarRadio" name="userType" value="renter">
+                                <label class="form-check-label" for="rentCarRadio">I want to rent a car</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" id="carOwnerRadio" name="userType" value="owner">
+                                <label class="form-check-label" for="carOwnerRadio">I am a car owner</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="agreeCheckbox">
+                        <label class="form-check-label" for="agreeCheckbox">I agree to the privacy policy</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+                <div class="modal-footer">
+                    <div class="text-center w-100">
+                        Already have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Forgot Password Modal -->
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="forgotPasswordModalLabel">Forgot Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" aria-describedby="emailHelp" placeholder="Enter Password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Reset Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 bg-secondary text-white p-5">
+            <form id="searchForm">
+                <div class="form-group">
+                    <label for="pickupLocation">Pickup Location</label>
+                    <input type="text" class="form-control" id="pickupLocation" placeholder="Enter pickup location">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="pickupDate">Pickup Date</label>
+                        <input type="date" class="form-control" id="pickupDate">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="pickupTime">Pickup Time</label>
+                        <input type="time" class="form-control" id="pickupTime">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="dropOffDate">Drop-off Date</label>
+                        <input type="date" class="form-control" id="dropOffDate">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="dropOffTime">Drop-off Time</label>
+                        <input type="time" class="form-control" id="dropOffTime">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-light">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Search Results Section -->
+<div class="container-fluid bg-white mt-4">
+    <div class="row p-4">
+        <!-- Search Result Header -->
+        <div class="col-md-12">
+            <h3>Search Results</h3>
+            <p>There are 10 cars available for you.</p>
+            <div class="d-flex justify-content-end">
+                <!-- View Options Buttons -->
+                <button class="btn btn-light mr-2"><i class="fas fa-th"></i> Thumbnail View</button>
+                <button class="btn btn-light"><i class="fas fa-list"></i> List View</button>
+
+            </div>
+        </div>
+        <!-- Search Results Content (Thumbnail View) -->
+        <div class="col-md-12 mt-4">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <div class="card">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="car-image.jpg" class="card-img" alt="Car Image">
+                            </div>
+                            <div class="col-md-6 align-self-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">Car Name</h5>
+                                    <p class="card-text">Rating: <i class="fas fa-star"></i> <br> No. of Rides: 100 <br> Price: $50 <br> Location: City, Country <br> Status: Available</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    <button class="btn btn-primary btn-sm mb-2">Rent Now</button>
+                                    <button class="btn btn-secondary btn-sm mb-2">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="card">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="car-image.jpg" class="card-img" alt="Car Image">
+                            </div>
+                            <div class="col-md-6 align-self-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">Car Name</h5>
+                                    <p class="card-text">Rating: <i class="fas fa-star"></i> <br> No. of Rides: 100 <br> Price: $50 <br> Location: City, Country <br> Status: Available</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    <button class="btn btn-primary btn-sm mb-2">Rent Now</button>
+                                    <button class="btn btn-secondary btn-sm mb-2">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="card">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="car-image.jpg" class="card-img" alt="Car Image">
+                            </div>
+                            <div class="col-md-6 align-self-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">Car Name</h5>
+                                    <p class="card-text">Rating: <i class="fas fa-star"></i> <br> No. of Rides: 100 <br> Price: $50 <br> Location: City, Country <br> Status: Available</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    <button class="btn btn-primary btn-sm mb-2">Rent Now</button>
+                                    <button class="btn btn-secondary btn-sm mb-2">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<script src="../static/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
