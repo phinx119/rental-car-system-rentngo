@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -180,13 +180,13 @@
             <p>There are 10 cars available for you.</p>
             <div class="d-flex justify-content-end">
                 <!-- View Options Buttons -->
-                <button class="btn btn-light mr-2"><i class="fas fa-th"></i> Thumbnail View</button>
-                <button class="btn btn-light"><i class="fas fa-list"></i> List View</button>
+                <button class="btn btn-light mr-2" id="thumbnailViewBtn"><i class="fas fa-th"></i></button>
+                <button class="btn btn-light" id="listViewBtn"><i class="fas fa-list"></i></button>
 
             </div>
         </div>
         <!-- Search Results Content (Thumbnail View) -->
-        <div class="col-md-12 mt-4">
+        <div class="col-md-12 mt-4" id="thumbnailView">
             <div class="row">
                 <div class="col-md-12 mb-3">
                     <div class="card">
@@ -252,6 +252,58 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Search Results Content (List View) -->
+        <div class="col-md-12 mt-4" id="listView" style="display: none;">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">No. of Rides</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Car Name</td>
+                    <td><img src="car-image.jpg" alt="Car Image" style="max-width: 100px;"></td>
+                    <td>100</td>
+                    <td>$50</td>
+                    <td>City, Country</td>
+                    <td>Available</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">Rent Now</button><br>
+                        <button class="btn btn-secondary btn-sm">View Details</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paging -->
+        <div class="col-md-12 mt-4">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
