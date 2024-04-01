@@ -1,7 +1,7 @@
 package com.group3.rentngo.model.dto;
 
-import com.group3.rentngo.model.entity.Role;
-import jakarta.validation.constraints.NotBlank;
+import com.group3.rentngo.model.entity.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.io.Serializable;

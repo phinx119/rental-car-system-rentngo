@@ -1,7 +1,6 @@
 package com.group3.rentngo.model.dto;
 
-import com.group3.rentngo.model.entity.Booking;
-import com.group3.rentngo.model.entity.Feedback;
+import com.group3.rentngo.model.entity.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 

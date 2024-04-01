@@ -1,9 +1,7 @@
 package com.group3.rentngo.service.impl;
 
 import com.group3.rentngo.model.entity.CarOwner;
-import com.group3.rentngo.repository.CarOwnerRepository;
-import com.group3.rentngo.repository.CarRepository;
-import com.group3.rentngo.repository.UserRepository;
+import com.group3.rentngo.repository.*;
 import com.group3.rentngo.service.CarOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

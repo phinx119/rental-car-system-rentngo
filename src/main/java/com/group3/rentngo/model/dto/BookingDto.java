@@ -1,12 +1,7 @@
 package com.group3.rentngo.model.dto;
 
-import com.group3.rentngo.model.entity.Booking;
-import com.group3.rentngo.model.entity.Car;
-import com.group3.rentngo.model.entity.Customer;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.group3.rentngo.model.entity.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.io.Serializable;
