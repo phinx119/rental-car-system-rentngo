@@ -9,13 +9,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+//Sign up when error
+$(document).ready(function () {
+    $('#signupLinkWhenError').trigger('click');
+});
+
 //Change between thumbnail view and list view
  const thumbnailViewBtn = document.getElementById('thumbnailViewBtn');
  const listViewBtn = document.getElementById('listViewBtn');
  const thumbnailView = document.getElementById('thumbnailView');
  const listView = document.getElementById('listView');
 
- // Add event listeners to buttons
  thumbnailViewBtn.addEventListener('click', () => {
      thumbnailView.style.display = 'block';
      listView.style.display = 'none';
