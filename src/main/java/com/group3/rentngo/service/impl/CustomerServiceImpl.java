@@ -1,5 +1,6 @@
 package com.group3.rentngo.service.impl;
 
+import com.group3.rentngo.model.entity.Customer;
 import com.group3.rentngo.repository.BookingRepository;
 import com.group3.rentngo.repository.CustomerRepository;
 import com.group3.rentngo.repository.UserRepository;
@@ -20,5 +21,15 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerRepository = customerRepository;
         this.userRepository = userRepository;
         this.bookingRepository = bookingRepository;
+    }
+
+    @Override
+    public Customer findCustomerByEmail(String email) {
+        return customerRepository.findByEmail(email);
+    }
+
+    @Override
+    public Customer findCustomerByPhone(String phone) {
+        return customerRepository.findByPhone(phone);
     }
 }

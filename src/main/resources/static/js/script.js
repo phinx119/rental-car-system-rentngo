@@ -1,4 +1,4 @@
- document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('logoutBtn').addEventListener('click', function (event) {
         event.preventDefault();
 
@@ -7,3 +7,4 @@
         }
     });
 });
+

@@ -41,7 +41,7 @@
                         <a class="dropdown-item" href="#">My Booking</a>
                         <a class="dropdown-item" href="#">My Wallet</a>
                         <div class="dropdown-divider"></div>
-                        <a id="logoutBtn" class="dropdown-item" href="#">Log Out</a>
+                        <a id="logoutBtn" class="dropdown-item" th:href="@{/logout}">Log Out</a>
                     </div>
                 </li>
             </ul>
@@ -55,6 +55,9 @@
 <div th:if="${param.logout}">
     <div class="alert alert-success"> You have been logged out.</div>
 </div>
+<ul th:if="${errors != null}">
+    <a href="#" data-toggle="modal" data-target="#signupModal" id="signupLinkWhenError" hidden>Sign Up</a>
+</ul>
 
 <!-- Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
@@ -69,14 +72,16 @@
             </div>
             <div class="modal-body">
                 <!-- Login form here -->
-                <form method="post" role="form" th:action="@{/login}">
+                <form method="post" role="form" th:action="@{/home/login}">
                     <div class="form-group">
                         <label for="loginUsername" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="loginUsername" name="username" placeholder="Username">
+                        <input type="text" class="form-control" id="loginUsername" name="username"
+                               placeholder="Username">
                     </div>
                     <div class="form-group">
                         <label for="loginPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="loginPassword" name="password"  placeholder="Password">
+                        <input type="password" class="form-control" id="loginPassword" name="password"
+                               placeholder="Password">
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
@@ -108,49 +113,72 @@
             </div>
             <div class="modal-body">
                 <!-- Signup form here -->
-                <form>
+                <form method="post" role="form" th:action="@{/home/signup}" th:object="${signupDto}">
                     <div class="form-group">
-                        <label for="signupName">Name</label>
-                        <input type="text" class="form-control" id="signupName" aria-describedby="signupName"
-                               placeholder="Enter Name">
+                        <label for="signupName">Username</label>
+                        <input type="text" th:field="*{username}" class="form-control" id="signupName" name="username"
+                               aria-describedby="signupName"
+                               placeholder="Enter Username">
+                        <p th:errors="*{username}" class="text-danger"
+                           th:if="${#fields.hasErrors('username')}"></p>
                     </div>
                     <div class="form-group">
                         <label for="signupEmail">Email address</label>
-                        <input type="email" class="form-control" id="signupEmail" aria-describedby="emailHelp"
+                        <input type="email" th:field="*{email}" class="form-control" id="signupEmail" name="email"
+                               aria-describedby="emailHelp"
                                placeholder="Enter email">
+                        <p th:errors="*{email}" class="text-danger"
+                           th:if="${#fields.hasErrors('email')}"></p>
                     </div>
                     <div class="form-group">
                         <label for="signupPhoneNumber">Phone number</label>
-                        <input type="text" class="form-control" id="signupPhoneNumber"
+                        <input type="text" th:field="*{phone}" class="form-control" id="signupPhoneNumber" name="phone"
                                aria-describedby="signupPhoneNumber" placeholder="Enter Phone number">
+                        <p th:errors="*{phone}" class="text-danger"
+                           th:if="${#fields.hasErrors('phone')}"></p>
                     </div>
                     <div class="form-group">
                         <label for="signupPassword">Password</label>
-                        <input type="password" class="form-control" id="signupPassword" placeholder="Password">
+                        <input type="password" th:field="*{password}" class="form-control" id="signupPassword"
+                               name="password"
+                               placeholder="Password">
+                        <p th:errors="*{password}" class="text-danger"
+                           th:if="${#fields.hasErrors('password')}"></p>
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                        <input type="password" th:field="*{confirmPassword}" class="form-control" id="confirmPassword"
+                               name="confirmPassword"
+                               placeholder="Confirm Password">
+                        <p th:errors="*{confirmPassword}" class="text-danger" id="alertConfirmPassword"
+                           th:if="${#fields.hasErrors('confirmPassword')}"></p>
                     </div>
                     <div class="form-row">
                         <div class="col">
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="rentCarRadio" name="userType"
-                                       value="renter">
-                                <label class="form-check-label" for="rentCarRadio">I want to rent a car</label>
+                                <input type="radio" th:field="*{role}" class="form-check-input" id="customerRadio"
+                                       name="role"
+                                       value="Customer">
+                                <label class="form-check-label" for="customerRadio">I want to rent a car</label>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="carOwnerRadio" name="userType"
-                                       value="owner">
+                                <input type="radio" th:field="*{role}" class="form-check-input" id="carOwnerRadio"
+                                       name="role"
+                                       value="CarOwner">
                                 <label class="form-check-label" for="carOwnerRadio">I am a car owner</label>
                             </div>
                         </div>
+                        <p th:errors="*{role}" class="text-danger"
+                           th:if="${#fields.hasErrors('role')}"></p>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="agreeCheckbox">
+                        <input type="checkbox" th:field="*{agreePrivacy}" th:value="true" class="form-check-input"
+                               id="agreeCheckbox" name="agreePrivacy" required>
                         <label class="form-check-label" for="agreeCheckbox">I agree to the privacy policy</label>
+                        <p th:errors="*{agreePrivacy}" class="text-danger"
+                           th:if="${#fields.hasErrors('agreePrivacy')}"></p>
                     </div>
                     <button type="submit" class="btn btn-primary">Sign Up</button>
                 </form>
@@ -431,9 +459,14 @@
     </div>
 </footer>
 
-<!--<script src="../static/js/script.js"></script>-->
+<script src="../static/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#signupLinkWhenError').trigger('click');
+    });
+</script>
 </body>
 </html>
