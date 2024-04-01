@@ -1,0 +1,31 @@
+header{
+    display: flex;
+    justify-content: space-between ;
+    align-items: center;
+    background-color: hsl(0,0%,40%);
+    color: white;
+}
+
+
+header a{
+
+    color: white;
+}
+header strong{
+    font-size: 35px;
+}
+.breadcrumb{
+    background: white !important;
+    margin: 0 !important;
+}
+.card-image{
+    text-align: center;
+}
+.card-image img{
+    width: 400px;text-align: center;
+    height: 200px;
+}
+
+.info-detail-items div {
+    margin: 25px;
+}
