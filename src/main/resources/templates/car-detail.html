@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/car-detail.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header class="row">
+    <strong ><i class="fa-solid fa-car mr-3 " ></i>Rent a car today</strong>
+    <div>
+        <a href="#">ABOUT US</a>
+    </div>
+    <div>
+        <span class="ml-5">Welcome,user</span>
+    </div>
+
+</header>
+<!-- start breadcrumb -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Search Results</li>
+        <li class="breadcrumb-item active" aria-current="page">Car details</li>
+    </ol>
+</nav>
+<h3 class="ml-5">Card Details</h3>
+<div class=" row card-information ">
+    <div class="col-md-6 card-image">
+        <img src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png">
+    </div>
+    <div class="col-md-6">
+        <h3>Nguyen Xuan Phi</h3>
+        <table class="info-car">
+            <tr>
+                <td><strong>Ratings:</strong></td>
+                <td>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+
+                </td>
+            </tr>
+            <tr>
+                <td><strong>No.of rides:</strong></td>
+                <td>
+                    <strong>0</strong>
+
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Price:</strong></td>
+                <td>
+                    <strong>900k/day</strong>
+
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Location:</strong></td>
+                <td>
+                    <strong>Cau giay, Ha Noi</strong>
+
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Status:</strong></td>
+                <td>
+                    <strong>Avaliable</strong>
+
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<div class=" row mt-5 ml-5">
+    <button id="infolBtn" style="border-right: none;"><a href="#">Basic information</a></button>
+    <button id="detailyBtn" ><a href="#">Details</a></button>
+    <button id="termBtn" style="border-right: none;"><a href="#">Term of use</a></button>
+</div>
+<div class="info-detail row ml-5 mt-4">
+    <div class="col-md-6 info-detail-items ">
+        <div>
+            <strong>License plate:</strong>
+        </div>
+        <div>
+            <strong>Brand name:</strong>
+        </div>
+        <div>
+            <strong>Production year:</strong>
+        </div>
+        <div>
+            <strong>Transmission:</strong>
+        </div>
+        <div>
+            <strong>Document</strong>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Note</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td >1</td>
+                    <td >Registration paper</td>
+                    <td>Verified</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Certificate of inspection</td>
+                    <td>Verified</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Insurance</td>
+                    <td>Not available</td>
+                </tr>
+                </tbody>
+            </table>
+            <span>Note: Documents will be available for viewing after you've paid the deposit to rent</span>
+        </div>
+    </div>
+    <div class="col-md-6 info-detail-items ">
+        <div>
+            <strong>Color:</strong>
+        </div>
+        <div>
+            <strong>Model:</strong>
+        </div>
+        <div>
+            <strong>No.of seats:</strong>
+        </div>
+        <div>
+            <strong>Fuel:</strong>
+        </div>
+    </div>
+
+</div>
+
+<div class="details  ml-5 mt-4" style="display: none;">
+    <strong>Mileage: </strong><br/>
+    <strong>Fuel consumption: 18 liters/100 km  </strong>
+    <br/>
+    <strong>Address: </strong><br/>
+    <span>Note: Full Address will be available after you've paid the deposit to rent</span><br/>
+    <strong>Description: </strong><br/>
+    <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non itaque minima voluptatum eligendi consectetur sint odit! Adipisci vitae fugit doloribus
+        sunt, culpa numquam minima ab. Ad rem pariatur architecto?</span><br/>
+    <strong>Additional functions: </strong><br/>
+    <table class="table">
+        <tr>
+            <td>
+            <td>
+                Bluetooth
+            </td>
+            <td>
+                <input type="checkbox">
+            </td>
+            </td>
+            <td>
+            <td>
+                Sunroof
+            </td>
+            <td>
+                <input type="checkbox">
+            </td>
+            </td>
+            <td>
+            <td>
+                DVD
+            </td>
+            <td>
+                <input type="checkbox">
+            </td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            <td>
+                GPS
+            </td>
+            <td>
+                <input type="checkbox">
+            </td>
+            </td>
+            <td>
+            <td>
+                Child lock
+            </td>
+            <td>
+                <input type="checkbox">
+            </td>
+            </td>
+            <td>
+            <td>
+                USB
+            </td>
+            <td>
+                <input type="checkbox">
+            </td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            <td>
+                Camera
+            </td>
+            <td>
+                <input type="checkbox">
+            </td>
+            </td>
+            <td>
+            <td>
+                Child seat
+            </td>
+            <td>
+                <input type="checkbox">
+            </td>
+            </td>
+            <td>
+
+            </td>
+
+        </tr>
+    </table>
+</div>
+
+<div class="term ml-5 mt-4" style="display: none;">
+    <table class="table">
+        <tr>
+            <td> <strong>Base price</strong></td>
+            <td> <strong>900,000</strong></td>
+            <td> <strong>VND/Day</strong></td>
+        </tr>
+        <tr>
+            <td> <strong>Request deposit</strong></td>
+            <td> <strong>900,000</strong></td>
+            <td> <strong>VND/Day</strong></td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Terms of use</strong>
+            </td>
+        </tr>
+        <tr>
+            <td> <strong>No smoking</strong></td>
+            <td><input type="checkbox"></td>
+
+
+            <td> <strong>No pet</strong></td>
+            <td><input type="checkbox"></td>
+
+
+            <td> <strong>No food</strong></td>
+            <td><input type="checkbox"></td>
+            <td> <strong>Other</strong></td>
+            <td><input type="checkbox"></td>
+        </tr>
+    </table>
+</div>
+
+<footer class="bg-secondary text-light mt-3">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light">Home</a></li>
+                    <li><a href="#" class="text-light">About Us</a></li>
+                    <li><a href="#" class="text-light">Services</a></li>
+                    <li><a href="#" class="text-light">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <p class="text-light">Address: 123 Street, City, Country</p>
+                <p class="text-light">Email: info@example.com</p>
+                <p class="text-light">Phone: +1234567890</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Follow Us</h5>
+                <ul class="list-inline">
+                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bg-light text-dark text-center py-3">
+        <p class="mb-0">&copy; 2024 Your Company. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    let infodetail = document.querySelector(".info-detail");
+    let details = document.querySelector(".details");
+    let term = document.querySelector(".term");
+
+    let infolBtn = document.getElementById("infolBtn");
+    let detailyBtn = document.getElementById("detailyBtn");
+    let termBtn = document.getElementById("termBtn");
+
+    infolBtn.addEventListener("click", function() {
+        infodetail.style.display = "block";
+        details.style.display = "none";
+        term.style.display = "none";
+    });
+
+    detailyBtn.addEventListener("click", function() {
+        infodetail.style.display = "none";
+        details.style.display = "block";
+        term.style.display = "none";
+    });
+
+    termBtn.addEventListener("click", function() {
+        infodetail.style.display = "none";
+        details.style.display = "none";
+        term.style.display = "block";
+    });
+</script>
+</body>
+</html>
