@@ -1,15 +1,11 @@
 package com.group3.rentngo.controller;
 
-import com.group3.rentngo.model.dto.CustomerDto;
 import com.group3.rentngo.model.dto.SignupDto;
-import com.group3.rentngo.model.dto.UserDto;
-import com.group3.rentngo.model.entity.User;
 import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CustomerService;
 import com.group3.rentngo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
