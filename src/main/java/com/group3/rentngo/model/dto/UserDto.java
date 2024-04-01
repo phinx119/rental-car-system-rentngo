@@ -1,9 +1,7 @@
 package com.group3.rentngo.model.dto;
 
-import com.group3.rentngo.model.entity.Role;
-import com.group3.rentngo.model.entity.User;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.group3.rentngo.model.entity.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.io.Serializable;
@@ -29,6 +27,9 @@ public class UserDto implements Serializable {
 //            message = "Minimum eight characters, at least one letter, one number and one special character.")
     @NotBlank(message = "Mandatory information.")
     String password;
+
+    @NotNull(message = "Mandatory information.")
+    boolean status;
 
     @NotNull(message = "Mandatory information.")
     Collection<Role> roles;

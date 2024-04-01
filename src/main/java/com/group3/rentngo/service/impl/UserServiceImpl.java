@@ -6,10 +6,7 @@ import com.group3.rentngo.model.entity.CarOwner;
 import com.group3.rentngo.model.entity.Customer;
 import com.group3.rentngo.model.entity.Role;
 import com.group3.rentngo.model.entity.User;
-import com.group3.rentngo.repository.CarOwnerRepository;
-import com.group3.rentngo.repository.CustomerRepository;
-import com.group3.rentngo.repository.RoleRepository;
-import com.group3.rentngo.repository.UserRepository;
+import com.group3.rentngo.repository.*;
 import com.group3.rentngo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,14 +20,14 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     private CarOwnerRepository carOwnerRepository;
     private CustomerRepository customerRepository;
-    private PasswordEncoder passwordEncoder;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
                            CarOwnerRepository carOwnerRepository,
-                           CustomerRepository customerRepository,
-                           PasswordEncoder passwordEncoder) {
+                           CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.carOwnerRepository = carOwnerRepository;
@@ -43,6 +40,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setStatus(userDto.isStatus());
         userRepository.save(user);
 
         User updateUser = userRepository.findByUsername(user.getUsername());
@@ -60,6 +58,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(signupDto.getUsername());
         user.setPassword(passwordEncoder.encode(signupDto.getPassword()));
+        user.setStatus(true);
 
         // save car owner account
         if (signupDto.getRole().equals("CarOwner")) {

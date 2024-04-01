@@ -76,12 +76,17 @@ public class AuthController {
         }
 
         userService.saveUser(signupDto);
-        return "redirect:/hello";
+        return "redirect:/customer/list-car";
+        //return "home-page";
     }
-
 
     @GetMapping("/hello")
     public String hello() {
         return "login";
+    }
+
+    @GetMapping("/error-403")
+    public String showPage403() {
+        return "error/403";
     }
 }

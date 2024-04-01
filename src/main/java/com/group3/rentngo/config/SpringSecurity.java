@@ -16,8 +16,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SpringSecurity {
 
+    private final UserDetailsService userDetailsService;
+
     @Autowired
-    private UserDetailsService userDetailsService;
+    public SpringSecurity(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -26,20 +30,27 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/hello").permitAll()
+        http
+                .csrf(
+                        csrf -> csrf.disable()
+                ).authorizeHttpRequests(
+                        authorize -> authorize
+//                                .requestMatchers("/admin/**").permitAll()
+//                                .requestMatchers("/car-owner/**").permitAll()
+                                .requestMatchers("/customer/**").hasRole("ADMIN")
                                 .requestMatchers("/home/**").permitAll()
                                 .requestMatchers("/home").permitAll()
+                                .requestMatchers("/hello").permitAll()
                 ).formLogin(
                         form -> form
                                 .loginPage("/home")
                                 .loginProcessingUrl("/home/login")
-                                .defaultSuccessUrl("/hello")
+                                .defaultSuccessUrl("/customer/list-car", true)
                                 .permitAll()
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .deleteCookies("JSESSIONID")
                                 .permitAll()
                 ).exceptionHandling(
                         httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer

@@ -48,6 +48,7 @@ public class RentNGoApplication {
             UserDto userDto = new UserDto();
             userDto.setUsername("admin");
             userDto.setPassword("123");
+            userDto.setStatus(true);
 
             if (userRepository.findByUsername(userDto.getUsername()) == null){
                 userService.saveAdmin(userDto);
