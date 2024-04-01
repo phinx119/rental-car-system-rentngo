@@ -1,6 +1,7 @@
 package com.group3.rentngo.service.impl;
 
 import com.group3.rentngo.model.dto.SignupDto;
+import com.group3.rentngo.model.dto.UserDto;
 import com.group3.rentngo.model.entity.CarOwner;
 import com.group3.rentngo.model.entity.Customer;
 import com.group3.rentngo.model.entity.Role;
@@ -38,6 +39,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void saveAdmin(UserDto userDto) {
+        User user = new User();
+        user.setUsername(userDto.getUsername());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userRepository.save(user);
+
+        User updateUser = userRepository.findByUsername(user.getUsername());
+
+        Role role = roleRepository.findByName("ROLE_ADMIN");
+        if (role == null) {
+            role = checkRoleExist("ROLE_ADMIN");
+        }
+        updateUser.setRoles(Arrays.asList(role));
+        userRepository.save(updateUser);
+    }
+
+    @Override
     public void saveUser(SignupDto signupDto) {
         User user = new User();
         user.setUsername(signupDto.getUsername());
@@ -47,7 +65,7 @@ public class UserServiceImpl implements UserService {
         if (signupDto.getRole().equals("CarOwner")) {
             Role role = roleRepository.findByName("ROLE_CAR_OWNER");
             if (role == null) {
-                role =checkRoleExist("ROLE_CAR_OWNER");
+                role = checkRoleExist("ROLE_CAR_OWNER");
             }
             user.setRoles(Arrays.asList(role));
 
