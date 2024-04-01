@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -28,13 +29,13 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
-                                authorize.requestMatchers("/register/**").permitAll()
-                                        .requestMatchers("/hello").permitAll()
-                        //.requestMatchers("/users").hasRole("ADMIN")
+                        authorize.requestMatchers("/hello").permitAll()
+                                .requestMatchers("/home/**").permitAll()
+                                .requestMatchers("/home").permitAll()
                 ).formLogin(
                         form -> form
                                 .loginPage("/home")
-                                .loginProcessingUrl("/login")
+                                .loginProcessingUrl("/home/login")
                                 .defaultSuccessUrl("/hello")
                                 .permitAll()
                 ).logout(
@@ -43,7 +44,7 @@ public class SpringSecurity {
                                 .permitAll()
                 ).exceptionHandling(
                         httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
-                                                                    .accessDeniedPage("/hello")
+                                .accessDeniedPage("/hello")
                 );
         return http.build();
     }

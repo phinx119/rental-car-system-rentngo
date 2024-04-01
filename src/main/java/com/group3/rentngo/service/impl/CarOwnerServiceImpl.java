@@ -1,5 +1,6 @@
 package com.group3.rentngo.service.impl;
 
+import com.group3.rentngo.model.entity.CarOwner;
 import com.group3.rentngo.repository.CarOwnerRepository;
 import com.group3.rentngo.repository.CarRepository;
 import com.group3.rentngo.repository.UserRepository;
@@ -20,5 +21,15 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         this.carOwnerRepository = carOwnerRepository;
         this.userRepository = userRepository;
         this.carRepository = carRepository;
+    }
+
+    @Override
+    public CarOwner findCarOwnerByEmail(String email) {
+        return carOwnerRepository.findByEmail(email);
+    }
+
+    @Override
+    public CarOwner findCarOwnerByPhone(String phone) {
+        return carOwnerRepository.findByPhone(phone);
     }
 }

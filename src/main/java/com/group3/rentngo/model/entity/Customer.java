@@ -18,13 +18,13 @@ public class Customer {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private String name;
 
-    @Column(nullable = false)
+    @Column
     private LocalDate dateOfBirth;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String nationalId;
 
     @Column(nullable = false, unique = true)
@@ -33,13 +33,13 @@ public class Customer {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String address;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String drivingLicense;
 
-    @Column(nullable = false)
+    @Column
     private BigDecimal wallet;
 
     @OneToOne(cascade = CascadeType.ALL)
