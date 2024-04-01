@@ -10,8 +10,8 @@
 </head>
 <body>
 
-  
-<header th:replace="fragments/header :: navbar"></header>
+<header th:insert="~{fragments/header.html :: header}"> </header>
+
 
 <div th:if="${param.error}">
     <div class="alert alert-danger">Invalid Email or Password</div>
@@ -388,10 +388,10 @@
 </div>
 
 
-<footer th:replace="fragments/footer :: footer"></footer>
+<footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
 
-<script src="../static/js/script.js"></script>
+<script th:src="@{/js/script.js}"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
