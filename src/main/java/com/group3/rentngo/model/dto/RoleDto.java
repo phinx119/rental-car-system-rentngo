@@ -1,8 +1,6 @@
 package com.group3.rentngo.model.dto;
 
-import com.group3.rentngo.model.entity.CarOwner;
 import com.group3.rentngo.model.entity.Role;
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
