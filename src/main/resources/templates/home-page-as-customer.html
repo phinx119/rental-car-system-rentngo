@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentN'Go</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<header th:insert="~{fragments/header.html :: header}"></header>
+
+
+<!-- Display for customer -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 bg-primary text-white p-5">
+            <h2>Looking for a vehicle?</h2>
+            <p>Find the ideal car rental for your trip.</p>
+        </div>
+        <div class="col-md-6 bg-secondary text-white p-5">
+            <form id="searchForm">
+                <div class="form-group">
+                    <label for="pickupLocation">Pickup Location</label>
+                    <input type="text" class="form-control" id="pickupLocation" placeholder="Enter pickup location">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="pickupDate">Pickup Date</label>
+                        <input type="date" class="form-control" id="pickupDate">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="pickupTime">Pickup Time</label>
+                        <input type="time" class="form-control" id="pickupTime">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="dropOffDate">Drop-off Date</label>
+                        <input type="date" class="form-control" id="dropOffDate">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="dropOffTime">Drop-off Time</label>
+                        <input type="time" class="form-control" id="dropOffTime">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-light">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!---->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 mb-4 ">
+            <hr class="my-4">
+            <h2 class="text-center mb-4">Why To Choose Us?</h2>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="fas fa-money-bill-wave fa-3x mb-3"></i>
+                    <h5 class="card-title">Save Money</h5>
+                    <p class="card-text text-center">Our service offers competitive pricing to help you save money on your rental.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="fas fa-car fa-3x mb-3"></i>
+                    <h5 class="card-title">Convenient</h5>
+                    <p class="card-text text-center">Rent a car conveniently and easily with our user-friendly platform.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="fas fa-clipboard-check fa-3x mb-3"></i>
+                    <h5 class="card-title">Legal and Insurance</h5>
+                    <p class="card-text text-center">Our rentals are legally compliant and come with insurance coverage for peace of mind.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="fas fa-headset fa-3x mb-3"></i>
+                    <h5 class="card-title">24/7 Support</h5>
+                    <p class="card-text text-center">Get support around the clock from our dedicated customer service team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <hr class="my-4">
+            <h2 class="text-center mb-4">What People Say About Us</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-user-circle fa-3x mr-3"></i>
+                        <div>
+                            <h5 class="card-title mb-0">John Doe</h5>
+                            <small>Customer</small>
+                        </div>
+                    </div>
+                    <p class="card-text">"Ahihi"</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-user-circle fa-3x mr-3"></i>
+                        <div>
+                            <h5 class="card-title mb-0">Jane Smith</h5>
+                            <small>Customer</small>
+                        </div>
+                    </div>
+                    <p class="card-text">"Ahihi"</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-user-circle fa-3x mr-3"></i>
+                        <div>
+                            <h5 class="card-title mb-0">Emily Johnson</h5>
+                            <small>Customer</small>
+                        </div>
+                    </div>
+                    <p class="card-text">"Ahihi"</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-user-circle fa-3x mr-3"></i>
+                        <div>
+                            <h5 class="card-title mb-0">Michael Brown</h5>
+                            <small>Customer</small>
+                        </div>
+                    </div>
+                    <p class="card-text">"Ahihi"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <hr class="my-4">
+            <h2 class="text-center mb-4">Where to Find Us</h2>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Location 1: Hanoi -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 rounded text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Hanoi</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location 2: Ho Chi Minh City -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 rounded text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Ho Chi Minh City</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location 3: Da Nang -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 rounded text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Da Nang</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location 4: Nha Trang -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 rounded text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Nha Trang</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location 5: Da Lat -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 rounded text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Da Lat</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location 6: Quang Ninh -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 rounded text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Quang Ninh</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="~{fragments/footer.html :: footer}"></footer>
+
+<script src="../static/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

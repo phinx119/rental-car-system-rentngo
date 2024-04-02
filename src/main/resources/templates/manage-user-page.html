@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentN'Go</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
+</head>
+<body>
+
+<header th:insert="~{fragments/header.html :: header}"></header>
+
+<div class="container-fluid bg-white mt-4">
+    <div class="row p-4">
+        <div class="col-md-12 mt-4">
+            <h3>Manage User</h3>
+            <p>There are 10 cars available for you.</p>
+            <table id="userTable" class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">No. of Rides</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Car Name</td>
+                    <td><img src="car-image.jpg" alt="Car Image" style="max-width: 100px;"></td>
+                    <td>100</td>
+                    <td>$50</td>
+                    <td>City, Country</td>
+                    <td>Available</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">Rent Now</button><br>
+                        <button class="btn btn-secondary btn-sm">View Details</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Car Name</td>
+                    <td><img src="car-image.jpg" alt="Car Image" style="max-width: 100px;"></td>
+                    <td>100</td>
+                    <td>$50</td>
+                    <td>City, Country</td>
+                    <td>Available</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">Rent Now</button><br>
+                        <button class="btn btn-secondary btn-sm">View Details</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Car Name</td>
+                    <td><img src="car-image.jpg" alt="Car Image" style="max-width: 100px;"></td>
+                    <td>100</td>
+                    <td>$50</td>
+                    <td>City, Country</td>
+                    <td>Available</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">Rent Now</button><br>
+                        <button class="btn btn-secondary btn-sm">View Details</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="~{fragments/footer.html :: footer}"></footer>
+
+
+<script src="../static/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+</body>
+</html>
