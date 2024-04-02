@@ -54,5 +54,6 @@ public class RentNGoApplication {
                 userService.saveAdmin(userDto);
             }
         };
+
     }
 }
