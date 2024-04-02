@@ -24,6 +24,7 @@ public class RentNGoApplication {
                                                UserRepository userRepository,
                                                UserService userService) {
         return runner -> {
+            // insert default role
             Role roleAdmin = roleRepository.findByName("ROLE_ADMIN");
             if (roleAdmin == null) {
                 Role role1 = new Role();
@@ -45,6 +46,7 @@ public class RentNGoApplication {
                 roleRepository.save(role3);
             }
 
+            // insert default user
             UserDto userDto = new UserDto();
             userDto.setUsername("admin");
             userDto.setPassword("123");

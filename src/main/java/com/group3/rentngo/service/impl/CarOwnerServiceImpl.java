@@ -41,7 +41,7 @@ public class CarOwnerServiceImpl implements CarOwnerService {
 
 
     @Override
-    public void addnewCar(Car car) {
+    public void addNewCar(Car car) {
         carRepository.save(car);
     }
 
@@ -57,7 +57,7 @@ public class CarOwnerServiceImpl implements CarOwnerService {
     }
 
     @Override
-    public void changBookingStatus(int id) {
+    public void changeBookingStatus(int id) {
         bookingRepository.updateById(id);
     }
 

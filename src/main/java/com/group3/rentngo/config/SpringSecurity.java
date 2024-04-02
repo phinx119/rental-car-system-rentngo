@@ -35,17 +35,17 @@ public class SpringSecurity {
                         csrf -> csrf.disable()
                 ).authorizeHttpRequests(
                         authorize -> authorize
-//                                .requestMatchers("/admin/**").permitAll()
-//                                .requestMatchers("/car-owner/**").permitAll()
-                                .requestMatchers("/customer/**").hasRole("ADMIN")
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/car-owner/**").hasAnyRole("ADMIN", "CAR_OWNER")
+                                .requestMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
                                 .requestMatchers("/home/**").permitAll()
                                 .requestMatchers("/home").permitAll()
-                                .requestMatchers("/hello").permitAll()
+                                .requestMatchers("/error-403").permitAll()
                 ).formLogin(
                         form -> form
                                 .loginPage("/home")
                                 .loginProcessingUrl("/home/login")
-                                .defaultSuccessUrl("/customer/list-car", true)
+                                .defaultSuccessUrl("/home", true)
                                 .permitAll()
                 ).logout(
                         logout -> logout
@@ -54,7 +54,7 @@ public class SpringSecurity {
                                 .permitAll()
                 ).exceptionHandling(
                         httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
-                                .accessDeniedPage("/hello")
+                                .accessDeniedPage("/error-403")
                 );
         return http.build();
     }
