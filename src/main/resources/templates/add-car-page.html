@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentN'Go</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<header th:insert="~{fragments/header.html :: header}"></header>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add car</li>
+    </ol>
+</nav>
+
+
+<div class="container-fluid bg-white mt-4">
+    <h3 class="profile-header">Add a Car</h3>
+    <a href="">Back</a>
+    <div class="row p-4">
+        <div class="col-3">
+            <button class="btn btn-outline-primary btn-block active" id="basicBtn"><a class="text-secondary" href="#">Step 1: Basic</a></button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-outline-primary btn-block" id="detailBtn"><a class="text-secondary" href="#">Step 2: Details</a></button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-outline-primary btn-block" id="pricingBtn"><a class="text-secondary" href="#">Step 3: Pricing</a></button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-outline-primary btn-block" id="finishBtn"><a class="text-secondary" href="#">Step 4: Finish</a></button>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-light mt-4">
+    <div class="row justify-content-center p-4">
+        <form class="col-md-10" id="carForm" enctype="multipart/form-data">
+
+            <!-- Form Inputs -->
+            <div id="step1" class="">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="licensePlate">License Plate:</label>
+                                <input type="text" class="form-control" id="licensePlate" name="licensePlate" placeholder="Enter license plate">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="color">Color:</label>
+                                <select class="form-control" id="color" name="color">
+                                    <option value="">Select color</option>
+                                    <option value="red">Red</option>
+                                    <option value="blue">Blue</option>
+                                    <option value="green">Green</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="brand">Brand Name:</label>
+                                <select class="form-control" id="brand" name="brand">
+                                    <option value="">Select brand</option>
+                                    <option value="Toyota">Toyota</option>
+                                    <option value="Honda">Honda</option>
+                                    <option value="Ford">Ford</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="model">Model:</label>
+                                <select class="form-control" id="model" name="model">
+                                    <option value="">Select model</option>
+                                    <option value="Sedan">Sedan</option>
+                                    <option value="SUV">SUV</option>
+                                    <option value="Truck">Truck</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="productionYear">Production Year:</label>
+                                <input type="number" class="form-control" id="productionYear" name="productionYear" placeholder="Enter production year">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="seats">Number of Seats:</label>
+                                <select class="form-control" id="seats" name="seats">
+                                    <option value="">Select number of seats</option>
+                                    <option value="2">2</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Transmission:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="transmission" id="automatic" value="Automatic">
+                                    <label class="form-check-label" for="automatic">Automatic</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="transmission" id="manual" value="Manual">
+                                    <label class="form-check-label" for="manual">Manual</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Fuel:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="fuel" id="gasoline" value="Gasoline">
+                                    <label class="form-check-label" for="gasoline">Gasoline</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="fuel" id="diesel" value="Diesel">
+                                    <label class="form-check-label" for="diesel">Diesel</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Title -->
+                <h4 class="mb-4">Documentation</h4>
+
+                <!-- File Uploads -->
+                <div class="col-md-12 mt-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="registrationPaper">Registration Paper:</label>
+                                <input type="file" class="form-control-file" id="registrationPaper" name="registrationPaper">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="inspectionCertificate">Certification of Inspection:</label>
+                                <input type="file" class="form-control-file" id="inspectionCertificate" name="inspectionCertificate">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="insurance">Insurance:</label>
+                                <input type="file" class="form-control-file" id="insurance" name="insurance">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 - Details (Visible by default) -->
+            <div id="step2" class="row">
+                <!-- Step 2 Inputs -->
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="mileage">Mileage:</label>
+                                <input type="text" class="form-control" id="mileage" name="mileage" placeholder="Enter mileage">
+                            </div>
+                            <div class="form-group">
+                                <label for="fuelConsumption">Fuel Consumption (L/100km):</label>
+                                <input type="text" class="form-control" id="fuelConsumption" name="fuelConsumption" placeholder="Enter fuel consumption">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address:</label>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City:</label>
+                                <input type="text" class="form-control" id="city" name="city" placeholder="Enter city">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="district">District:</label>
+                                <input type="text" class="form-control" id="district" name="district" placeholder="Enter district">
+                            </div>
+                            <div class="form-group">
+                                <label for="ward">Ward:</label>
+                                <input type="text" class="form-control" id="ward" name="ward" placeholder="Enter ward">
+                            </div>
+                            <div class="form-group">
+                                <label for="houseNumber">House Number:</label>
+                                <input type="text" class="form-control" id="houseNumber" name="houseNumber" placeholder="Enter house number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <!-- Additional Functions Checkbox (First Column) -->
+                            <div class="form-group">
+                                <label>Additional Functions:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="bluetooth" name="additionalFunction" value="Bluetooth">
+                                    <label class="form-check-label" for="bluetooth">Bluetooth</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gps" name="additionalFunction" value="GPS">
+                                    <label class="form-check-label" for="gps">GPS</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="camera" name="additionalFunction" value="Camera">
+                                    <label class="form-check-label" for="camera">Camera</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <!-- Additional Functions Checkbox (Second Column) -->
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="sunRoof" name="additionalFunction" value="Sun Roof">
+                                    <label class="form-check-label" for="sunRoof">Sun Roof</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="childLock" name="additionalFunction" value="Child Lock">
+                                    <label class="form-check-label" for="childLock">Child Lock</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <!-- Additional Functions Checkbox (Third Column) -->
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="childSeat" name="additionalFunction" value="Child Seat">
+                                    <label class="form-check-label" for="childSeat">Child Seat</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="dvd" name="additionalFunction" value="DVD">
+                                    <label class="form-check-label" for="dvd">DVD</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="frontImage">Front Image:</label>
+                                <input type="file" class="form-control-file" id="frontImage" name="frontImage">
+                            </div>
+                            <div class="form-group">
+                                <label for="backImage">Back Image:</label>
+                                <input type="file" class="form-control-file" id="backImage" name="backImage">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="leftImage">Left Image:</label>
+                                <input type="file" class="form-control-file" id="leftImage" name="leftImage">
+                            </div>
+                            <div class="form-group">
+                                <label for="rightImage">Right Image:</label>
+                                <input type="file" class="form-control-file" id="rightImage" name="rightImage">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 - Pricing and Terms (Hidden by default) -->
+            <div id="step3" class="row" style="display: none;">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="basePrice">Base Price per Day (VND):</label>
+                        <input type="number" class="form-control" id="basePrice" name="basePrice" placeholder="Enter base price">
+                    </div>
+                    <div class="form-group">
+                        <label for="requiredDeposit">Required Deposit (VND):</label>
+                        <input type="number" class="form-control" id="requiredDeposit" name="requiredDeposit" placeholder="Enter required deposit">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Terms of Use:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="noFood" name="terms" value="No Food">
+                            <label class="form-check-label" for="noFood">No Food</label>
+                        </div>
+                        <!-- Add more checkboxes for terms of use -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="noSmoking" name="terms" value="No Smoking">
+                            <label class="form-check-label" for="noSmoking">No Smoking</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="noPet" name="terms" value="No Pet">
+                            <label class="form-check-label" for="noPet">No Pet</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="other" name="terms" value="Other">
+                            <label class="form-check-label" for="other">Other</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="note">Note:</label>
+                        <textarea class="form-control" id="note" name="note" rows="3" placeholder="Please specify any additional notes"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 - Preview (Hidden by default) -->
+            <div id="step4" class="row" style="display: none;">
+                <div class="col-md-12">
+                    <h4>Preview</h4>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="car-image.jpg" class="card-img" alt="Car Image">
+                    </div>
+                    <div class="col-md-6 align-self-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Car Name</h5>
+                            <p class="card-text">Rating: <i class="fas fa-star"></i>  <br> No. of ride:  0 <br> Price 900k/day <br> Location: Cau Giay, Ha Noi <br> Status: Available </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="col-md-12 text-center mt-4">
+                <button type="button" id="prevBtn" class="btn btn-secondary mr-2">Previous</button>
+                <button type="button" id="nextBtn" class="btn btn-primary">Next</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="display: none;">Submit</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<footer th:insert="~{fragments/footer.html :: footer}"></footer>
+
+<script>
+    // JavaScript code to handle navigation between form steps
+    document.addEventListener("DOMContentLoaded", function () {
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        const basicBtn = document.getElementById('basicBtn');
+        const detailBtn = document.getElementById('detailBtn');
+        const pricingBtn = document.getElementById('pricingBtn');
+        const finishBtn = document.getElementById('finishBtn');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Hide Step 2, Step 3, and Step 4 initially
+        step2.style.display = 'none';
+        step3.style.display = 'none';
+        step4.style.display = 'none';
+
+        // Event listener for Next button - Step 1 to Step 2, Step 2 to Step 3, and Step 3 to Step 4
+        nextBtn.addEventListener('click', function () {
+            if (step1.style.display !== 'none') {
+                step1.style.display = 'none';
+                step2.style.display = 'block';
+                basicBtn.classList.remove('active');
+                detailBtn.classList.add('active');
+            } else if (step2.style.display !== 'none') {
+                step2.style.display = 'none';
+                step3.style.display = 'block';
+                detailBtn.classList.remove('active');
+                pricingBtn.classList.add('active');
+            } else if (step3.style.display !== 'none') {
+                step3.style.display = 'none';
+                step4.style.display = 'block';
+                pricingBtn.classList.remove('active');
+                finishBtn.classList.add('active');
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            }
+        });
+
+        // Event listener for Previous button - Step 2 to Step 1, Step 3 to Step 2, and Step 4 to Step 3
+        prevBtn.addEventListener('click', function () {
+            if (step2.style.display !== 'none') {
+                step2.style.display = 'none';
+                step1.style.display = 'block';
+                basicBtn.classList.add('active');
+                detailBtn.classList.remove('active');
+            } else if (step3.style.display !== 'none') {
+                step3.style.display = 'none';
+                step2.style.display = 'block';
+                detailBtn.classList.add('active');
+                pricingBtn.classList.remove('active');
+            } else if (step4.style.display !== 'none') {
+                step4.style.display = 'none';
+                step3.style.display = 'block';
+                pricingBtn.classList.add('active');
+                finishBtn.classList.remove('active');
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+
+<script src="../static/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

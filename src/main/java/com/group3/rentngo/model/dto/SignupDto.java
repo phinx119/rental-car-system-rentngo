@@ -1,6 +1,6 @@
 package com.group3.rentngo.model.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 @AllArgsConstructor

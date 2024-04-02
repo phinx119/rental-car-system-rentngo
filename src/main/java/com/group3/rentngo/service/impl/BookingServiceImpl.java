@@ -1,9 +1,6 @@
 package com.group3.rentngo.service.impl;
 
-import com.group3.rentngo.repository.BookingRepository;
-import com.group3.rentngo.repository.CarRepository;
-import com.group3.rentngo.repository.CustomerRepository;
-import com.group3.rentngo.repository.FeedbackRepository;
+import com.group3.rentngo.repository.*;
 import com.group3.rentngo.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

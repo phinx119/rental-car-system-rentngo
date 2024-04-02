@@ -1,10 +1,7 @@
 package com.group3.rentngo.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Collection;
 import java.util.Date;
@@ -37,10 +34,7 @@ public class Booking {
     @Column(nullable = false)
     private boolean status;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    @JoinTable(
-            name="booking_car",
-            joinColumns={@JoinColumn(name="booking_id", referencedColumnName="booking_no")},
-            inverseJoinColumns={@JoinColumn(name="car_id", referencedColumnName="id")})
-    private Collection<Car> cars;
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
 }

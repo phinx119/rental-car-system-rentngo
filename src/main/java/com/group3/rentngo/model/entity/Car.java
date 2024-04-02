@@ -1,12 +1,10 @@
 package com.group3.rentngo.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Blob;
+import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
@@ -80,6 +78,6 @@ public class Car {
     @JoinColumn(name = "car_owner_id")
     private CarOwner carOwner;
 
-    @ManyToMany(mappedBy = "cars")
-    private List<Booking> bookings;
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private Collection<Booking> bookings;
 }

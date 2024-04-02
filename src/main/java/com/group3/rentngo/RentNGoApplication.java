@@ -1,10 +1,11 @@
 package com.group3.rentngo;
 
 import com.group3.rentngo.model.dto.SignupDto;
+import com.group3.rentngo.model.dto.UserDto;
 import com.group3.rentngo.model.entity.Role;
 import com.group3.rentngo.repository.CustomerRepository;
 import com.group3.rentngo.repository.RoleRepository;
-import com.group3.rentngo.service.CarOwnerService;
+import com.group3.rentngo.repository.UserRepository;
 import com.group3.rentngo.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,8 +21,8 @@ public class RentNGoApplication {
 
     @Bean
     public CommandLineRunner commandLineRunner(RoleRepository roleRepository,
-                                               CustomerRepository customerRepository,
-                                               UserService userService, CarOwnerService carOwnerService) {
+                                               UserRepository userRepository,
+                                               UserService userService) {
         return runner -> {
             Role roleAdmin = roleRepository.findByName("ROLE_ADMIN");
             if (roleAdmin == null) {
@@ -44,19 +45,14 @@ public class RentNGoApplication {
                 roleRepository.save(role3);
             }
 
-            SignupDto signupDto = new SignupDto();
-            signupDto.setUsername("xuanphi");
-            signupDto.setEmail("xuanphi2003@gmail.com");
-            signupDto.setPhone("0812497838");
-            signupDto.setPassword("phi119");
-            signupDto.setConfirmPassword("phi119");
-            signupDto.setRole("Customer");
-            signupDto.setAgreePrivacy("true");
+            UserDto userDto = new UserDto();
+            userDto.setUsername("admin");
+            userDto.setPassword("123");
+            userDto.setStatus(true);
 
-            if (customerRepository.findByEmail(signupDto.getEmail()) == null){
-                userService.saveUser(signupDto);
+            if (userRepository.findByUsername(userDto.getUsername()) == null){
+                userService.saveAdmin(userDto);
             }
-            carOwnerService.changBookingStatus(1);
         };
 
     }

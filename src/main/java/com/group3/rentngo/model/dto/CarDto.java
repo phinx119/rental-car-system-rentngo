@@ -1,10 +1,7 @@
 package com.group3.rentngo.model.dto;
 
-import com.group3.rentngo.model.entity.Car;
-import com.group3.rentngo.model.entity.CarOwner;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import com.group3.rentngo.model.entity.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.io.Serializable;
