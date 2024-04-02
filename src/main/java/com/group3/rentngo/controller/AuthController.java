@@ -6,6 +6,8 @@ import com.group3.rentngo.service.CustomerService;
 import com.group3.rentngo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +32,24 @@ public class AuthController {
 
     @GetMapping(value = {"/", "/home"})
     public String homePage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && !authentication.getAuthorities().isEmpty()) {
+            boolean isAdmin = authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+            boolean isCarOwner = authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_CAR_OWNER"));
+            boolean isCustomer = authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_CUSTOMER"));
+            if (isAdmin) {
+                return "redirect:/admin/list-user";
+            }
+            if (isCarOwner) {
+                return "redirect:/car-owner/home";
+            }
+            if (isCustomer) {
+                return "redirect:/customer/home";
+            }
+        }
 
         SignupDto signupDto = new SignupDto();
         model.addAttribute("signupDto", signupDto);
@@ -80,13 +100,8 @@ public class AuthController {
         //return "home-page";
     }
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "login";
-    }
-  
     @GetMapping("/error-403")
-    public String showPage403() {
+    public String hello() {
         return "error/403";
     }
 }

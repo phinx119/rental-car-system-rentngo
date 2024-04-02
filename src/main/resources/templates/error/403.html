@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>403</title>
+    <title>Error 403</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -14,10 +14,13 @@
             <h4>403</h4>
         </div>
     </div>
+    <hr>
 </div>
-<hr>
 <div class="container">
-    <span>You do not have permission.</span><a th:href="@{/home}">Go home</a>
+    <h5>You do not have permission.</h5>
+    <hr>
+    <a class="nav-link active" th:href="@{/home}">Go home</a>
+    <a class="nav-link active" th:href="@{/logout}">Logout</a>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -5,9 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-//@RequestMapping("/customer")
+@RequestMapping("/customer")
 public class CustomerController {
-    @GetMapping("/customer/list-car")
+    @GetMapping("/home")
+    public String viewCarOwnerHome() {
+        return "home-page-as-customer";
+    }
+    @GetMapping("/list-car")
     public String viewListCar() {
         return "list-car-search-page";
     }
