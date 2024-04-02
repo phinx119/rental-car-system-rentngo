@@ -4,6 +4,7 @@ import com.group3.rentngo.model.dto.SignupDto;
 import com.group3.rentngo.model.entity.Role;
 import com.group3.rentngo.repository.CustomerRepository;
 import com.group3.rentngo.repository.RoleRepository;
+import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +21,7 @@ public class RentNGoApplication {
     @Bean
     public CommandLineRunner commandLineRunner(RoleRepository roleRepository,
                                                CustomerRepository customerRepository,
-                                               UserService userService) {
+                                               UserService userService, CarOwnerService carOwnerService) {
         return runner -> {
             Role roleAdmin = roleRepository.findByName("ROLE_ADMIN");
             if (roleAdmin == null) {
@@ -55,6 +56,8 @@ public class RentNGoApplication {
             if (customerRepository.findByEmail(signupDto.getEmail()) == null){
                 userService.saveUser(signupDto);
             }
+            carOwnerService.changBookingStatus(1);
         };
+
     }
 }
