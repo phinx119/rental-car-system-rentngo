@@ -11,11 +11,11 @@ public interface CarOwnerService {
 
     CarOwner findCarOwnerByPhone(String phone);
 
-    void addnewCar(Car car);
+    void addNewCar(Car car);
 
     void updateCarInformation(Car car);
 
     List<Feedback> showFeedback();
 
-    void changBookingStatus(int id);
+    void changeBookingStatus(int id);
 }

@@ -35,6 +35,10 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * @author phinx
+     * @description insert default user - admin
+     */
     @Override
     public void saveAdmin(UserDto userDto) {
         User user = new User();
@@ -53,6 +57,10 @@ public class UserServiceImpl implements UserService {
         userRepository.save(updateUser);
     }
 
+    /**
+     * @author phinx
+     * @description insert new user with suitable role
+     */
     @Override
     public void saveUser(SignupDto signupDto) {
         User user = new User();
@@ -97,12 +105,20 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * @author phinx
+     * @description check role existed or not
+     */
     private Role checkRoleExist(String roleName) {
         Role role = new Role();
         role.setName(roleName);
         return roleRepository.save(role);
     }
 
+    /**
+     * @author phinx
+     * @description get user detail by username
+     */
     @Override
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);

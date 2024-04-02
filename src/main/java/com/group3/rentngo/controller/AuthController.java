@@ -1,6 +1,7 @@
 package com.group3.rentngo.controller;
 
 import com.group3.rentngo.model.dto.SignupDto;
+import com.group3.rentngo.model.entity.CustomUserDetails;
 import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CustomerService;
 import com.group3.rentngo.service.UserService;
@@ -15,6 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+/**
+ * @author phinx
+ * @description controller class contain authorization function
+ */
 @Controller
 public class AuthController {
     private UserService userService;
@@ -30,16 +35,18 @@ public class AuthController {
         this.customerService = customerService;
     }
 
+    /**
+     * @author phinx
+     * @description redirect to home page for each actor
+     */
     @GetMapping(value = {"/", "/home"})
     public String homePage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && !authentication.getAuthorities().isEmpty()) {
-            boolean isAdmin = authentication.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-            boolean isCarOwner = authentication.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ROLE_CAR_OWNER"));
-            boolean isCustomer = authentication.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ROLE_CUSTOMER"));
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            boolean isAdmin = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+            boolean isCarOwner = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CAR_OWNER"));
+            boolean isCustomer = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CUSTOMER"));
             if (isAdmin) {
                 return "redirect:/admin/list-user";
             }
@@ -57,6 +64,10 @@ public class AuthController {
         return "home-page";
     }
 
+    /**
+     * @author phinx
+     * @description signup method
+     */
     @PostMapping("/home/signup")
     public String signup(@Valid @ModelAttribute("signupDto") SignupDto signupDto,
                          BindingResult result,
@@ -96,12 +107,15 @@ public class AuthController {
         }
 
         userService.saveUser(signupDto);
-        return "redirect:/customer/list-car";
-        //return "home-page";
+        return "redirect:/home";
     }
 
+    /**
+     * @author phinx
+     * @description show error 403 page
+     */
     @GetMapping("/error-403")
-    public String hello() {
+    public String showError403() {
         return "error/403";
     }
 }

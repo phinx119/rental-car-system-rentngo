@@ -1,5 +1,6 @@
 package com.group3.rentngo.service.impl;
 
+import com.group3.rentngo.model.entity.CustomUserDetails;
 import com.group3.rentngo.model.entity.Role;
 import com.group3.rentngo.model.entity.User;
 import com.group3.rentngo.repository.UserRepository;
@@ -29,18 +30,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
 
         if (user != null && user.isStatus()) {
-            return new org.springframework.security.core.userdetails.User(user.getUsername(),
-                    user.getPassword(),
-                    mapRolesToAuthorities(user.getRoles()));
+            return new CustomUserDetails(user);
         }else{
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-    }
-
-    private Collection< ? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        Collection < ? extends GrantedAuthority> mapRoles = roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
-        return mapRoles;
     }
 }
