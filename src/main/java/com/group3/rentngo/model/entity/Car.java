@@ -71,8 +71,19 @@ public class Car {
     private String termOfUse;
 
     @Lob
-    @Column
-    private Blob image;
+    @Column(nullable = false)
+    private Blob registrationPaper;
+
+    @Lob
+    @Column(nullable = false)
+    private Blob certificateOfInspection;
+
+    @Lob
+    @Column(nullable = false)
+    private Blob insurance;
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private Collection<CarImage> carImages;
 
     @ManyToOne
     @JoinColumn(name = "car_owner_id")

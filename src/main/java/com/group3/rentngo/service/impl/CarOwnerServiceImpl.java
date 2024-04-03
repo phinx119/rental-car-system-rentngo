@@ -61,5 +61,4 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         bookingRepository.updateById(id);
     }
 
-
 }

@@ -1,6 +1,8 @@
 package com.group3.rentngo.model.dto;
 
 import com.group3.rentngo.model.entity.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -71,7 +73,25 @@ public class CarDto implements Serializable {
     String termOfUse;
 
     @NotNull(message = "Mandatory information.")
-    Blob image;
+    Blob registrationPaper;
+
+    @NotNull(message = "Mandatory information.")
+    Blob certificateOfInspection;
+
+    @NotNull(message = "Mandatory information.")
+    Blob insurance;
+
+    @NotNull(message = "Mandatory information.")
+    Blob frontImage;
+
+    @NotNull(message = "Mandatory information.")
+    Blob backImage;
+
+    @NotNull(message = "Mandatory information.")
+    Blob leftImage;
+
+    @NotNull(message = "Mandatory information.")
+    Blob rightImage;
 
     @NotNull(message = "Mandatory information.")
     CarOwner carOwner;
