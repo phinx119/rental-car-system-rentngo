@@ -41,12 +41,14 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void saveAdmin(UserDto userDto) {
+        // insert admin account first
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setStatus(userDto.isStatus());
         userRepository.save(user);
 
+        // then set role admin for admin
         User updateUser = userRepository.findByUsername(user.getUsername());
 
         Role role = roleRepository.findByName("ROLE_ADMIN");
@@ -63,6 +65,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void saveUser(SignupDto signupDto) {
+        // map data from dto to user
         User user = new User();
         user.setUsername(signupDto.getUsername());
         user.setPassword(passwordEncoder.encode(signupDto.getPassword()));
@@ -70,17 +73,20 @@ public class UserServiceImpl implements UserService {
 
         // save car owner account
         if (signupDto.getRole().equals("CarOwner")) {
+            // check role existed or not and set role
             Role role = roleRepository.findByName("ROLE_CAR_OWNER");
             if (role == null) {
                 role = checkRoleExist("ROLE_CAR_OWNER");
             }
             user.setRoles(Arrays.asList(role));
 
+            // insert car owner first
             CarOwner carOwner = new CarOwner();
             carOwner.setEmail(signupDto.getEmail());
             carOwner.setPhone(signupDto.getPhone());
             carOwnerRepository.save(carOwner);
 
+            // then insert user
             CarOwner updateCarOwner = carOwnerRepository.findByEmail(signupDto.getEmail());
             updateCarOwner.setUser(user);
             carOwnerRepository.save(updateCarOwner);
@@ -88,17 +94,20 @@ public class UserServiceImpl implements UserService {
 
         // save customer account
         if (signupDto.getRole().equals("Customer")) {
+            // check role existed or not and set role
             Role role = roleRepository.findByName("ROLE_CUSTOMER");
             if (role == null) {
                 role = checkRoleExist("ROLE_CUSTOMER");
             }
             user.setRoles(Arrays.asList(role));
 
+            // insert customer first
             Customer customer = new Customer();
             customer.setEmail(signupDto.getEmail());
             customer.setPhone(signupDto.getPhone());
             customerRepository.save(customer);
 
+            // then insert user
             Customer updateCustomer = customerRepository.findByEmail(signupDto.getEmail());
             updateCustomer.setUser(user);
             customerRepository.save(updateCustomer);
