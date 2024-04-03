@@ -40,7 +40,7 @@
 
 <div class="container-fluid bg-light mt-4">
     <div class="row justify-content-center p-4">
-        <form class="col-md-10" id="carForm" enctype="multipart/form-data">
+        <form class="col-md-10"  id="carForm" enctype="multipart/form-data" th:object="${car}"  th:action="@{#}" method="post">
 
             <!-- Form Inputs -->
             <div id="step1" class="">
@@ -49,43 +49,52 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="licensePlate">License Plate:</label>
-                                <input type="text" class="form-control" id="licensePlate" name="licensePlate" placeholder="Enter license plate">
+                                <input type="text" class="form-control" th:field="*{licensePlate}" id="licensePlate" name="licensePlate" placeholder="Enter license plate">
+                                <p th:errors="*{licensePlate}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
+
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="color">Color:</label>
-                                <select class="form-control" id="color" name="color">
+                                <select class="form-control" id="color" name="color" th:field="*{color}">
                                     <option value="">Select color</option>
                                     <option value="red">Red</option>
                                     <option value="blue">Blue</option>
                                     <option value="green">Green</option>
                                     <!-- Add more options as needed -->
                                 </select>
+                                <p th:errors="*{color}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="brand">Brand Name:</label>
-                                <select class="form-control" id="brand" name="brand">
+                                <select class="form-control" id="brand" name="brand" th:field="*{brand}">
                                     <option value="">Select brand</option>
                                     <option value="Toyota">Toyota</option>
                                     <option value="Honda">Honda</option>
                                     <option value="Ford">Ford</option>
                                     <!-- Add more options as needed -->
                                 </select>
+                                <p th:errors="*{brand}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="model">Model:</label>
-                                <select class="form-control" id="model" name="model">
+                                <select class="form-control" id="model" name="model" th:field="*{model}">
                                     <option value="">Select model</option>
                                     <option value="Sedan">Sedan</option>
                                     <option value="SUV">SUV</option>
                                     <option value="Truck">Truck</option>
                                     <!-- Add more options as needed -->
                                 </select>
+                                <p th:errors="*{model}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                         </div>
                     </div>
@@ -96,45 +105,54 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="productionYear">Production Year:</label>
-                                <input type="number" class="form-control" id="productionYear" name="productionYear" placeholder="Enter production year">
+                                <input type="number" class="form-control" id="productionYear" name="productionYear" placeholder="Enter production year" th:field="*{productionYear}">
+                                <p th:errors="*{productionYear}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="seats">Number of Seats:</label>
-                                <select class="form-control" id="seats" name="seats">
+                                <select class="form-control" id="seats" name="seats" th:field="*{numberOfSeats}">
                                     <option value="">Select number of seats</option>
                                     <option value="2">2</option>
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                     <!-- Add more options as needed -->
                                 </select>
+                                <p th:errors="*{numberOfSeats}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Transmission:</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="transmission" id="automatic" value="Automatic">
+                                    <input class="form-check-input" type="radio" name="transmission" id="automatic" value="Automatic" th:field="*{transmissionType}">
                                     <label class="form-check-label" for="automatic">Automatic</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="transmission" id="manual" value="Manual">
+                                    <input class="form-check-input" type="radio" name="transmission" id="manual" value="Manual" th:field="*{transmissionType}">
                                     <label class="form-check-label" for="manual">Manual</label>
                                 </div>
+
+                                <p th:errors="*{transmissionType}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Fuel:</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="fuel" id="gasoline" value="Gasoline">
+                                    <input class="form-check-input" type="radio" name="fuel" id="gasoline" value="Gasoline" th:field="*{fuelType}" >
                                     <label class="form-check-label" for="gasoline">Gasoline</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="fuel" id="diesel" value="Diesel">
+                                    <input class="form-check-input" type="radio" name="fuel" id="diesel" value="Diesel" th:field="*{fuelType}">
                                     <label class="form-check-label" for="diesel">Diesel</label>
                                 </div>
+                                <p th:errors="*{fuelType}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                         </div>
                     </div>
@@ -149,19 +167,19 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="registrationPaper">Registration Paper:</label>
-                                <input type="file" class="form-control-file" id="registrationPaper" name="registrationPaper">
+                                <input type="file" class="form-control-file" id="registrationPaper" name="registrationPaper" th:field="*{}">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="inspectionCertificate">Certification of Inspection:</label>
-                                <input type="file" class="form-control-file" id="inspectionCertificate" name="inspectionCertificate">
+                                <input type="file" class="form-control-file" id="inspectionCertificate" name="inspectionCertificate" th:field="*{}">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="insurance">Insurance:</label>
-                                <input type="file" class="form-control-file" id="insurance" name="insurance">
+                                <input type="file" class="form-control-file" id="insurance" name="insurance" th:field="*{}">
                             </div>
                         </div>
                     </div>
@@ -176,33 +194,47 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="mileage">Mileage:</label>
-                                <input type="text" class="form-control" id="mileage" name="mileage" placeholder="Enter mileage">
+                                <input type="text" class="form-control" id="mileage" name="mileage" placeholder="Enter mileage" th:field="*{mileage}">
+                                <p th:errors="*{mileage}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                             <div class="form-group">
                                 <label for="fuelConsumption">Fuel Consumption (L/100km):</label>
-                                <input type="text" class="form-control" id="fuelConsumption" name="fuelConsumption" placeholder="Enter fuel consumption">
+                                <input type="text" class="form-control" id="fuelConsumption" name="fuelConsumption" placeholder="Enter fuel consumption" th:field="*{fuelConsumption}" >
+                                <p th:errors="*{fuelConsumption}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                             <div class="form-group">
                                 <label for="address">Address:</label>
-                                <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" >
+                                <p th:errors="*{address}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                             <div class="form-group">
                                 <label for="city">City:</label>
-                                <input type="text" class="form-control" id="city" name="city" placeholder="Enter city">
+                                <input type="text" class="form-control" id="city" name="city" placeholder="Enter city" >
+                                <p th:errors="*{address}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="district">District:</label>
-                                <input type="text" class="form-control" id="district" name="district" placeholder="Enter district">
+                                <input type="text" class="form-control" id="district" name="district" placeholder="Enter district" >
+                                <p th:errors="*{address}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                             <div class="form-group">
                                 <label for="ward">Ward:</label>
-                                <input type="text" class="form-control" id="ward" name="ward" placeholder="Enter ward">
+                                <input type="text" class="form-control" id="ward" name="ward" placeholder="Enter ward" >
+                                <p th:errors="*{address}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                             <div class="form-group">
                                 <label for="houseNumber">House Number:</label>
-                                <input type="text" class="form-control" id="houseNumber" name="houseNumber" placeholder="Enter house number">
+                                <input type="text" class="form-control" id="houseNumber" name="houseNumber" placeholder="Enter house number" >
+                                <p th:errors="*{address}" class="text-danger"
+                                   th:if="${#fields.hasErrors()}"></p>
                             </div>
                         </div>
                     </div>
@@ -214,15 +246,17 @@
                             <div class="form-group">
                                 <label>Additional Functions:</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="bluetooth" name="additionalFunction" value="Bluetooth">
+                                    <input class="form-check-input" type="checkbox" id="bluetooth" name="additionalFunction" value="Bluetooth" th:field="*{additionalFunctions}">
                                     <label class="form-check-label" for="bluetooth">Bluetooth</label>
+
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gps" name="additionalFunction" value="GPS">
+                                    <input class="form-check-input" type="checkbox" id="gps" name="additionalFunction" value="GPS" th:field="*{additionalFunctions}">
                                     <label class="form-check-label" for="gps">GPS</label>
+
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="camera" name="additionalFunction" value="Camera">
+                                    <input class="form-check-input" type="checkbox" id="camera" name="additionalFunction" value="Camera" th:field="*{additionalFunctions}">
                                     <label class="form-check-label" for="camera">Camera</label>
                                 </div>
                             </div>
@@ -232,11 +266,11 @@
                             <div class="form-group">
                                 <label>&nbsp;</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="sunRoof" name="additionalFunction" value="Sun Roof">
+                                    <input class="form-check-input" type="checkbox" id="sunRoof" name="additionalFunction" value="Sun Roof" th:field="*{additionalFunctions}">
                                     <label class="form-check-label" for="sunRoof">Sun Roof</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="childLock" name="additionalFunction" value="Child Lock">
+                                    <input class="form-check-input" type="checkbox" id="childLock" name="additionalFunction" value="Child Lock" th:field="*{additionalFunctions}">
                                     <label class="form-check-label" for="childLock">Child Lock</label>
                                 </div>
                             </div>
@@ -246,11 +280,11 @@
                             <div class="form-group">
                                 <label>&nbsp;</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="childSeat" name="additionalFunction" value="Child Seat">
+                                    <input class="form-check-input" type="checkbox" id="childSeat" name="additionalFunction" value="Child Seat" th:field="*{additionalFunctions}">
                                     <label class="form-check-label" for="childSeat">Child Seat</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="dvd" name="additionalFunction" value="DVD">
+                                    <input class="form-check-input" type="checkbox" id="dvd" name="additionalFunction" th:field="*{additionalFunctions}" value="DVD">
                                     <label class="form-check-label" for="dvd">DVD</label>
                                 </div>
                             </div>
@@ -261,21 +295,21 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="frontImage">Front Image:</label>
-                                <input type="file" class="form-control-file" id="frontImage" name="frontImage">
+                                <input type="file" class="form-control-file" id="frontImage" name="frontImage" th:field="*{image}">
                             </div>
                             <div class="form-group">
                                 <label for="backImage">Back Image:</label>
-                                <input type="file" class="form-control-file" id="backImage" name="backImage">
+                                <input type="file" class="form-control-file" id="backImage" name="backImage" th:field="*{image}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="leftImage">Left Image:</label>
-                                <input type="file" class="form-control-file" id="leftImage" name="leftImage">
+                                <input type="file" class="form-control-file" id="leftImage" name="leftImage" th:field="*{image}">
                             </div>
                             <div class="form-group">
                                 <label for="rightImage">Right Image:</label>
-                                <input type="file" class="form-control-file" id="rightImage" name="rightImage">
+                                <input type="file" class="form-control-file" id="rightImage" name="rightImage" th:field="*{image}">
                             </div>
                         </div>
                     </div>
@@ -287,37 +321,39 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="basePrice">Base Price per Day (VND):</label>
-                        <input type="number" class="form-control" id="basePrice" name="basePrice" placeholder="Enter base price">
+                        <input type="number" class="form-control" id="basePrice" name="basePrice" placeholder="Enter base price" th:field="*{basePrice}">
+                        <p th:errors="*{basePrice}" class="text-danger"
+                           th:if="${#fields.hasErrors()}"></p>
                     </div>
                     <div class="form-group">
                         <label for="requiredDeposit">Required Deposit (VND):</label>
-                        <input type="number" class="form-control" id="requiredDeposit" name="requiredDeposit" placeholder="Enter required deposit">
+                        <input type="number" class="form-control" id="requiredDeposit" name="requiredDeposit" placeholder="Enter required deposit" th:field="*{deposit}">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Terms of Use:</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="noFood" name="terms" value="No Food">
+                            <input class="form-check-input" type="checkbox" id="noFood" name="terms" value="No Food" th:field="*{termOfUse}">
                             <label class="form-check-label" for="noFood">No Food</label>
                         </div>
                         <!-- Add more checkboxes for terms of use -->
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="noSmoking" name="terms" value="No Smoking">
+                            <input class="form-check-input" type="checkbox" id="noSmoking" name="terms" value="No Smoking" th:field="*{termOfUse}">
                             <label class="form-check-label" for="noSmoking">No Smoking</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="noPet" name="terms" value="No Pet">
+                            <input class="form-check-input" type="checkbox" id="noPet" name="terms" value="No Pet" th:field="*{termOfUse}">
                             <label class="form-check-label" for="noPet">No Pet</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="other" name="terms" value="Other">
+                            <input class="form-check-input" type="checkbox" id="other" name="terms" value="Other" th:field="*{termOfUse}">
                             <label class="form-check-label" for="other">Other</label>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="note">Note:</label>
-                        <textarea class="form-control" id="note" name="note" rows="3" placeholder="Please specify any additional notes"></textarea>
+                        <textarea class="form-control" id="note" name="note" rows="3" placeholder="Please specify any additional notes" th:field="*{description}"></textarea>
                     </div>
                 </div>
             </div>

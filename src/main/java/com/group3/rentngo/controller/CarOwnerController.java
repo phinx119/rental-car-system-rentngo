@@ -1,8 +1,17 @@
 package com.group3.rentngo.controller;
 
+import com.group3.rentngo.model.dto.CarDto;
+import com.group3.rentngo.model.dto.CarOwnerDto;
+import com.group3.rentngo.model.entity.Car;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * @author phinx
@@ -19,4 +28,18 @@ public class CarOwnerController {
     public String viewCarOwnerHome() {
         return "home-page-as-car-owner";
     }
+
+
+
+
+    @GetMapping("/addcar-form")
+    public String addNewCar(Model model) {
+        CarDto car=new CarDto();
+        model.addAttribute("car",car);
+        return "add-car-page";
+    }
+
 }
+
+
+
