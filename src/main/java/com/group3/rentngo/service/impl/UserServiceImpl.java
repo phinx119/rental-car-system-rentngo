@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,19 +22,22 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     private CarOwnerRepository carOwnerRepository;
     private CustomerRepository customerRepository;
-
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
                            CarOwnerRepository carOwnerRepository,
-                           CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
+                           CustomerRepository customerRepository,
+                           PasswordEncoder passwordEncoder,
+                           EmailService emailService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.carOwnerRepository = carOwnerRepository;
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     /**
@@ -131,5 +136,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    /**
+     * @author phinx
+     * @description test send email
+     */
+    public void sendComplexEmail(String name, String content) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("name", name);
+        model.put("content", "<p>" + content + "</p>");
+
+        emailService.sendEmail("xuanphi2003@gmail.com", "Important Notification", model, "email/template");
     }
 }

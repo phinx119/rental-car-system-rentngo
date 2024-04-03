@@ -10,4 +10,6 @@ public interface UserService {
     void saveUser(SignupDto signupDto);
 
     User findUserByUsername(String username);
+
+    void sendComplexEmail(String username, String content);
 }
