@@ -19,7 +19,7 @@ public interface CarOwnerService {
 
     void updateCarInformation(Car car);
 
-    List<Feedback> showFeedback();
 
-    void changeBookingStatus(int id);
+
+
 }
