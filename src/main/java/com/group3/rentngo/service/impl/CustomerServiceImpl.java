@@ -6,6 +6,8 @@ import com.group3.rentngo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
@@ -29,5 +31,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer findCustomerByPhone(String phone) {
         return customerRepository.findByPhone(phone);
+    }
+
+    @Override
+    public List<Customer> findAll() {
+        return customerRepository.findAll();
     }
 }

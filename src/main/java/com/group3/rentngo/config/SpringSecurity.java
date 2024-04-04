@@ -35,11 +35,10 @@ public class SpringSecurity {
                         csrf -> csrf.disable()
                 ).authorizeHttpRequests(
                         authorize -> authorize
+                                .requestMatchers("/","/home","/home/**").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/car-owner/**").hasAnyRole("ADMIN", "CAR_OWNER")
                                 .requestMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
-                                .requestMatchers("/home/**").permitAll()
-                                .requestMatchers("/home").permitAll()
                                 .requestMatchers("/error-403").permitAll()
                 ).formLogin(
                         form -> form

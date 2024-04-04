@@ -29,10 +29,11 @@ public class CarOwnerController {
         return "home-page-as-car-owner";
     }
 
-
-
-
-    @GetMapping("/addcar-form")
+    /**
+     * @author tiennq
+     * @description show add car form
+     */
+    @GetMapping("/add-car-form")
     public String addNewCar(Model model) {
         CarDto car=new CarDto();
         model.addAttribute("car",car);

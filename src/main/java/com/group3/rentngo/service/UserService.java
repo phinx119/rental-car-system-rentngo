@@ -4,12 +4,16 @@ import com.group3.rentngo.model.dto.SignupDto;
 import com.group3.rentngo.model.dto.UserDto;
 import com.group3.rentngo.model.entity.User;
 
+import java.util.List;
+
 public interface UserService {
     void saveAdmin(UserDto userDto);
 
     void saveUser(SignupDto signupDto);
 
     User findUserByUsername(String username);
+
+    List<User> getUserList();
 
     void sendComplexEmail(String username, String content);
 }

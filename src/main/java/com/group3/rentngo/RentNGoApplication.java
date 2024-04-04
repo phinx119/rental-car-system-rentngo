@@ -24,37 +24,37 @@ public class RentNGoApplication {
                                                UserRepository userRepository,
                                                UserService userService) {
         return runner -> {
-//            // insert default role
-//            Role roleAdmin = roleRepository.findByName("ROLE_ADMIN");
-//            if (roleAdmin == null) {
-//                Role role1 = new Role();
-//                role1.setName("ROLE_ADMIN");
-//                roleRepository.save(role1);
-//            }
-//
-//            Role roleCarOwner = roleRepository.findByName("ROLE_CAR_OWNER");
-//            if (roleCarOwner == null) {
-//                Role role2 = new Role();
-//                role2.setName("ROLE_CAR_OWNER");
-//                roleRepository.save(role2);
-//            }
-//
-//            Role roleCustomer = roleRepository.findByName("ROLE_CUSTOMER");
-//            if (roleCustomer == null) {
-//                Role role3 = new Role();
-//                role3.setName("ROLE_CUSTOMER");
-//                roleRepository.save(role3);
-//            }
-//
-//            // insert default user
-//            UserDto userDto = new UserDto();
-//            userDto.setUsername("admin");
-//            userDto.setPassword("123");
-//            userDto.setStatus(true);
-//
-//            if (userRepository.findByUsername(userDto.getUsername()) == null){
-//                userService.saveAdmin(userDto);
-//            }
+            // insert default role
+            Role roleAdmin = roleRepository.findByName("ROLE_ADMIN");
+            if (roleAdmin == null) {
+                Role role1 = new Role();
+                role1.setName("ROLE_ADMIN");
+                roleRepository.save(role1);
+            }
+
+            Role roleCarOwner = roleRepository.findByName("ROLE_CAR_OWNER");
+            if (roleCarOwner == null) {
+                Role role2 = new Role();
+                role2.setName("ROLE_CAR_OWNER");
+                roleRepository.save(role2);
+            }
+
+            Role roleCustomer = roleRepository.findByName("ROLE_CUSTOMER");
+            if (roleCustomer == null) {
+                Role role3 = new Role();
+                role3.setName("ROLE_CUSTOMER");
+                roleRepository.save(role3);
+            }
+
+            // insert default user
+            UserDto userDto = new UserDto();
+            userDto.setUsername("admin");
+            userDto.setPassword("123");
+            userDto.setStatus(true);
+
+            if (userRepository.findByUsername(userDto.getUsername()) == null){
+                userService.saveAdmin(userDto);
+            }
         };
 
     }
