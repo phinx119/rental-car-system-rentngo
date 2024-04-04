@@ -40,9 +40,8 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Phone</th>
                 <th scope="col">Email</th>
+                <th scope="col">Phone</th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
@@ -52,9 +51,8 @@
             </tr>
             <tr th:each="carOwner : ${carOwnerList}">
                 <td th:text="${carOwner.getUser().getId()}"></td>
-                <td th:text="${carOwner.getUser().getUsername()}"></td>
-                <td th:text="${carOwner.getPhone()}"></td>
                 <td th:text="${carOwner.getEmail()}"></td>
+                <td th:text="${carOwner.getPhone()}"></td>
                 <td>
                     <button class="btn btn-secondary btn-sm">View Details</button>
                 </td>
@@ -76,33 +74,22 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Phone</th>
                 <th scope="col">Email</th>
+                <th scope="col">Phone</th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>Registration</td>
-                <td>Note about registration</td>
-                <td>Note about registration</td>
-                <td><a href="#">Link to registration document</a></td>
+            <tr th:if="${customerList.isEmpty()}">
+                <td colspan="6">No car owner available.</td>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>Registration</td>
-                <td>Note about registration</td>
-                <td>Note about registration</td>
-                <td><a href="#">Link to registration document</a></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Registration</td>
-                <td>Note about registration</td>
-                <td>Note about registration</td>
-                <td><a href="#">Link to registration document</a></td>
+            <tr th:each="customer : ${customerList}">
+                <td th:text="${customer.getUser().getId()}"></td>
+                <td th:text="${customer.getEmail()}"></td>
+                <td th:text="${customer.getPhone()}"></td>
+                <td>
+                    <button class="btn btn-secondary btn-sm">View Details</button>
+                </td>
             </tr>
             </tbody>
         </table>

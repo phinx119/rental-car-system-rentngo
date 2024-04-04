@@ -6,15 +6,14 @@ import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CustomerService;
 import com.group3.rentngo.service.UserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author phinx
@@ -73,26 +72,16 @@ public class AuthController {
                          BindingResult result,
                          Model model) {
         // check existed user account with username
-        if (userService.findUserByUsername(signupDto.getUsername()) != null) {
-            result.rejectValue("username", null, "There is already an account registered with the same username");
+        if (userService.findUserByEmail(signupDto.getEmail()) != null) {
+            result.rejectValue("email", null, "There is already an account registered with the same username");
         } else {
             // check existed car owner account with email or phone number
-            if ("CarOwner".equals(signupDto.getRole())) {
-                if (carOwnerService.findCarOwnerByEmail(signupDto.getEmail()) != null) {
-                    result.rejectValue("email", null, "There is already a car owner account registered with the same email");
-                }
-                if (carOwnerService.findCarOwnerByPhone(signupDto.getPhone()) != null) {
-                    result.rejectValue("phone", null, "There is already a car owner account registered with the same phone");
-                }
+            if ("CarOwner".equals(signupDto.getRole()) && carOwnerService.findCarOwnerByPhone(signupDto.getPhone()) != null) {
+                result.rejectValue("phone", null, "There is already a car owner account registered with the same phone");
             }
             // check existed customer account with email or phone number
-            if ("Customer".equals(signupDto.getRole())) {
-                if (customerService.findCustomerByEmail(signupDto.getEmail()) != null) {
-                    result.rejectValue("email", null, "There is already a customer account registered with the same email");
-                }
-                if (customerService.findCustomerByPhone(signupDto.getPhone()) != null) {
-                    result.rejectValue("phone", null, "There is already a customer account registered with the same phone");
-                }
+            if ("Customer".equals(signupDto.getRole()) && customerService.findCustomerByPhone(signupDto.getPhone()) != null) {
+                result.rejectValue("phone", null, "There is already a customer account registered with the same phone");
             }
         }
 
@@ -108,6 +97,25 @@ public class AuthController {
 
         userService.saveUser(signupDto);
         return "redirect:/home";
+    }
+
+    /**
+     * @author phinx
+     * @description get input email, check existed to reset password
+     */
+    @PostMapping("/home/check-existed-email")
+    public String checkExistedEmail(@Valid @RequestParam("email") @NotBlank @Email String email,
+                                    BindingResult result,
+                                    Model model) {
+        if (result.hasErrors()) {
+            // Handle validation errors, if any
+            return "error-page"; // You can specify an error page to redirect to
+        } else {
+            // Proceed with your logic here
+            // For example, check if the email exists in your system
+            // and perform necessary actions
+            return "success-page"; // You can specify a success page to redirect to
+        }
     }
 
     /**

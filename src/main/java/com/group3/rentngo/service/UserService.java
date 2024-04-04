@@ -11,9 +11,9 @@ public interface UserService {
 
     void saveUser(SignupDto signupDto);
 
-    User findUserByUsername(String username);
+    User findUserByEmail(String email);
 
-    List<User> getUserList();
+    List<User> findAll();
 
     void sendComplexEmail(String username, String content);
 }

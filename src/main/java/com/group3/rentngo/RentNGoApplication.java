@@ -48,11 +48,11 @@ public class RentNGoApplication {
 
             // insert default user
             UserDto userDto = new UserDto();
-            userDto.setUsername("admin");
+            userDto.setEmail("codewithphinx@gmail.com");
             userDto.setPassword("123");
             userDto.setStatus(true);
 
-            if (userRepository.findByUsername(userDto.getUsername()) == null){
+            if (userRepository.findByEmail(userDto.getEmail()) == null){
                 userService.saveAdmin(userDto);
             }
         };
