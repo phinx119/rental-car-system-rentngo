@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Car</title>
+    <link rel="stylesheet" href="../static/css/bookcar.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+<div class="container-fluid">
+    <header class="row">
+        <strong ><i class="fa-solid fa-car mr-3 " ></i>Rent a car today</strong>
+        <div>
+            <a href="#">ABOUT US</a>
+        </div>
+        <div>
+            <span class="ml-5">Welcome,user</span>
+        </div>
+    </header>
+</div>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Book Car</li>
+
+    </ol>
+</nav>
+
+<div class="booking">
+    <div class="booking-detail">
+        <strong>Booking car</strong>
+        <span><i class="fa-solid fa-pen-to-square"></i>Change details</span>
+    </div>
+    <ul>
+        <li>Pick-up location: Trung kinh, Cau Giay, Ha Noi</li>
+        <li>Pick-up date and time: 13/02/2022-12:00PM </li>
+        <li>Return date and time :23/02/2022-14:00PM</li>
+    </ul>
+</div>
+
+<div class="process-step">
+    <button id="step1" type="button" class="btn btn-light">Step 1</button>
+    <button id="step2" type="button" class="btn btn-light">Step 2</button>
+    <button id="step3" type="button" class="btn btn-light">Step 3</button>
+</div>
+<div class="row booking-info">
+    <div class="col-md-6" style="border-right: 1px solid black ;">
+        <img src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png" alt=""><br/>
+        <strong>Nguyễn Xuân Phi 2017</strong>
+        <table class="info-detail">
+            <tr>
+                <td><strong>Ratings:</strong></td>
+                <td>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+
+                </td>
+            </tr>
+            <tr>
+                <td><strong>No.of rides:</strong></td>
+                <td>
+                    <strong>0</strong>
+
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Price:</strong></td>
+                <td>
+                    <strong>900k/day</strong>
+
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Location:</strong></td>
+                <td>
+                    <strong>Cau giay, Ha Noi</strong>
+
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Status:</strong></td>
+                <td>
+                    <strong>Avaliable</strong>
+
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="col-md-6">
+        <strong>Booking Summary</strong>
+        <div class="booking-summary">
+            <span><strong>Number of days: 15</strong></span><br/>
+            <span><strong>Price perday day: 900,00VND</strong></span><br/>
+            <hr/>
+            <span><strong>Total:13,500,000VND</strong></span><br/>
+            <span><strong>Deposit: 15,000,000ND</strong></span><br/>
+        </div>
+    </div>
+</div>
+<form action="#" class="container">
+    <!-- Step 1 -->
+    <div class="personal-information">
+        <strong style="font-size: 20px;">Renter's infomation</strong>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="personal-information-items">
+                    <strong>Full Name</strong><br/>
+                    <input type="text" />
+                </div>
+                <div class="personal-information-items">
+                    <strong>Phone number</strong><br/>
+                    <input type="text" />
+                </div>
+                <div class="personal-information-items">
+                    <strong>National ID No</strong><br/>
+                    <input type="text" />
+                </div>
+                <div class="address">
+                    <strong>Address</strong><br/>
+                    <select >
+                        <option  disabled selected hidden>city/prince</option>
+                        <option value="Ha Noi">Ha Noi</option>
+                        <option value="Ho Chi Minh">Ho Chi Minh</option>
+                        <option value="Da Nang">Da Nang</option>
+                        <option value="Ha Long">Ha Long</option>
+                    </select>
+                    <br/>
+                    <select>
+                        <option  disabled selected hidden>district</option>
+                        <option value="Ha Noi">Ha Noi</option>
+                        <option value="Ho Chi Minh">Ho Chi Minh</option>
+                        <option value="Da Nang">Da Nang</option>
+                        <option value="Ha Long">Ha Long</option>
+                    </select>
+                    <br/>
+                    <select>
+                        <option  disabled selected hidden>ward</option>
+                        <option value="Ha Noi">Ha Noi</option>
+                        <option value="Ho Chi Minh">Ho Chi Minh</option>
+                        <option value="Da Nang">Da Nang</option>
+                        <option value="Ha Long">Ha Long</option>
+                    </select>
+                    <br/>
+                    <input class="street" type="text" placeholder="House number,Street">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="personal-information-items">
+                    <strong>Date of birth</strong><br/>
+                    <input type="date" />
+                    <i class="fa-regular fa-calendar-days"></i>
+                </div>
+                <div class="personal-information-items">
+                    <strong>Email Address</strong><br/>
+                    <input type="text" />
+                </div>
+                <div class="personal-information-items">
+                    <strong>Driving Scense</strong><br/>
+                    <input type="text" />
+                </div>
+            </div>
+            <div class="save-information mt-3 ">
+                <a href="#" class="discard-link mr-3">Discard</a>
+                <a id="next" href="#" class="btn btn-primary">Next</a>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Step 1 -->
+    <!-- Step 2 -->
+    <div class="payment" style="display: none;" >
+        <strong>Please select your payment method</strong><br/>
+        <input type="radio" name="" id=""> <span>My wallet</span> <br/>
+        <span style="font-size: 14px;" >Current balance: <span style="margin-left: 15px; color: red;">20,000,000 VND</span> </span><br/>
+        <input type="radio" name="" id=""> <span>Cash</span> <br/>
+        <span style="font-size: 14px;" >Current balance: <span>Our operator will contact you for further instruction</span> </span><br/>
+        <input type="radio" name="" id=""> <span>Bank tranfer</span> <br/>
+        <span style="font-size: 14px;" >Current balance: <span>Our operator will contact you for further instruction</span> </span><br/>
+        <div class="confirm mt-3 ">
+            <a href="#" class="discard-link mr-3">Cancel</a>
+            <a id="confirm" href="#" class="btn btn-primary">Confirm payment</a>
+        </div>
+    </div>
+    <!-- End Step 2 -->
+
+    <!-- Step 3 -->
+    <div class="finish" style="display: none;">
+        <br/>
+        <strong>You've successfully booked Nissan Navara EI2017 from 13/02/2022 - 12:00PM - 14:00PM</strong><br/><br/>
+        <strong>Your booking  number is 012345 </strong><br/><br/>
+        <strong>Our operator will contact you with further guidance about pickup</strong>
+        <div class="btn-book">
+            <a href="#">Go to homepage</a>
+            <button class="btn btn-primary">Book another car</button>
+            <button class="btn btn-success">View Booking</button>
+        </div>
+    </div>
+    <!-- Step 3 -->
+</form>
+<footer class="bg-secondary text-light mt-3">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light">Home</a></li>
+                    <li><a href="#" class="text-light">About Us</a></li>
+                    <li><a href="#" class="text-light">Services</a></li>
+                    <li><a href="#" class="text-light">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <p class="text-light">Address: 123 Street, City, Country</p>
+                <p class="text-light">Email: info@example.com</p>
+                <p class="text-light">Phone: +1234567890</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Follow Us</h5>
+                <ul class="list-inline">
+                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    </li>
+                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bg-light text-dark text-center py-3">
+        <p class="mb-0">&copy; 2024 Your Company. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+    let personalinformation = document.querySelector(".personal-information");
+    let payment = document.querySelector(".payment");
+    let finish = document.querySelector(".finish");
+
+    let step1 = document.getElementById("step1");
+    let step2 = document.getElementById("step2");
+    let step3 = document.getElementById("step3");
+    let next = document.getElementById("next");
+    let confirm = document.getElementById("confirm");
+
+    next.addEventListener("click", function() {
+        personalinformation.style.display = "none";
+        payment.style.display = "block";
+        finish.style.display = "none";
+    });
+
+    confirm.addEventListener("click", function() {
+        personalinformation.style.display = "none";
+        payment.style.display = "none";
+        finish.style.display = "block";
+    });
+
+    // finish.addEventListener("click", function() {
+    //     infodetail.style.display = "none";
+    //     details.style.display = "none";
+    //     term.style.display = "block";
+    // });
+</script>
+</body>
+</html>
