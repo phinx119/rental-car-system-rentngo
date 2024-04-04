@@ -13,41 +13,135 @@
 <header th:insert="~{fragments/header.html :: header}"></header>
 
 <div class="container-fluid bg-white mt-4">
-    <div class="row p-4">
-        <div class="col-md-12 mt-4">
-            <h3>Manage User</h3>
-            <p>There are <span th:text="${carOwnerList.size()}"></span> cars available.</p>
-            <table id="userTable" class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${carOwnerList.isEmpty()}">
-                    <td colspan="6">No car owner available.</td>
-                </tr>
-                <tr th:each="carOwner : ${carOwnerList}">
-                    <td th:text="${carOwner.getUser().getId()}"></td>
-                    <td th:text="${carOwner.getUser().getUsername()}"></td>
-                    <td th:text="${carOwner.getPhone()}"></td>
-                    <td th:text="${carOwner.getEmail()}"></td>
-                    <td>
-                        <button class="btn btn-secondary btn-sm">View Details</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+    <h3 class="profile-header">Manage user</h3>
+</div>
+
+
+<div class="bg-white mt-4">
+    <div class="row justify-content-left p-0">
+        <div class="col-1 p-0">
+            <button class="btn btn-outline-primary btn-block btn-sm active" id="firstTabBtn"><a class="text-dark" href="#">Car owner list</a></button>
         </div>
+        <div class="col-1 p-0">
+            <button class="btn btn-outline-primary btn-block btn-sm" id="secondTabBtn"><a class="text-dark" href="#">User list</a></button>
+        </div>
+    </div>
+</div>
+
+<!--Tab 1: car owner list-->
+<div class="container-fluid bg-light mt-4" id="firstTab">
+    <div class="row justify-content p-4">
+        <div>
+            <h4>Manage car owner</h4>
+            <p>There are <span th:text="${carOwnerList.size()}"></span> cars available.</p>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${carOwnerList.isEmpty()}">
+                <td colspan="6">No car owner available.</td>
+            </tr>
+            <tr th:each="carOwner : ${carOwnerList}">
+                <td th:text="${carOwner.getUser().getId()}"></td>
+                <td th:text="${carOwner.getUser().getUsername()}"></td>
+                <td th:text="${carOwner.getPhone()}"></td>
+                <td th:text="${carOwner.getEmail()}"></td>
+                <td>
+                    <button class="btn btn-secondary btn-sm">View Details</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--Tab 2: User list-->
+<div class="container-fluid bg-light mt-4" id="secondTab" style="display: none;">
+    <div class="row justify-content p-4">
+        <div>
+            <h4>Manage customer</h4>
+            <p>There are  users available.</p>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>Registration</td>
+                <td>Note about registration</td>
+                <td>Note about registration</td>
+                <td><a href="#">Link to registration document</a></td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Registration</td>
+                <td>Note about registration</td>
+                <td>Note about registration</td>
+                <td><a href="#">Link to registration document</a></td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Registration</td>
+                <td>Note about registration</td>
+                <td>Note about registration</td>
+                <td><a href="#">Link to registration document</a></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
+<script>
+    // Get buttons
+    const firstTabBtn = document.getElementById('firstTabBtn');
+    const secondTabBtn = document.getElementById('secondTabBtn');
+
+    // Get sections
+    const firstTab = document.getElementById('firstTab');
+    const secondTab = document.getElementById('secondTab');
+
+    // Function to remove active class from all buttons
+    function removeActiveClassFromButtons() {
+        firstTabBtn.classList.remove('active');
+        secondTabBtn.classList.remove('active');
+    }
+
+    // Event listeners
+    firstTabBtn.addEventListener('click', function() {
+        firstTab.style.display = 'block';
+        secondTab.style.display = 'none';
+        removeActiveClassFromButtons();
+        firstTabBtn.classList.add('active');
+    });
+
+    secondTabBtn.addEventListener('click', function() {
+        firstTab.style.display = 'none';
+        secondTab.style.display = 'block';
+        removeActiveClassFromButtons();
+        secondTabBtn.classList.add('active');
+    });
+
+</script>
 
 <script src="../static/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
