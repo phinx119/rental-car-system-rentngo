@@ -54,6 +54,15 @@
                                placeholder="Password">
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
+                    <!-- Toggle buttons -->
+                    <button type="button" class="btn btn-secondary" onclick="toggleButtons()">Show Login Options</button>
+
+                    <!-- Hidden buttons -->
+                    <div id="hiddenButtons" style="display: none;">
+                        <button type="button" class="btn btn-outline-info" onclick="autoFill('admin')">Admin</button>
+                        <button type="button" class="btn btn-outline-info" onclick="autoFill('user')">User</button>
+                        <button type="button" class="btn btn-outline-info" onclick="autoFill('carOwner')">Car Owner</button>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -406,6 +415,45 @@
 
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
+<script>
+    function toggleButtons() {
+        var hiddenButtons = document.getElementById("hiddenButtons");
+        if (hiddenButtons.style.display === "none") {
+            hiddenButtons.style.display = "block";
+        } else {
+            hiddenButtons.style.display = "none";
+        }
+    }
+
+    //Auto fill account
+    function autoFill(role) {
+        var emailInput = document.getElementById("loginUsername");
+        var passwordInput = document.getElementById("loginPassword");
+
+        switch (role) {
+            case 'admin':
+                emailInput.value = "admin";
+                passwordInput.value = "123";
+                break;
+            case 'user':
+                emailInput.value = "";
+                passwordInput.value = "";
+                break;
+            case 'carOwner':
+                emailInput.value = "";
+                passwordInput.value = "";
+                break;
+            default:
+                break;
+        }
+    }
+
+    //Sign up when error
+    $(document).ready(function () {
+        $('#signupLinkWhenError').trigger('click');
+    });
+
+</script>
 
 <script th:src="@{/js/script.js}"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

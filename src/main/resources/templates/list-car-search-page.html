@@ -185,6 +185,24 @@
 
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
+<script>
+    //Change between thumbnail view and list view
+    const thumbnailViewBtn = document.getElementById('thumbnailViewBtn');
+    const listViewBtn = document.getElementById('listViewBtn');
+    const thumbnailView = document.getElementById('thumbnailView');
+    const listView = document.getElementById('listView');
+
+    thumbnailViewBtn.addEventListener('click', () => {
+        thumbnailView.style.display = 'block';
+        listView.style.display = 'none';
+    });
+
+    listViewBtn.addEventListener('click', () => {
+        thumbnailView.style.display = 'none';
+        listView.style.display = 'block';
+    });
+</script>
+
 <script th:src="@{js/script.js}"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
