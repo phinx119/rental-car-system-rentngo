@@ -55,15 +55,7 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         carRepository.save(car);
     }
 
-    @Override
-    public List<Feedback> showFeedback() {
-        List<Feedback> feedbacks = feedbackRepository.findAll();
-        return feedbacks;
-    }
 
-    @Override
-    public void changeBookingStatus(int id) {
-        bookingRepository.updateById(id);
-    }
+
 
 }
