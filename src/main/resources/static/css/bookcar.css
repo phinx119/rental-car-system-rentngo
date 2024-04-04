@@ -1,0 +1,99 @@
+header{
+    display: flex;
+    justify-content: space-between ;
+    align-items: center;
+    background-color: hsl(0,0%,40%);
+    color: white;
+    overflow-x: hidden;
+}
+
+header a{
+    color: white;
+}
+header strong{
+    font-size: 35px;
+}
+.breadcrumb{
+    background: white !important;
+    margin: 0 !important;
+}
+.booking{
+    padding: 25px 100px;
+    background-color: hsl(0,0%,40%);
+    color: white;
+}
+.booking-detail{
+    display: flex;
+    justify-content: space-between;
+}
+.booking li{
+    margin-top: 10px;
+}
+.process-step{
+    text-align: center;
+}
+.process-step button{
+    background-color: rgb(172, 170, 170);
+    width: 450px;
+
+}
+.booking-info{
+
+    padding: 0px 70px;
+    border: 1px solid black;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+.booking-info img{
+    width: 300px;
+    /* height: 200px; */
+    object-fit: contain;
+}
+.info-detail {
+    width: 500px;
+}
+.booking-summary{
+    position: relative;
+    text-align: right;
+
+}
+.personal-information{
+    margin-left: 30px;
+    margin-top: 20px;
+    border: 1px s;
+}
+.personal-information-items{
+    margin-bottom: 20px;
+}
+.personal-information-items input{
+    height: 25px;
+}
+.address select{
+    width: 50%;
+    margin-top: 20px;
+}
+.street{
+    width: 50%;
+    margin-top: 20px;
+    color: black;
+}
+.save-information{
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+.confirm{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.finish strong{
+    margin-top: 20px;
+}
+.btn-book{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
