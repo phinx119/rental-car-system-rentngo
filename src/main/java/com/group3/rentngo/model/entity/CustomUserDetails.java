@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
-    //private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     User user;
 
@@ -32,7 +32,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getEmail();
     }
 
     @Override

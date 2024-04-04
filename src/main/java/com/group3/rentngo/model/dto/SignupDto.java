@@ -10,9 +10,10 @@ import lombok.*;
 public class SignupDto {
 
     @NotBlank(message = "Mandatory information.")
-    private String username;
+    private String name;
 
     @NotBlank(message = "Mandatory information.")
+    @Email
     private String email;
 
     @NotBlank(message = "Mandatory information.")

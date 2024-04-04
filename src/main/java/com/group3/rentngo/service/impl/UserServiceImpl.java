@@ -49,13 +49,13 @@ public class UserServiceImpl implements UserService {
     public void saveAdmin(UserDto userDto) {
         // insert admin account first
         User user = new User();
-        user.setUsername(userDto.getUsername());
+        user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setStatus(userDto.isStatus());
         userRepository.save(user);
 
         // then set role admin for admin
-        User updateUser = userRepository.findByUsername(user.getUsername());
+        User updateUser = userRepository.findByEmail(user.getEmail());
 
         Role role = roleRepository.findByName("ROLE_ADMIN");
         if (role == null) {
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
     public void saveUser(SignupDto signupDto) {
         // map data from dto to user
         User user = new User();
-        user.setUsername(signupDto.getUsername());
+        user.setEmail(signupDto.getEmail());
         user.setPassword(passwordEncoder.encode(signupDto.getPassword()));
         user.setStatus(true);
 
@@ -88,6 +88,7 @@ public class UserServiceImpl implements UserService {
 
             // insert car owner first
             CarOwner carOwner = new CarOwner();
+            carOwner.setName(signupDto.getName());
             carOwner.setEmail(signupDto.getEmail());
             carOwner.setPhone(signupDto.getPhone());
             carOwnerRepository.save(carOwner);
@@ -109,6 +110,7 @@ public class UserServiceImpl implements UserService {
 
             // insert customer first
             Customer customer = new Customer();
+            customer.setName(signupDto.getName());
             customer.setEmail(signupDto.getEmail());
             customer.setPhone(signupDto.getPhone());
             customerRepository.save(customer);
@@ -135,8 +137,8 @@ public class UserServiceImpl implements UserService {
      * @description get user detail by username
      */
     @Override
-    public User findUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     /**
@@ -144,7 +146,7 @@ public class UserServiceImpl implements UserService {
      * @description get user list
      */
     @Override
-    public List<User> getUserList() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
