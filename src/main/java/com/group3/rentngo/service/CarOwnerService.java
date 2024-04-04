@@ -7,9 +7,13 @@ import com.group3.rentngo.model.entity.Feedback;
 import java.util.List;
 
 public interface CarOwnerService {
+
+
     CarOwner findCarOwnerByEmail(String email);
 
     CarOwner findCarOwnerByPhone(String phone);
+
+    List<CarOwner> findAll();
 
     void addNewCar(Car car);
 

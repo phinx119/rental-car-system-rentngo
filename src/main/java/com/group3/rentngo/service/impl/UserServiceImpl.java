@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -136,6 +137,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    /**
+     * @author phinx
+     * @description get user list
+     */
+    @Override
+    public List<User> getUserList() {
+        return userRepository.findAll();
     }
 
     /**

@@ -39,6 +39,11 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         return carOwnerRepository.findByPhone(phone);
     }
 
+    @Override
+    public List<CarOwner> findAll() {
+        return carOwnerRepository.findAll();
+    }
+
 
     @Override
     public void addNewCar(Car car) {

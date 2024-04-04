@@ -16,57 +16,27 @@
     <div class="row p-4">
         <div class="col-md-12 mt-4">
             <h3>Manage User</h3>
-            <p>There are 10 cars available for you.</p>
+            <p>There are <span th:text="${carOwnerList.size()}"></span> cars available.</p>
             <table id="userTable" class="table table-striped">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">No. of Rides</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Location</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Car Name</td>
-                    <td><img src="car-image.jpg" alt="Car Image" style="max-width: 100px;"></td>
-                    <td>100</td>
-                    <td>$50</td>
-                    <td>City, Country</td>
-                    <td>Available</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm">Rent Now</button><br>
-                        <button class="btn btn-secondary btn-sm">View Details</button>
-                    </td>
+                <tr th:if="${carOwnerList.isEmpty()}">
+                    <td colspan="6">No car owner available.</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Car Name</td>
-                    <td><img src="car-image.jpg" alt="Car Image" style="max-width: 100px;"></td>
-                    <td>100</td>
-                    <td>$50</td>
-                    <td>City, Country</td>
-                    <td>Available</td>
+                <tr th:each="carOwner : ${carOwnerList}">
+                    <td th:text="${carOwner.getUser().getId()}"></td>
+                    <td th:text="${carOwner.getUser().getUsername()}"></td>
+                    <td th:text="${carOwner.getPhone()}"></td>
+                    <td th:text="${carOwner.getEmail()}"></td>
                     <td>
-                        <button class="btn btn-primary btn-sm">Rent Now</button><br>
-                        <button class="btn btn-secondary btn-sm">View Details</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Car Name</td>
-                    <td><img src="car-image.jpg" alt="Car Image" style="max-width: 100px;"></td>
-                    <td>100</td>
-                    <td>$50</td>
-                    <td>City, Country</td>
-                    <td>Available</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm">Rent Now</button><br>
                         <button class="btn btn-secondary btn-sm">View Details</button>
                     </td>
                 </tr>
