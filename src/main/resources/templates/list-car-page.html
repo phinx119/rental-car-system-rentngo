@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Car</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<header th:insert="~{fragments/header.html :: header}"></header>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">My car</li>
+    </ol>
+</nav>
+
+<!-- Search Results Section -->
+<div class="container-fluid bg-white mt-4">
+    <div class="row p-4">
+        <!-- Search Result Header -->
+        <div class="col-md-12">
+            <h3>List of cars</h3>
+            <button class="btn btn-primary btn-sm" href="">Add car</button>
+        </div>
+        <!-- Search Results Content (Thumbnail View) -->
+        <div class="col-md-12 mt-4" id="thumbnailView">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <div class="card">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="car-image.jpg" class="card-img" alt="Car Image">
+                            </div>
+                            <div class="col-md-6 align-self-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">Car Name</h5>
+                                    <ul class="list-unstyled">
+                                        <li>Rating: <i class="fas fa-star"></i></li>
+                                        <li>No of ride:</li>
+                                        <li>Price:</li>
+                                        <li>Location:</li>
+                                        <li>Status:</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    <button class="btn btn-primary btn-sm mb-2">Confirm Deposit</button>
+                                    <button class="btn btn-secondary btn-sm mb-2">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="card">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="car-image.jpg" class="card-img" alt="Car Image">
+                            </div>
+                            <div class="col-md-6 align-self-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">Car Name</h5>
+                                    <ul class="list-unstyled">
+                                        <li>Rating: <i class="fas fa-star"></i></li>
+                                        <li>No of ride:</li>
+                                        <li>Price:</li>
+                                        <li>Location:</li>
+                                        <li>Status:</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    <button class="btn btn-primary btn-sm mb-2">Confirm Deposit</button>
+                                    <button class="btn btn-secondary btn-sm mb-2">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="card">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="car-image.jpg" class="card-img" alt="Car Image">
+                            </div>
+                            <div class="col-md-6 align-self-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">Car Name</h5>
+                                    <ul class="list-unstyled">
+                                        <li>Rating: <i class="fas fa-star"></i></li>
+                                        <li>No of ride:</li>
+                                        <li>Price:</li>
+                                        <li>Location:</li>
+                                        <li>Status:</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    <button class="btn btn-primary btn-sm mb-2">Confirm Deposit</button>
+                                    <button class="btn btn-secondary btn-sm mb-2">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paging -->
+        <div class="col-md-12 mt-4">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="~{fragments/footer.html :: footer}"></footer>
+
+
+<script th:src="@{js/script.js}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
