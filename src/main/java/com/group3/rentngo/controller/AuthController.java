@@ -1,6 +1,8 @@
 package com.group3.rentngo.controller;
 
+import com.group3.rentngo.model.dto.ResetPasswordDto;
 import com.group3.rentngo.model.dto.SignupDto;
+import com.group3.rentngo.model.dto.UserDto;
 import com.group3.rentngo.model.entity.CustomUserDetails;
 import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CustomerService;
@@ -57,7 +59,10 @@ public class AuthController {
             }
         }
 
+        UserDto userDto = new UserDto();
         SignupDto signupDto = new SignupDto();
+
+        model.addAttribute("userDto", userDto);
         model.addAttribute("signupDto", signupDto);
 
         return "home-page";
@@ -73,7 +78,7 @@ public class AuthController {
                          Model model) {
         // check existed user account with username
         if (userService.findUserByEmail(signupDto.getEmail()) != null) {
-            result.rejectValue("email", null, "There is already an account registered with the same username");
+            result.rejectValue("email", null, "Email already existed. Please try another email.");
         } else {
             // check existed car owner account with email or phone number
             if ("CarOwner".equals(signupDto.getRole()) && carOwnerService.findCarOwnerByPhone(signupDto.getPhone()) != null) {
@@ -85,18 +90,22 @@ public class AuthController {
             }
         }
 
-        if (signupDto.getAgreePrivacy() == null || signupDto.getAgreePrivacy().isEmpty()) {
-            result.rejectValue("agreePrivacy", null, "You must agree to the privacy policy to continue.");
+        if (!signupDto.getPassword().equals(signupDto.getConfirmPassword())) {
+            result.rejectValue("confirmPassword", null, "Password and Confirm password don’t match. Please try again.");
         }
+
+//        if (signupDto.getAgreePrivacy() == null || signupDto.getAgreePrivacy().isEmpty()) {
+//            result.rejectValue("agreePrivacy", null, "You must agree to the privacy policy to continue.");
+//        }
 
         if (result.hasErrors()) {
             model.addAttribute("signupDto", signupDto);
             model.addAttribute("errors", result.getAllErrors());
             return "home-page";
+        } else {
+            userService.saveUser(signupDto);
+            return "redirect:/home";
         }
-
-        userService.saveUser(signupDto);
-        return "redirect:/home";
     }
 
     /**
@@ -104,17 +113,57 @@ public class AuthController {
      * @description get input email, check existed to reset password
      */
     @PostMapping("/home/check-existed-email")
-    public String checkExistedEmail(@Valid @RequestParam("email") @NotBlank @Email String email,
+    public String checkExistedEmail(@Valid @ModelAttribute("userDto") UserDto userDto,
                                     BindingResult result,
                                     Model model) {
+        if (userService.findUserByEmail(userDto.getEmail()) == null) {
+            result.rejectValue("email", null, "Email address does not exist in the system.");
+        }
+        result.getAllErrors();
         if (result.hasErrors()) {
-            // Handle validation errors, if any
-            return "error-page"; // You can specify an error page to redirect to
+            model.addAttribute("userDto", userDto);
+            model.addAttribute("errors", result.getAllErrors());
+            return "home-page";
         } else {
-            // Proceed with your logic here
-            // For example, check if the email exists in your system
-            // and perform necessary actions
-            return "success-page"; // You can specify a success page to redirect to
+            userService.sendComplexEmail(userDto.getEmail(), "<a href=\"http://localhost:8080/reset-password/" + userDto.getEmail() + "\">Reset password link</a>");
+            return "redirect:/home";
+        }
+    }
+
+    /**
+     * @author phinx
+     * @description show reset password page
+     */
+    @GetMapping("/reset-password/{email}")
+    public String showResetPasswordPage(@PathVariable String email, Model model) {
+        ResetPasswordDto resetPasswordDto = new ResetPasswordDto();
+        if (email != null) {
+            resetPasswordDto.setEmail(email);
+        }
+        model.addAttribute("resetPasswordDto", resetPasswordDto);
+        return "reset-password-page";
+    }
+
+    /**
+     * @author phinx
+     * @description get input email, check existed to reset password
+     */
+    @PostMapping("/reset-password")
+    public String resetPassword(@Valid @ModelAttribute("resetPasswordDto") ResetPasswordDto resetPasswordDto,
+                                BindingResult result,
+                                Model model) {
+        if (!resetPasswordDto.getPassword().equals(resetPasswordDto.getConfirmPassword())) {
+            result.rejectValue("confirmPassword", null, "Password and Confirm password don’t match. Please try again.");
+        }
+
+        if (result.hasErrors()) {
+            model.addAttribute("resetPasswordDto", resetPasswordDto);
+            model.addAttribute("email", resetPasswordDto.getEmail());
+            model.addAttribute("errors", result.getAllErrors());
+            return "reset-password-page";
+        } else {
+            userService.resetPassword(resetPasswordDto);
+            return "redirect:/home";
         }
     }
 

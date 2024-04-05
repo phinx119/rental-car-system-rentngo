@@ -88,7 +88,7 @@
                 <td th:text="${customer.getEmail()}"></td>
                 <td th:text="${customer.getPhone()}"></td>
                 <td>
-                    <button class="btn btn-secondary btn-sm">View Details</button>
+                    <a th:href="@{/admin/view-customer-detail(id=${customer.getId()})}" class="btn btn-secondary btn-sm">View Details</a>
                 </td>
             </tr>
             </tbody>

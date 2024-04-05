@@ -1,5 +1,6 @@
 package com.group3.rentngo.service.impl;
 
+import com.group3.rentngo.model.dto.ResetPasswordDto;
 import com.group3.rentngo.model.dto.SignupDto;
 import com.group3.rentngo.model.dto.UserDto;
 import com.group3.rentngo.model.entity.CarOwner;
@@ -154,11 +155,17 @@ public class UserServiceImpl implements UserService {
      * @author phinx
      * @description test send email
      */
-    public void sendComplexEmail(String name, String content) {
+    public void sendComplexEmail(String email, String content) {
         Map<String, Object> model = new HashMap<>();
-        model.put("name", name);
+        model.put("email", email);
         model.put("content", "<p>" + content + "</p>");
 
-        emailService.sendEmail("xuanphi2003@gmail.com", "Important Notification", model, "email/template");
+        emailService.sendEmail(email, "Important Notification", model, "email/template");
+    }
+
+    @Override
+    public void resetPassword(ResetPasswordDto resetPasswordDto) {
+        String encodedPassword = passwordEncoder.encode(resetPasswordDto.getPassword());
+        userRepository.updatePasswordByEmail(encodedPassword, resetPasswordDto.getEmail());
     }
 }

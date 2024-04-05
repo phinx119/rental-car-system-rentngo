@@ -94,10 +94,10 @@
                 <!-- Signup form here -->
                 <form method="post" role="form" th:action="@{/home/signup}" th:object="${signupDto}">
                     <div class="form-group">
-                        <label for="signupName">Username</label>
-                        <input type="text" th:field="*{name}" class="form-control" id="signupName" name="username"
+                        <label for="signupName">Name</label>
+                        <input type="text" th:field="*{name}" class="form-control" id="signupName" name="name"
                                aria-describedby="signupName"
-                               placeholder="Enter Username">
+                               placeholder="Enter Name">
                         <p th:errors="*{name}" class="text-danger"
                            th:if="${#fields.hasErrors('name')}"></p>
                     </div>
@@ -149,6 +149,7 @@
                                 <label class="form-check-label" for="carOwnerRadio">I am a car owner</label>
                             </div>
                         </div>
+                        <br>
                         <p th:errors="*{role}" class="text-danger"
                            th:if="${#fields.hasErrors('role')}"></p>
                     </div>
@@ -184,12 +185,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form th:action="@{/home/check-existed-email}" method="post">
+                <form method="post" role="form" th:action="@{/home/check-existed-email}" th:object="${userDto}">
                     <div class="form-group">
-                        <label for="email">Email address</label>
-                        <!-- Thymeleaf input -->
-                        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+                        <label for="checkEmail">Email address</label>
+                        <input type="email" th:field="*{email}" class="form-control" id="checkEmail" name="email"
+                               aria-describedby="emailHelp"
                                placeholder="Enter email">
+                        <p th:errors="*{email}" class="text-danger"
+                           th:if="${#fields.hasErrors('email')}"></p>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
