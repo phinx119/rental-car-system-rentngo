@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, Serializable {
     private static final long serialVersionUID = 1L;
 
     User user;
