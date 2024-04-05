@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
 
         if (confirm('Are you sure you want to log out?')) {
-            window.location.href = 'home-page.html';
+            window.location.href = '/logout';
         }
     });
 });
