@@ -7,17 +7,10 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SignupDto {
-
-    @NotBlank(message = "This field is required.")
-    private String name;
-
+public class ResetPasswordDto {
     @NotBlank(message = "This field is required.")
     @Email
     private String email;
-
-    @NotBlank(message = "This field is required.")
-    private String phone;
 
     @Size(min = 7, message = "Minimum length is 7.")
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
@@ -27,10 +20,4 @@ public class SignupDto {
 
     @NotBlank(message = "This field is required.")
     private String confirmPassword;
-
-    @NotBlank(message = "This field is required.")
-    private String role;
-
-    @NotBlank(message = "This field is required.")
-    private String agreePrivacy;
 }

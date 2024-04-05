@@ -18,6 +18,6 @@ public class RoleDto implements Serializable {
 
     private Long id;
 
-    @NotBlank(message = "Mandatory information.")
+    @NotBlank(message = "This field is required.")
     String name;
 }

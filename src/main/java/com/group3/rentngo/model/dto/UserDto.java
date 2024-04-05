@@ -19,19 +19,19 @@ public class UserDto implements Serializable {
 
     private Long id;
 
-    @NotBlank(message = "Mandatory information.")
-    @Email
+    @NotBlank(message = "This field is required.")
+    @Email(message = "Please enter a valid email address")
     String email;
 
-    //    @Size(min = 8, message = "Minimum length is 8.")
-//    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\\\d)(?=.*[@$!%*#?&])[A-Za-z\\\\d@$!%*#?&]{8,}$",
-//            message = "Minimum eight characters, at least one letter, one number and one special character.")
-    @NotBlank(message = "Mandatory information.")
+//    @Size(min = 7, message = "Minimum length is 7.")
+//    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
+//            message = "Password must contain at least one number, one numeral, and seven characters.")
+//    @NotBlank(message = "This field is required.")
     String password;
 
-    @NotNull(message = "Mandatory information.")
+//    @NotNull(message = "This field is required.")
     boolean status;
 
-    @NotNull(message = "Mandatory information.")
+//    @NotNull(message = "This field is required.")
     Collection<Role> roles;
 }

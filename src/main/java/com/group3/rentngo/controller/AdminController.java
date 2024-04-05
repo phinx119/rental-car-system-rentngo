@@ -10,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author phinx
@@ -37,12 +39,20 @@ public class AdminController {
      * @description show user management page
      */
     @GetMapping("/list-user")
-    public String viewListUser(Model model){
+    public String viewListUser(Model model) {
         List<CarOwner> carOwnerList = carOwnerService.findAll();
         List<Customer> customerList = customerService.findAll();
 
         model.addAttribute("carOwnerList", carOwnerList);
         model.addAttribute("customerList", customerList);
         return "manage-user-page";
+    }
+
+    @GetMapping("/view-customer-detail")
+    public String viewUserDetail(@RequestParam("id") Long customerId, Model model) {
+        Optional<Customer> customerDetail = customerService.findCustomerById(customerId);
+        Customer customer = customerDetail.orElse(null);
+        model.addAttribute("customer", customer); ;
+        return "edit-profile";
     }
 }
