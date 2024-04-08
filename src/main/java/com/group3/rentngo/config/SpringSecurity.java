@@ -1,5 +1,6 @@
 package com.group3.rentngo.config;
 
+import com.group3.rentngo.security.CustomLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -39,8 +41,9 @@ public class SpringSecurity {
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/car-owner/**").hasAnyRole("ADMIN", "CAR_OWNER")
                                 .requestMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
+                                .requestMatchers("/vnpay/**").hasAnyRole("ADMIN", "CAR_OWNER", "CUSTOMER")
                                 .requestMatchers("/reset-password/**", "/error-403").permitAll()
-                                //.requestMatchers("/js/**", "/css/**", "/image/**").permitAll()
+                                .requestMatchers("/js/**", "/css/**", "/images/**").permitAll()
                                 .anyRequest().authenticated()
                 ).formLogin(
                         form -> form
@@ -52,12 +55,18 @@ public class SpringSecurity {
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .deleteCookies("JSESSIONID")
+                                .logoutSuccessHandler(logoutSuccessHandler())
                                 .permitAll()
                 ).exceptionHandling(
                         httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
                                 .accessDeniedPage("/error-403")
                 );
         return http.build();
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
     }
 
     @Autowired

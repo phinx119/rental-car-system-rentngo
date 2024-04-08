@@ -13,6 +13,9 @@
         width: 100%;
         height: auto;
     }
+    html {
+        scroll-behavior: smooth;
+    }
 </style>
 <body>
 
@@ -55,7 +58,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
                     <!-- Toggle buttons -->
-                    <button type="button" class="btn btn-secondary" onclick="toggleButtons()">Show Login Options</button>
+<!--                    <button type="button" class="btn btn-secondary" onclick="toggleButtons()">Show Login Options</button>-->
 
                     <!-- Hidden buttons -->
                     <div id="hiddenButtons" style="display: none;">
@@ -217,7 +220,7 @@
     </div>
 </div>
 
-<div class="container mt-5">
+<div class="container mt-5" id="why-us-section">
     <div class="row">
         <div class="col-md-12 mb-4">
             <h2 class="text-center mb-4">Why To Choose Us?</h2>
@@ -352,7 +355,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Hanoi</h5>
                     <h6 class="card-title">80+ Cars</h6>
-                    <img src="../static/image/banner/hanoi_image.jpg" alt="Hanoi Image">
+                    <img th:src="@{/images/banner/hanoi_image.jpg}" alt="Hanoi Image">
                 </div>
             </div>
         </div>
@@ -363,7 +366,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Ho Chi Minh City</h5>
                     <h6 class="card-title">80+ Cars</h6>
-                    <img src="../static/image/banner/ho_chi_minh_city_image.jpg" alt="Ho Chi Minh City Image">
+                    <img th:src="@{/images/banner/ho_chi_minh_city_image.jpg}" alt="Ho Chi Minh City Image">
                 </div>
             </div>
         </div>
@@ -374,7 +377,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Da Nang</h5>
                     <h6 class="card-title">80+ Cars</h6>
-                    <img src="../static/image/banner/da_nang_image.jpg" alt="Da Nang Image">
+                    <img th:src="@{/images/banner/da_nang_image.jpg}" alt="Da Nang Image">
                 </div>
             </div>
         </div>
@@ -385,7 +388,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Nha Trang</h5>
                     <h6 class="card-title">80+ Cars</h6>
-                    <img src="../static/image/banner/nha_trang_image.jpg" alt="Nha Trang Image">
+                    <img th:src="@{/images/banner/nha_trang_image.jpg}" alt="Nha Trang Image">
                 </div>
             </div>
         </div>
@@ -396,7 +399,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Da Lat</h5>
                     <h6 class="card-title">80+ Cars</h6>
-                    <img src="../static/image/banner/da_lat_image.jpg" alt="Da Lat Image">
+                    <img th:src="@{/images/banner/da_lat_image.jpg}" alt="Da Lat Image">
                 </div>
             </div>
         </div>
@@ -407,7 +410,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Quang Ninh</h5>
                     <h6 class="card-title">80+ Cars</h6>
-                    <img src="../static/image/banner/quang_ninh_image.jpg" alt="Quang Ninh Image">
+                    <img th:src="@{/images/banner/quang_ninh_image.jpg}" alt="Quang Ninh Image">
                 </div>
             </div>
         </div>
@@ -417,7 +420,35 @@
 </div>
 
 
-<footer th:insert="~{fragments/footer.html :: footer}"></footer>
+<footer class="bg-secondary text-light">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>RENT CAR</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" data-toggle="modal" data-target="#loginModal" class="text-light">Search Cars and Rates</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>CUSTOMER ACCESS</h5>
+                <ul class="list-unstyled">
+                <li><a href="#" data-toggle="modal" data-target="#loginModal" class="text-light">Manage My Booking</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#loginModal" class="text-light">My Wallet</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#loginModal" class="text-light">My Car</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>JOIN US</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" data-toggle="modal" data-target="#signupModal" class="text-light">New User Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bg-light text-dark text-center py-3">
+        <p class="mb-0">&copy; 2024 Your Company. All rights reserved.</p>
+    </div>
+</footer>
 
 <script>
     function toggleButtons() {
@@ -456,7 +487,6 @@
     $(document).ready(function () {
         $('#signupLinkWhenError').trigger('click');
     });
-
 </script>
 
 <script th:src="@{/js/script.js}"></script>

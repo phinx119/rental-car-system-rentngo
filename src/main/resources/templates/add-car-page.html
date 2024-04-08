@@ -40,7 +40,7 @@
 
 <div class="container-fluid bg-light mt-4">
     <div class="row justify-content-center p-4">
-        <form class="col-md-10"  id="carForm" enctype="multipart/form-data" th:object="${car}"  th:action="@{#}" method="post">
+        <form class="col-md-10"  id="carForm" enctype="multipart/form-data" th:object="${car}"  th:action="@{addnewcar}" method="post">
 
             <!-- Form Inputs -->
             <div id="step1" class="">
@@ -48,10 +48,17 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="carName">Car Name:</label>
+                                <input type="text" class="form-control" th:field="*{name}" id="carName" name="carName" placeholder="Enter car name">
+                                <!--                                <p th:errors="*{licensePlate}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+
+                            </div>
+                            <div class="form-group">
                                 <label for="licensePlate">License Plate:</label>
                                 <input type="text" class="form-control" th:field="*{licensePlate}" id="licensePlate" name="licensePlate" placeholder="Enter license plate">
-                                <p th:errors="*{licensePlate}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{licensePlate}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
 
                             </div>
                         </div>
@@ -65,8 +72,8 @@
                                     <option value="green">Green</option>
                                     <!-- Add more options as needed -->
                                 </select>
-                                <p th:errors="*{color}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{color}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -79,8 +86,8 @@
                                     <option value="Ford">Ford</option>
                                     <!-- Add more options as needed -->
                                 </select>
-                                <p th:errors="*{brand}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{brand}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -93,8 +100,8 @@
                                     <option value="Truck">Truck</option>
                                     <!-- Add more options as needed -->
                                 </select>
-                                <p th:errors="*{model}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{model}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                         </div>
                     </div>
@@ -106,22 +113,22 @@
                             <div class="form-group">
                                 <label for="productionYear">Production Year:</label>
                                 <input type="number" class="form-control" id="productionYear" name="productionYear" placeholder="Enter production year" th:field="*{productionYear}">
-                                <p th:errors="*{productionYear}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{productionYear}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="seats">Number of Seats:</label>
                                 <select class="form-control" id="seats" name="seats" th:field="*{numberOfSeats}">
-                                    <option value="">Select number of seats</option>
+                                    <!--                                    <option value="">Select number of seats</option>-->
                                     <option value="2">2</option>
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                     <!-- Add more options as needed -->
                                 </select>
-                                <p th:errors="*{numberOfSeats}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{numberOfSeats}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -136,8 +143,8 @@
                                     <label class="form-check-label" for="manual">Manual</label>
                                 </div>
 
-                                <p th:errors="*{transmissionType}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{transmissionType}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -151,8 +158,8 @@
                                     <input class="form-check-input" type="radio" name="fuel" id="diesel" value="Diesel" th:field="*{fuelType}">
                                     <label class="form-check-label" for="diesel">Diesel</label>
                                 </div>
-                                <p th:errors="*{fuelType}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{fuelType}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                         </div>
                     </div>
@@ -167,19 +174,19 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="registrationPaper">Registration Paper:</label>
-                                <input type="file" class="form-control-file" id="registrationPaper" name="registrationPaper" th:field="*{}">
+                                <input type="file" class="form-control-file" id="registrationPaper" name="registrationPaper" th:field="*{registrationPaper}" >
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="inspectionCertificate">Certification of Inspection:</label>
-                                <input type="file" class="form-control-file" id="inspectionCertificate" name="inspectionCertificate" th:field="*{}">
+                                <input type="file" class="form-control-file" id="inspectionCertificate" name="inspectionCertificate" >
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="insurance">Insurance:</label>
-                                <input type="file" class="form-control-file" id="insurance" name="insurance" th:field="*{}">
+                                <input type="file" class="form-control-file" id="insurance" name="insurance" >
                             </div>
                         </div>
                     </div>
@@ -195,46 +202,50 @@
                             <div class="form-group">
                                 <label for="mileage">Mileage:</label>
                                 <input type="text" class="form-control" id="mileage" name="mileage" placeholder="Enter mileage" th:field="*{mileage}">
-                                <p th:errors="*{mileage}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{mileage}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                             <div class="form-group">
                                 <label for="fuelConsumption">Fuel Consumption (L/100km):</label>
                                 <input type="text" class="form-control" id="fuelConsumption" name="fuelConsumption" placeholder="Enter fuel consumption" th:field="*{fuelConsumption}" >
-                                <p th:errors="*{fuelConsumption}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{fuelConsumption}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                             <div class="form-group">
                                 <label for="address">Address:</label>
                                 <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" >
-                                <p th:errors="*{address}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{address}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                             <div class="form-group">
                                 <label for="city">City:</label>
-                                <input type="text" class="form-control" id="city" name="city" placeholder="Enter city" >
-                                <p th:errors="*{address}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <input type="text" class="form-control" id="city" name="city" placeholder="Enter city"  >
+                                <!--                                <p th:errors="*{address}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
+
+
+
+
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="district">District:</label>
                                 <input type="text" class="form-control" id="district" name="district" placeholder="Enter district" >
-                                <p th:errors="*{address}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{address}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                             <div class="form-group">
                                 <label for="ward">Ward:</label>
                                 <input type="text" class="form-control" id="ward" name="ward" placeholder="Enter ward" >
-                                <p th:errors="*{address}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{address}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                             <div class="form-group">
                                 <label for="houseNumber">House Number:</label>
                                 <input type="text" class="form-control" id="houseNumber" name="houseNumber" placeholder="Enter house number" >
-                                <p th:errors="*{address}" class="text-danger"
-                                   th:if="${#fields.hasErrors()}"></p>
+                                <!--                                <p th:errors="*{address}" class="text-danger"-->
+                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
                             </div>
                         </div>
                     </div>
@@ -295,21 +306,21 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="frontImage">Front Image:</label>
-                                <input type="file" class="form-control-file" id="frontImage" name="frontImage" th:field="*{image}">
+                                <input type="file" class="form-control-file" id="frontImage" name="frontImage">
                             </div>
                             <div class="form-group">
                                 <label for="backImage">Back Image:</label>
-                                <input type="file" class="form-control-file" id="backImage" name="backImage" th:field="*{image}">
+                                <input type="file" class="form-control-file" id="backImage" name="backImage" >
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="leftImage">Left Image:</label>
-                                <input type="file" class="form-control-file" id="leftImage" name="leftImage" th:field="*{image}">
+                                <input type="file" class="form-control-file" id="leftImage" name="leftImage">
                             </div>
                             <div class="form-group">
                                 <label for="rightImage">Right Image:</label>
-                                <input type="file" class="form-control-file" id="rightImage" name="rightImage" th:field="*{image}">
+                                <input type="file" class="form-control-file" id="rightImage" name="rightImage" >
                             </div>
                         </div>
                     </div>
@@ -322,8 +333,8 @@
                     <div class="form-group">
                         <label for="basePrice">Base Price per Day (VND):</label>
                         <input type="number" class="form-control" id="basePrice" name="basePrice" placeholder="Enter base price" th:field="*{basePrice}">
-                        <p th:errors="*{basePrice}" class="text-danger"
-                           th:if="${#fields.hasErrors()}"></p>
+                        <!--                        <p th:errors="*{basePrice}" class="text-danger"-->
+                        <!--                           th:if="${#fields.hasErrors()}"></p>-->
                     </div>
                     <div class="form-group">
                         <label for="requiredDeposit">Required Deposit (VND):</label>
@@ -356,6 +367,7 @@
                         <textarea class="form-control" id="note" name="note" rows="3" placeholder="Please specify any additional notes" th:field="*{description}"></textarea>
                     </div>
                 </div>
+                <button type="submit">Add</button>
             </div>
 
             <!-- Step 4 - Preview (Hidden by default) -->
@@ -365,12 +377,49 @@
                 </div>
                 <div class="row no-gutters">
                     <div class="col-md-4">
-                        <img src="car-image.jpg" class="card-img" alt="Car Image">
+                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="car-image.jpg" class="card-img" alt="Car Image">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="car-image2.jpg" class="card-img" alt="Car Image 2">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="car-image3.jpg" class="card-img" alt="Car Image 3">
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
                     </div>
                     <div class="col-md-6 align-self-center">
                         <div class="card-body">
                             <h5 class="card-title">Car Name</h5>
-                            <p class="card-text">Rating: <i class="fas fa-star"></i>  <br> No. of ride:  0 <br> Price 900k/day <br> Location: Cau Giay, Ha Noi <br> Status: Available </p>
+                            <ul class="list-unstyled">
+                                <li>Rating:
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                </li>
+                                <li>No. of ride: </li>
+                                <li>Price 900k/day</li>
+                                <li>Location: Cau Giay, Ha Noi</li>
+                                <li>Status: Available</li>
+                            </ul>
                         </div>
                     </div>
                 </div>

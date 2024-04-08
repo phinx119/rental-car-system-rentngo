@@ -1,7 +1,10 @@
 package com.group3.rentngo.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Collection;
 import java.util.Date;
@@ -37,4 +40,7 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
+
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    private Collection<PaymentHistory> paymentHistories;
 }

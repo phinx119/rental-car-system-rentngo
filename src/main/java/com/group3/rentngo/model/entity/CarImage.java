@@ -35,8 +35,4 @@ public class CarImage {
     @Lob
     @Column(nullable = false)
     private Blob rightImage;
-
-    @ManyToOne
-    @JoinColumn(name = "car_id")
-    private Car car;
 }

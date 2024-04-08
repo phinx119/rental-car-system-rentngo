@@ -50,15 +50,7 @@ public class CarOwnerServiceImpl implements CarOwnerService {
     }
 
 
-    @Override
-    public void addNewCar(Car car) {
-        carRepository.save(car);
-    }
 
-    @Override
-    public void updateCarInformation(Car car) {
-        carRepository.save(car);
-    }
 
 
 

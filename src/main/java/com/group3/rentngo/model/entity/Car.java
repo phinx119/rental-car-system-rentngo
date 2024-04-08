@@ -1,11 +1,13 @@
 package com.group3.rentngo.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Blob;
 import java.util.Collection;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -70,20 +72,17 @@ public class Car {
     @Column(nullable = false)
     private String termOfUse;
 
-    @Lob
+    @Transient
     @Column(nullable = false)
-    private Blob registrationPaper;
+    private MultipartFile registrationPaper;
 
-    @Lob
+    @Transient
     @Column(nullable = false)
-    private Blob certificateOfInspection;
+    private MultipartFile certificateOfInspection;
 
-    @Lob
+    @Transient
     @Column(nullable = false)
-    private Blob insurance;
-
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
-    private Collection<CarImage> carImages;
+    private MultipartFile insurance;
 
     @ManyToOne
     @JoinColumn(name = "car_owner_id")
@@ -91,4 +90,8 @@ public class Car {
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
     private Collection<Booking> bookings;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_image_id")
+    private CarImage carImage;
 }

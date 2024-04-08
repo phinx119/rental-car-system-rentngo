@@ -16,11 +16,6 @@ public interface CarOwnerService {
 
     List<CarOwner> findAll();
 
-    void addNewCar(Car car);
-
-    void updateCarInformation(Car car);
-
-
 
 
 }
