@@ -7,6 +7,7 @@ import com.group3.rentngo.model.entity.CustomUserDetails;
 import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CustomerService;
 import com.group3.rentngo.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,14 +29,17 @@ public class AuthController {
     private UserService userService;
     private CarOwnerService carOwnerService;
     private CustomerService customerService;
+    private HttpSession session;
 
     @Autowired
     public AuthController(UserService userService,
                           CarOwnerService carOwnerService,
-                          CustomerService customerService) {
+                          CustomerService customerService,
+                          HttpSession session) {
         this.userService = userService;
         this.carOwnerService = carOwnerService;
         this.customerService = customerService;
+        this.session = session;
     }
 
     /**
@@ -50,6 +54,7 @@ public class AuthController {
             boolean isAdmin = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
             boolean isCarOwner = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CAR_OWNER"));
             boolean isCustomer = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CUSTOMER"));
+            session.setAttribute("email", userDetails.getUsername());
             if (isAdmin) {
                 return "redirect:/admin/list-user";
             }
