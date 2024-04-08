@@ -28,7 +28,8 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">My Profile</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" href="#">Admin Dashboard</a>
-                        <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}" href="#">My Car</a>
+                        <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}"
+                           th:href="@{'car-owner/view-list-car/' + ${id}}">My Car</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}" href="#">My Booking</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}" href="#">My Report</a>
                         <a class="dropdown-item" th:unless="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" href="#">My Wallet</a>

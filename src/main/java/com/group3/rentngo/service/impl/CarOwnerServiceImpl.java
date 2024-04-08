@@ -35,6 +35,11 @@ public class CarOwnerServiceImpl implements CarOwnerService {
     }
 
     @Override
+    public CarOwner findCarOwnerByIdUser(long id) {
+        return carOwnerRepository.findByUser_Id(id);
+    }
+
+    @Override
     public CarOwner findCarOwnerByPhone(String phone) {
         return carOwnerRepository.findByPhone(phone);
     }

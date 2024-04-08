@@ -159,7 +159,6 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> model = new HashMap<>();
         model.put("email", email);
         model.put("content", "<p>" + content + "</p>");
-
         emailService.sendEmail(email, "Important Notification", model, "email/template");
     }
 

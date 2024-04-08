@@ -28,7 +28,7 @@ public class SignupDto {
     @NotBlank(message = "This field is required.")
     private String confirmPassword;
 
-    @NotBlank(message = "This field is required.")
+    @NotBlank(message = "This field is required."   )
     private String role;
 
     @NotBlank(message = "This field is required.")

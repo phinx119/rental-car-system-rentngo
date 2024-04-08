@@ -52,7 +52,10 @@ public class AuthController {
                 return "redirect:/admin/list-user";
             }
             if (isCarOwner) {
-                return "redirect:/car-owner/home";
+                long id = userDetails.getId();
+                model.addAttribute("id",id);
+//                return "redirect:/car-owner/home";
+                return "home-page-as-car-owner";
             }
             if (isCustomer) {
                 return "redirect:/customer/home";
@@ -99,6 +102,8 @@ public class AuthController {
 //        }
 
         if (result.hasErrors()) {
+            UserDto userDto = new UserDto();
+            model.addAttribute("userDto", userDto);
             model.addAttribute("signupDto", signupDto);
             model.addAttribute("errors", result.getAllErrors());
             return "home-page";
