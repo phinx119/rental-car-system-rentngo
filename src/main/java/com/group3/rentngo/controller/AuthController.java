@@ -8,14 +8,16 @@ import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CustomerService;
 import com.group3.rentngo.service.UserService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author phinx
@@ -99,6 +101,9 @@ public class AuthController {
 //        }
 
         if (result.hasErrors()) {
+            UserDto userDto = new UserDto();
+
+            model.addAttribute("userDto", userDto);
             model.addAttribute("signupDto", signupDto);
             model.addAttribute("errors", result.getAllErrors());
             return "home-page";

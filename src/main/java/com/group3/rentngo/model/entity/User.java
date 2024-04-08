@@ -1,7 +1,10 @@
 package com.group3.rentngo.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Collection;
 
@@ -33,4 +36,6 @@ public class User {
             inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
     private Collection<Role> roles;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Collection<PaymentHistory> paymentHistories;
 }
