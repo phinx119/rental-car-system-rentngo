@@ -4,25 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
-    <link rel="stylesheet" href="../static/css/profile.css">
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<header class="row">
-    <strong ><i class="fa-solid fa-car mr-3 " ></i>Rent a car today</strong>
-    <div>
-        <a href="#">ABOUT US</a>
-    </div>
-    <div>
-        <span class="ml-5">Welcome,user</span>
-    </div>
+<!--<header class="row">-->
+<!--    <strong ><i class="fa-solid fa-car mr-3 " ></i>Rent a car today</strong>-->
+<!--    <div>-->
+<!--        <a href="#">ABOUT US</a>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <span class="ml-5">Welcome,user</span>-->
+<!--    </div>-->
 
-</header>
+<!--</header>-->
+
+<header th:insert="~{fragments/header.html :: header}"></header>
+
 <!-- start breadcrumb -->
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/home">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Library</li>
     </ol>
 </nav>
@@ -40,11 +43,11 @@
             </div>
             <div class="personal-information-items">
                 <strong>Phone number</strong><br/>
-                <input type="text"/>
+                <input type="text" th:value="*{customer.phone}"/>
             </div>
             <div class="personal-information-items">
                 <strong>National ID No</strong><br/>
-                <input type="text" />
+                <input type="text" th:value="*{customer.nationalId}"/>
             </div>
             <div class="address">
                 <strong>Address</strong><br/>
@@ -77,16 +80,16 @@
         <div class="col-md-6">
             <div class="personal-information-items">
                 <strong>Date of birth</strong><br/>
-                <input type="date" />
+                <input type="date" th:value="*{customer.dateOfBirth}"/>
                 <i class="fa-regular fa-calendar-days"></i>
             </div>
             <div class="personal-information-items">
                 <strong>Email Address</strong><br/>
-                <input type="text" />
+                <input type="text" th:value="*{customer.email}"/>
             </div>
             <div class="personal-information-items">
                 <strong>Driving Scense</strong><br/>
-                <input type="text" />
+                <input type="text" th:value="*{customer.drivingLicense}"/>
             </div>
         </div>
         <div class="save-information mt-3 ">
