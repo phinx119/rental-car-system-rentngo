@@ -10,6 +10,7 @@ public interface CarOwnerService {
 
 
     CarOwner findCarOwnerByEmail(String email);
+    CarOwner findCarOwnerByIdUser(long id);
 
     CarOwner findCarOwnerByPhone(String phone);
 

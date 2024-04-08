@@ -7,6 +7,9 @@ import com.group3.rentngo.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CarServiceImpl implements CarService {
     private CarRepository carRepository;
@@ -22,6 +25,16 @@ public class CarServiceImpl implements CarService {
         this.bookingRepository = bookingRepository;
     }
 
+    @Override
+    public List<Car> listCarOfOwner(Long id) {
+        return carRepository.findByCarOwner_Id(id);
+    }
+
+    @Override
+    public Optional<Car> findbyId(Long id) {
+        return carRepository.findById(id);
+    }
+    
     @Override
     public void addCar(CarDto carDto) {
         Car car=new Car();

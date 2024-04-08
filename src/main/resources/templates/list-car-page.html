@@ -32,7 +32,7 @@
         </div>
         <div class="col-md-12 mt-4" id="thumbnailView">
             <div class="row">
-                <div class="col-md-12 mb-3">
+                <div class="col-md-12 mb-3" th:each="car : ${list}">
                     <div class="card">
                         <div class="row no-gutters">
                             <div class="col-md-4">
@@ -44,7 +44,7 @@
                                     </ol>
                                     <div class="carousel-inner">
                                         <div class="carousel-item active">
-                                            <img src="car-image.jpg" class="card-img" alt="Car Image">
+                                             <img th:src="@{car.}" class="card-img" alt="Car Image">
                                         </div>
                                         <div class="carousel-item">
                                             <img src="car-image2.jpg" class="card-img" alt="Car Image 2">
@@ -65,27 +65,20 @@
                             </div>
                             <div class="col-md-6 align-self-center">
                                 <div class="card-body">
-                                    <h5 class="card-title">Car Name</h5>
+                                    <h5 class="card-title" th:text="${car.name}">Car Name</h5>
                                     <ul class="list-unstyled">
-                                        <li>Rating:
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                        </li>
-                                        <li>No of ride:</li>
-                                        <li>Price:</li>
-                                        <li>Location:</li>
-                                        <li>Status:</li>
+                                        <li th:text="'Rating: 4 '">Rating: <i class="fas fa-star"></i></li>
+                                        <li th:text="'No of ride: ' + ${car.numberOfSeats}">No of ride:</li>
+                                        <li th:text="'Price: ' + ${car.basePrice}">Price:</li>
+                                        <li th:text="'Location: ' + ${car.address}">Location:</li>
+                                        <li th:text="'Status: Available ' ">Status:</li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-md-2 d-flex align-items-center justify-content-center">
                                 <div class="d-flex flex-column align-items-center">
-                                    <button class="btn btn-primary btn-sm mb-2">Confirm Deposit</button>
-                                    <button class="btn btn-secondary btn-sm mb-2">View Details</button>
-                                </div>
+                                    <a class="btn btn-primary btn-sm mb-2">Confirm Deposit</a>
+                                    <a th:href="@{/car-owner/display-car-detail/{id}(id=${car.id})}" class="btn btn-secondary btn-sm mb-2">View Details</a>                               </div>
                             </div>
                         </div>
                     </div>
@@ -207,6 +200,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
 

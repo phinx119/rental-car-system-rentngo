@@ -35,6 +35,10 @@ public class CustomUserDetails implements UserDetails, Serializable {
         return user.getEmail();
     }
 
+    public Long getId() {
+        return user.getId();
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
