@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Blob;
 import java.util.Collection;
@@ -72,17 +73,17 @@ public class Car {
     @Column(nullable = false)
     private String termOfUse;
 
-    @Lob
+    @Transient
     @Column(nullable = false)
-    private Blob registrationPaper;
+    private MultipartFile registrationPaper;
 
-    @Lob
+    @Transient
     @Column(nullable = false)
-    private Blob certificateOfInspection;
+    private MultipartFile certificateOfInspection;
 
-    @Lob
+    @Transient
     @Column(nullable = false)
-    private Blob insurance;
+    private MultipartFile insurance;
 
     @ManyToOne
     @JoinColumn(name = "car_owner_id")

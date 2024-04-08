@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.sql.Blob;
@@ -73,25 +74,25 @@ public class CarDto implements Serializable {
     String termOfUse;
 
     @NotNull(message = "Mandatory information.")
-    Blob registrationPaper;
+    MultipartFile registrationPaper;
 
     @NotNull(message = "Mandatory information.")
-    Blob certificateOfInspection;
+    MultipartFile certificateOfInspection;
 
     @NotNull(message = "Mandatory information.")
-    Blob insurance;
+    MultipartFile insurance;
 
     @NotNull(message = "Mandatory information.")
-    Blob frontImage;
+    MultipartFile frontImage;
 
     @NotNull(message = "Mandatory information.")
-    Blob backImage;
+    MultipartFile backImage;
 
     @NotNull(message = "Mandatory information.")
-    Blob leftImage;
+    MultipartFile leftImage;
 
     @NotNull(message = "Mandatory information.")
-    Blob rightImage;
+    MultipartFile rightImage;
 
     @NotNull(message = "Mandatory information.")
     CarOwner carOwner;
