@@ -7,9 +7,11 @@ import com.group3.rentngo.model.entity.CarOwner;
 import com.group3.rentngo.model.entity.Customer;
 import com.group3.rentngo.model.entity.Role;
 import com.group3.rentngo.model.entity.User;
-import com.group3.rentngo.repository.*;
+import com.group3.rentngo.repository.CarOwnerRepository;
+import com.group3.rentngo.repository.CustomerRepository;
+import com.group3.rentngo.repository.RoleRepository;
+import com.group3.rentngo.repository.UserRepository;
 import com.group3.rentngo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +22,13 @@ import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private CarOwnerRepository carOwnerRepository;
-    private CustomerRepository customerRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final CarOwnerRepository carOwnerRepository;
+    private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-    @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
                            CarOwnerRepository carOwnerRepository,

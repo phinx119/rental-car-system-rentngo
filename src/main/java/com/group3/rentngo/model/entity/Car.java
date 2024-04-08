@@ -1,11 +1,13 @@
 package com.group3.rentngo.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Blob;
 import java.util.Collection;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -81,9 +83,6 @@ public class Car {
     @Lob
     @Column(nullable = false)
     private Blob insurance;
-
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
-    private Collection<CarImage> carImages;
 
     @ManyToOne
     @JoinColumn(name = "car_owner_id")
