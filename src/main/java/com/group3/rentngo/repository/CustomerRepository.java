@@ -2,8 +2,12 @@ package com.group3.rentngo.repository;
 
 import com.group3.rentngo.model.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Repository
@@ -15,5 +19,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     Customer findByPhone(String phone);
 
+    @Transactional
+    @Modifying
+    @Query("update Customer c set c.wallet = ?1 where c.email = ?2")
+    int updateWalletByEmail(BigDecimal wallet, String email);
 
 }

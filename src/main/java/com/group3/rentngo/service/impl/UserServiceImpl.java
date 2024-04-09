@@ -3,15 +3,14 @@ package com.group3.rentngo.service.impl;
 import com.group3.rentngo.model.dto.ResetPasswordDto;
 import com.group3.rentngo.model.dto.SignupDto;
 import com.group3.rentngo.model.dto.UserDto;
-import com.group3.rentngo.model.entity.CarOwner;
-import com.group3.rentngo.model.entity.Customer;
-import com.group3.rentngo.model.entity.Role;
-import com.group3.rentngo.model.entity.User;
+import com.group3.rentngo.model.entity.*;
 import com.group3.rentngo.repository.CarOwnerRepository;
 import com.group3.rentngo.repository.CustomerRepository;
 import com.group3.rentngo.repository.RoleRepository;
 import com.group3.rentngo.repository.UserRepository;
 import com.group3.rentngo.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +40,16 @@ public class UserServiceImpl implements UserService {
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+    }
+
+    @Override
+    public CustomUserDetails getUserDetail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            return userDetails;
+        }
+        return null;
     }
 
     /**
@@ -160,7 +169,6 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> model = new HashMap<>();
         model.put("email", email);
         model.put("content", "<p>" + content + "</p>");
-
         emailService.sendEmail(email, "Important Notification", model, "email/template");
     }
 

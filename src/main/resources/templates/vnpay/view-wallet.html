@@ -25,7 +25,7 @@
         <div class="col-md-6">
             <h2>
                 Your current balance:
-                <span id="balance" style="color: green">20,000,000VND</span>
+                <span id="balance" style="color: green" th:text="*{wallet}"></span>
             </h2>
         </div>
         <div class="col-md-6">
@@ -71,7 +71,7 @@
             <form th:action="@{/vnpay/submit-order}" method="post">
                 <div class="modal-body">
                     <p>Please select the amount to top-up to your wallet.</p>
-                    <input type="hidden" name="transactionType" value="Withdraw">
+                    <input type="hidden" name="transactionType" value="Top-up">
                     <div class="form-group">
                         <label for="top-up-amount">Amount:</label>
                         <select class="form-control" id="top-up-amount" name="amount">
@@ -125,7 +125,7 @@
                         Your current balance is <span id="currentBalanceWithdraw"></span>.
                         Please select the amount to withdraw from your wallet.
                     </p>
-                    <input type="hidden" name="transactionType" value="Top-up">
+                    <input type="hidden" name="transactionType" value="Withdraw">
                     <div class="form-group">
                         <label for="withdraw-amount">Amount:</label>
                         <select class="form-control" id="withdraw-amount" name="amount">
@@ -190,48 +190,21 @@
                 <th>Date Time</th>
                 <th>Booking No.</th>
                 <th>Car Name</th>
+                <th>Note</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>10,000,000</td>
-                <td>Pay deposit</td>
-                <td>2024-04-03 10:00 AM</td>
-                <td>123456</td>
-                <td>Toyota Corolla</td>
+            <tr th:if="${paymentHistoryList.isEmpty()}">
+                <td colspan="7">No payment history available.</td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>5,000,000</td>
-                <td>Top-up</td>
-                <td>2024-04-02 08:30 AM</td>
-                <td>987654</td>
-                <td>Honda Civic</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>200,000</td>
-                <td>Withdraw</td>
-                <td>2024-04-01 03:45 PM</td>
-                <td>456789</td>
-                <td>BMW 3 Series</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>1,000,000</td>
-                <td>Refund deposit</td>
-                <td>2024-03-31 11:20 AM</td>
-                <td>654321</td>
-                <td>Ford Focus</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>1,000,000</td>
-                <td>Pay deposit</td>
-                <td>2024-03-30 02:15 PM</td>
-                <td>234567</td>
-                <td>Nissan Altima</td>
+            <tr th:each="paymentHistory : ${paymentHistoryList}">
+                <td th:text="${paymentHistory.getId()}"></td>
+                <td th:text="${#numbers.formatDecimal(paymentHistory.getAmount(), 0, 'COMMA', paymentHistory.getAmount() % 1 == 0 ? 0 : 2, 'POINT')}"></td>
+                <td th:text="${paymentHistory.getType()}"></td>
+                <td th:text="${paymentHistory.getCreateDate()}"></td>
+                <td th:text="${paymentHistory.getBooking() != null ? paymentHistory.getBooking().getId() : 'N/A'}"></td>
+                <td th:text="${paymentHistory.getBooking() != null && paymentHistory.getBooking().getCar() != null ? paymentHistory.getBooking().getCar().getBrand() : 'N/A'}"></td>
+                <td th:text="${paymentHistory.getNote()}"></td>
             </tr>
             </tbody>
         </table>
@@ -272,7 +245,7 @@
         $("#withdrawModal").modal("show");
     }
 </script>
-<script src="../../static/js/script.js"></script>
+<script th:src="@{/js/script.js}"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

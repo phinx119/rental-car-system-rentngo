@@ -1,13 +1,12 @@
 package com.group3.rentngo.service.impl;
 
-import com.group3.rentngo.model.entity.Car;
 import com.group3.rentngo.model.entity.CarOwner;
-import com.group3.rentngo.model.entity.Feedback;
 import com.group3.rentngo.repository.*;
 import com.group3.rentngo.service.CarOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -34,6 +33,11 @@ public class CarOwnerServiceImpl implements CarOwnerService {
     }
 
     @Override
+    public CarOwner findCarOwnerByIdUser(long id) {
+        return carOwnerRepository.findByUser_Id(id);
+    }
+
+    @Override
     public CarOwner findCarOwnerByPhone(String phone) {
         return carOwnerRepository.findByPhone(phone);
     }
@@ -43,10 +47,13 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         return carOwnerRepository.findAll();
     }
 
-
-
-
-
-
-
+    @Override
+    public void updateWallet(String email, String totalPrice) {
+        CarOwner carOwner = carOwnerRepository.findByEmail(email);
+        BigDecimal wallet = carOwner.getWallet() == null ? BigDecimal.valueOf(0) : carOwner.getWallet();
+        BigDecimal totalPriceDecimal = new BigDecimal(totalPrice);
+        BigDecimal updatedWallet = wallet.add(totalPriceDecimal);
+        carOwner.setWallet(updatedWallet);
+        carOwnerRepository.updateWalletByEmail(updatedWallet, email);
+    }
 }

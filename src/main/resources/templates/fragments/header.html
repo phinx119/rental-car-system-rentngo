@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">ABOUT US</a>
+                    <a class="nav-link" href="#why-us-section">ABOUT US</a>
                 </li>
                 <li class="nav-item" th:unless="${#authorization.expression('isAuthenticated()')}">
                     <!-- Content for authenticated users -->
@@ -30,7 +30,7 @@
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
                            href="#">Admin Dashboard</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}"
-                           href="#">My Car</a>
+                           th:href="@{'car-owner/view-list-car/' + ${id}}">My Car</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}"
                            href="#">My Booking</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}"
