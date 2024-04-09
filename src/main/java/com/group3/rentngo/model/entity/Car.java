@@ -74,19 +74,18 @@ public class Car {
 
     @Transient
     private MultipartFile registrationPaper;
-    @Column(name = "registrationpaperpath", nullable = false)
+    @Column(nullable = false)
     private String registrationPaperPath;
 
     @Transient
     private MultipartFile certificateOfInspection;
-    @Column(name = "certificateofinspectionpath")
+    @Column(nullable = false)
     private String certificateOfInspectionPath;
 
     @Transient
     private MultipartFile insurance;
-    @Column(name = "insurancepath")
+    @Column(nullable = false)
     private String insurancePath;
-
 
     @ManyToOne
     @JoinColumn(name = "car_owner_id")
@@ -98,4 +97,8 @@ public class Car {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_image_id")
     private CarImage carImage;
+
+
+
+
 }
