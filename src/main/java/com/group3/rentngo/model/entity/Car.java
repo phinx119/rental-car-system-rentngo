@@ -73,16 +73,20 @@ public class Car {
     private String termOfUse;
 
     @Transient
-    @Column(nullable = false)
     private MultipartFile registrationPaper;
+    @Column(name = "registrationpaperpath", nullable = false)
+    private String registrationPaperPath;
 
     @Transient
-    @Column(nullable = false)
     private MultipartFile certificateOfInspection;
+    @Column(name = "certificateofinspectionpath")
+    private String certificateOfInspectionPath;
 
     @Transient
-    @Column(nullable = false)
     private MultipartFile insurance;
+    @Column(name = "insurancepath")
+    private String insurancePath;
+
 
     @ManyToOne
     @JoinColumn(name = "car_owner_id")
