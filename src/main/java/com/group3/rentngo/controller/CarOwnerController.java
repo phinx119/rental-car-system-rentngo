@@ -93,7 +93,7 @@ public class CarOwnerController {
                             @RequestPart("registrationPaper") MultipartFile registrationPaper,
                             @RequestPart("inspectionCertificate") MultipartFile inspectionCertificate,
                             @RequestPart("insurance") MultipartFile insurance) {
-        String saveLocation = "src/main/resources/static/images/car";
+        String saveLocation = "src/main/resources/static/images/document";
 
         try {
             // Lưu registrationPaper
