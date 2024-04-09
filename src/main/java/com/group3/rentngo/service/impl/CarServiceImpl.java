@@ -2,6 +2,7 @@ package com.group3.rentngo.service.impl;
 
 import com.group3.rentngo.model.dto.CarDto;
 import com.group3.rentngo.model.entity.Car;
+import com.group3.rentngo.model.entity.CarImage;
 import com.group3.rentngo.repository.*;
 import com.group3.rentngo.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,16 @@ public class CarServiceImpl implements CarService {
     private CarRepository carRepository;
     private CarOwnerRepository carOwnerRepository;
     private BookingRepository bookingRepository;
-
+private CarImageRepository carImageRepository;
     @Autowired
     public CarServiceImpl(CarRepository carRepository,
                           CarOwnerRepository carOwnerRepository,
-                          BookingRepository bookingRepository) {
+                          BookingRepository bookingRepository,
+                          CarImageRepository carImageRepository) {
         this.carRepository = carRepository;
         this.carOwnerRepository = carOwnerRepository;
         this.bookingRepository = bookingRepository;
+        this.carImageRepository=carImageRepository;
     }
 
     @Override
@@ -36,7 +39,7 @@ public class CarServiceImpl implements CarService {
     }
     
     @Override
-    public void addCar(CarDto carDto) {
+    public void addCar(CarDto carDto, CarImage carImage) {
         Car car = new Car();
         car.setBrand(carDto.getBrand());
         car.setModel(carDto.getModel());
@@ -59,9 +62,15 @@ public class CarServiceImpl implements CarService {
         car.setCertificateOfInspection(carDto.getCertificateOfInspection());
         car.setInsurance(carDto.getInsurance());
         car.setCarOwner(carDto.getCarOwner());
-
         car.setCertificateOfInspectionPath(carDto.getCertificateOfInspectionPath());
         car.setInsurancePath(carDto.getInsurancePath());
+        car.setCarImage(carImage);
         carRepository.save(car);
+    }
+
+    @Override
+    public void addCarImage(CarImage carImage) {
+
+        carImageRepository.save(carImage);
     }
 }
