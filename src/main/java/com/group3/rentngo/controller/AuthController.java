@@ -10,8 +10,6 @@ import com.group3.rentngo.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,9 +46,8 @@ public class AuthController {
      */
     @GetMapping(value = {"/", "/home"})
     public String homePage(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
-            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        CustomUserDetails userDetails = userService.getUserDetail();
+        if (userDetails != null) {
             boolean isAdmin = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
             boolean isCarOwner = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CAR_OWNER"));
             boolean isCustomer = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CUSTOMER"));
@@ -59,10 +56,7 @@ public class AuthController {
                 return "redirect:/admin/list-user";
             }
             if (isCarOwner) {
-                long id = userDetails.getId();
-                model.addAttribute("id",id);
-//                return "redirect:/car-owner/home";
-                return "home-page-as-car-owner";
+                return "redirect:/car-owner/home";
             }
             if (isCustomer) {
                 return "redirect:/customer/home";
@@ -103,10 +97,6 @@ public class AuthController {
         if (!signupDto.getPassword().equals(signupDto.getConfirmPassword())) {
             result.rejectValue("confirmPassword", null, "Password and Confirm password don’t match. Please try again.");
         }
-
-//        if (signupDto.getAgreePrivacy() == null || signupDto.getAgreePrivacy().isEmpty()) {
-//            result.rejectValue("agreePrivacy", null, "You must agree to the privacy policy to continue.");
-//        }
 
         if (result.hasErrors()) {
             UserDto userDto = new UserDto();
