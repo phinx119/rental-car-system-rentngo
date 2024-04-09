@@ -1,15 +1,24 @@
 package com.group3.rentngo.service.impl;
 
+import com.group3.rentngo.common.CommonUtil;
 import com.group3.rentngo.config.VNPayConfig;
 import com.group3.rentngo.model.entity.PaymentHistory;
+import com.group3.rentngo.model.entity.User;
 import com.group3.rentngo.repository.PaymentHistoryRepository;
+import com.group3.rentngo.service.CarOwnerService;
+import com.group3.rentngo.service.CustomerService;
+import com.group3.rentngo.service.UserService;
 import com.group3.rentngo.service.VNPayService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -17,9 +26,24 @@ import java.util.*;
 public class VNPayServiceImpl implements VNPayService {
 
     private final PaymentHistoryRepository paymentHistoryRepository;
+    private final UserService userService;
+    private final CarOwnerService carOwnerService;
+    private final CustomerService customerService;
+    public final CommonUtil commonUtil;
+    private final HttpSession session;
 
-    public VNPayServiceImpl(PaymentHistoryRepository paymentHistoryRepository) {
+    public VNPayServiceImpl(PaymentHistoryRepository paymentHistoryRepository,
+                            UserService userService,
+                            CarOwnerService carOwnerService,
+                            CustomerService customerService,
+                            CommonUtil commonUtil,
+                            HttpSession session) {
         this.paymentHistoryRepository = paymentHistoryRepository;
+        this.userService = userService;
+        this.carOwnerService = carOwnerService;
+        this.customerService = customerService;
+        this.commonUtil = commonUtil;
+        this.session = session;
     }
 
     /**
@@ -43,7 +67,7 @@ public class VNPayServiceImpl implements VNPayService {
         vnp_Params.put("vnp_CurrCode", "VND");
 
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
-        vnp_Params.put("vnp_OrderInfo", "order-info");
+        vnp_Params.put("vnp_OrderInfo", vnp_OrderType);
         vnp_Params.put("vnp_OrderType", vnp_OrderType);
 
         String locate = "vn";
@@ -137,7 +161,36 @@ public class VNPayServiceImpl implements VNPayService {
     }
 
     @Override
-    public void saveNewPaymentHistory(PaymentHistory paymentHistory) {
+    public void saveNewPaymentHistory(String orderType, String totalPrice, String paymentTime) throws ParseException {
+        // create new payment history
+        PaymentHistory paymentHistory = new PaymentHistory();
+        paymentHistory.setAmount(BigDecimal.valueOf(Long.parseLong(totalPrice)));
+        paymentHistory.setType(orderType);
 
+        // parse string to sql date
+        Date createDate = commonUtil.parseDate(paymentTime);
+        paymentHistory.setCreateDate(createDate);
+
+        // get user information to add to new payment history
+        String email = (String) session.getAttribute("email");
+        User user = userService.findUserByEmail(email);
+
+        paymentHistory.setUser(user);
+        paymentHistoryRepository.save(paymentHistory);
+
+        // update wallet value of car owner
+        if (carOwnerService.findCarOwnerByEmail(email) != null) {
+            carOwnerService.updateWallet(email, totalPrice);
+        }
+
+        // update wallet value of customer
+        if (customerService.findCustomerByEmail(email) != null) {
+            customerService.updateWallet(email, totalPrice);
+        }
+    }
+
+    @Override
+    public List<PaymentHistory> findAll() {
+        return paymentHistoryRepository.findAll();
     }
 }
