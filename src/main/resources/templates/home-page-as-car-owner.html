@@ -7,13 +7,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+</style>
 <body>
 
 <header th:insert="~{fragments/header.html :: header}"></header>
 
 
 <!-- Display for car owner -->
-<div class="container-fluid">
+<div id="why-us-section" class="container-fluid">
     <div class="row">
         <div class="col-md-12 bg-secondary text-white p-5">
             <h2 class="text-left">Have a car for rent? Don't miss your benefits.</h2>
@@ -69,7 +74,7 @@
 
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
-<script src="../static/js/script.js"></script>
+<script th:src="@{/js/script.js}"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

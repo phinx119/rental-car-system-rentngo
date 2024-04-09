@@ -7,10 +7,9 @@ import com.group3.rentngo.model.entity.CustomUserDetails;
 import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CustomerService;
 import com.group3.rentngo.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,14 +27,17 @@ public class AuthController {
     private UserService userService;
     private CarOwnerService carOwnerService;
     private CustomerService customerService;
+    private HttpSession session;
 
     @Autowired
     public AuthController(UserService userService,
                           CarOwnerService carOwnerService,
-                          CustomerService customerService) {
+                          CustomerService customerService,
+                          HttpSession session) {
         this.userService = userService;
         this.carOwnerService = carOwnerService;
         this.customerService = customerService;
+        this.session = session;
     }
 
     /**
@@ -44,12 +46,12 @@ public class AuthController {
      */
     @GetMapping(value = {"/", "/home"})
     public String homePage(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
-            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        CustomUserDetails userDetails = userService.getUserDetail();
+        if (userDetails != null) {
             boolean isAdmin = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
             boolean isCarOwner = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CAR_OWNER"));
             boolean isCustomer = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CUSTOMER"));
+            session.setAttribute("email", userDetails.getUsername());
             if (isAdmin) {
                 return "redirect:/admin/list-user";
             }
@@ -96,13 +98,9 @@ public class AuthController {
             result.rejectValue("confirmPassword", null, "Password and Confirm password don’t match. Please try again.");
         }
 
-//        if (signupDto.getAgreePrivacy() == null || signupDto.getAgreePrivacy().isEmpty()) {
-//            result.rejectValue("agreePrivacy", null, "You must agree to the privacy policy to continue.");
-//        }
-
         if (result.hasErrors()) {
             UserDto userDto = new UserDto();
-
+          
             model.addAttribute("userDto", userDto);
             model.addAttribute("signupDto", signupDto);
             model.addAttribute("errors", result.getAllErrors());

@@ -3,7 +3,11 @@ package com.group3.rentngo.service;
 import com.group3.rentngo.model.dto.CarDto;
 import com.group3.rentngo.model.entity.Car;
 
-public interface CarService {
+import java.util.List;
+import java.util.Optional;
 
-    void addCar(CarDto carDto);
+public interface CarService {
+     List<Car> listCarOfOwner(Long id);
+     Optional<Car> findbyId(Long id);
+     void addCar(CarDto carDto);
 }

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Blob;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -95,4 +94,8 @@ public class Car {
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
     private Collection<Booking> bookings;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_image_id")
+    private CarImage carImage;
 }

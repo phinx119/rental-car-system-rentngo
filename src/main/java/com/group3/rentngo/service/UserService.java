@@ -3,11 +3,13 @@ package com.group3.rentngo.service;
 import com.group3.rentngo.model.dto.ResetPasswordDto;
 import com.group3.rentngo.model.dto.SignupDto;
 import com.group3.rentngo.model.dto.UserDto;
+import com.group3.rentngo.model.entity.CustomUserDetails;
 import com.group3.rentngo.model.entity.User;
 
 import java.util.List;
 
 public interface UserService {
+    CustomUserDetails getUserDetail();
     void saveAdmin(UserDto userDto);
 
     void saveUser(SignupDto signupDto);

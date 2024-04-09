@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,17 +10,7 @@
 
 </head>
 <body>
-<div class="container-fluid">
-    <header class="row">
-        <strong ><i class="fa-solid fa-car mr-3 " ></i>Rent a car today</strong>
-        <div>
-            <a href="#">ABOUT US</a>
-        </div>
-        <div>
-            <span class="ml-5">Welcome,user</span>
-        </div>
-    </header>
-</div>
+<header th:insert="~{fragments/header.html :: header}"></header>
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -206,41 +196,7 @@
     </div>
     <!-- Step 3 -->
 </form>
-<footer class="bg-secondary text-light mt-3">
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-md-4">
-                <h5>Links</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-light">Home</a></li>
-                    <li><a href="#" class="text-light">About Us</a></li>
-                    <li><a href="#" class="text-light">Services</a></li>
-                    <li><a href="#" class="text-light">Contact</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <h5>Contact Us</h5>
-                <p class="text-light">Address: 123 Street, City, Country</p>
-                <p class="text-light">Email: info@example.com</p>
-                <p class="text-light">Phone: +1234567890</p>
-            </div>
-            <div class="col-md-4">
-                <h5>Follow Us</h5>
-                <ul class="list-inline">
-                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-facebook-f"></i></a>
-                    </li>
-                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-twitter"></i></a></li>
-                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
-                    </li>
-                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-linkedin"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="bg-light text-dark text-center py-3">
-        <p class="mb-0">&copy; 2024 Your Company. All rights reserved.</p>
-    </div>
-</footer>
+<footer th:insert="~{fragments/footer.html :: footer}"></footer>
 <script>
     let personalinformation = document.querySelector(".personal-information");
     let payment = document.querySelector(".payment");
