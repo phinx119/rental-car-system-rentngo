@@ -74,8 +74,9 @@ public class Car {
     private String termOfUse;
 
     @Transient
-    @Column(nullable = false)
     private MultipartFile registrationPaper;
+    @Column(name = "registrationpaperpath", nullable = false)
+    private String registrationPaperPath;
 
     @Transient
     @Column(nullable = false)

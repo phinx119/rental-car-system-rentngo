@@ -5,6 +5,7 @@ import com.group3.rentngo.model.dto.CarOwnerDto;
 import com.group3.rentngo.model.entity.Car;
 import com.group3.rentngo.service.impl.CarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,9 +47,9 @@ public class CarOwnerController {
     CarServiceImpl carService;
 
 
-    @PostMapping("/addnewcar")
-    public String addNewCar(@RequestParam("registrationPaper") MultipartFile registrationPaper,
-                            @ModelAttribute("car") CarDto car) {
+    @PostMapping(path = "/addnewcar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String addNewCar(@ModelAttribute("car") CarDto car, @RequestPart("registrationPaper") MultipartFile registrationPaper) {
+        //   MultipartFile registrationPaper=car.getRegistrationPaper();
 
         String saveLocation = "src/main/resources/static/images/car";
         String registrationPaperName = registrationPaper.getOriginalFilename();
@@ -65,7 +66,9 @@ public class CarOwnerController {
         } catch (Exception e) {
             System.out.println(e);
         }
-        // car.setRegistrationPaper(saveLocation + "/" + registrationPaperNewName);
+
+        car.setRegistrationPaperPath(saveLocation + "/" + registrationPaperNewName);
+
         carService.addCar(car);
 
         return "redirect:/home";

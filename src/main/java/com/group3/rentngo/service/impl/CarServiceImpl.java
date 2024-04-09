@@ -24,7 +24,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void addCar(CarDto carDto) {
-        Car car=new Car();
+        Car car = new Car();
         car.setBrand(carDto.getBrand());
         car.setModel(carDto.getModel());
         car.setColor(carDto.getColor());
@@ -42,7 +42,7 @@ public class CarServiceImpl implements CarService {
         car.setDescription(carDto.getDescription());
         car.setAdditionalFunctions(carDto.getAdditionalFunctions());
         car.setTermOfUse(carDto.getTermOfUse());
-        car.setRegistrationPaper(carDto.getRegistrationPaper());
+        car.setRegistrationPaperPath(carDto.getRegistrationPaperPath());
         car.setCertificateOfInspection(carDto.getCertificateOfInspection());
         car.setInsurance(carDto.getInsurance());
         car.setCarOwner(carDto.getCarOwner());

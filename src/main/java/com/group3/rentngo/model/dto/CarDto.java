@@ -76,6 +76,8 @@ public class CarDto implements Serializable {
     @NotNull(message = "Mandatory information.")
     MultipartFile registrationPaper;
 
+    String registrationPaperPath;
+
     @NotNull(message = "Mandatory information.")
     MultipartFile certificateOfInspection;
 
