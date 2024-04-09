@@ -46,6 +46,9 @@ public class CarServiceImpl implements CarService {
         car.setCertificateOfInspection(carDto.getCertificateOfInspection());
         car.setInsurance(carDto.getInsurance());
         car.setCarOwner(carDto.getCarOwner());
+
+        car.setCertificateOfInspectionPath(carDto.getCertificateOfInspectionPath());
+        car.setInsurancePath(carDto.getInsurancePath());
         carRepository.save(car);
     }
 }

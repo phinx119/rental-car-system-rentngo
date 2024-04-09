@@ -48,32 +48,49 @@ public class CarOwnerController {
 
 
     @PostMapping(path = "/addnewcar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public String addNewCar(@ModelAttribute("car") CarDto car, @RequestPart("registrationPaper") MultipartFile registrationPaper) {
-        //   MultipartFile registrationPaper=car.getRegistrationPaper();
-
+    public String addNewCar(@ModelAttribute("car") CarDto car,
+                            @RequestPart("registrationPaper") MultipartFile registrationPaper,
+                            @RequestPart("inspectionCertificate") MultipartFile inspectionCertificate,
+                            @RequestPart("insurance") MultipartFile insurance) {
         String saveLocation = "src/main/resources/static/images/car";
-        String registrationPaperName = registrationPaper.getOriginalFilename();
-        String registrationPaperNewName = UUID.randomUUID().toString() + registrationPaperName;
+
         try {
-            File saveLocationFile = new File(saveLocation);
-            if (!saveLocationFile.exists()) {
-                saveLocationFile.mkdirs();
-            }
+            // Lưu registrationPaper
+            String registrationPaperName = registrationPaper.getOriginalFilename();
+            String registrationPaperNewName = UUID.randomUUID().toString() + registrationPaperName;
             File registrationPaperFile = new File(saveLocation + "/" + registrationPaperNewName);
-            FileOutputStream fos = new FileOutputStream(registrationPaperFile);
-            fos.write(registrationPaper.getBytes());
-            fos.close();
+            FileOutputStream registrationFos = new FileOutputStream(registrationPaperFile);
+            registrationFos.write(registrationPaper.getBytes());
+            registrationFos.close();
+            car.setRegistrationPaperPath(saveLocation + "/" + registrationPaperNewName);
+
+            // Lưu inspectionCertificate
+            String inspectionCertificateName = inspectionCertificate.getOriginalFilename();
+            String inspectionCertificateNewName = UUID.randomUUID().toString() + inspectionCertificateName;
+            File inspectionCertificateFile = new File(saveLocation + "/" + inspectionCertificateNewName);
+            FileOutputStream inspectionFos = new FileOutputStream(inspectionCertificateFile);
+            inspectionFos.write(inspectionCertificate.getBytes());
+            inspectionFos.close();
+            car.setCertificateOfInspectionPath(saveLocation + "/" + inspectionCertificateNewName);
+
+             //Lưu insurance
+            String insuranceName = insurance.getOriginalFilename();
+            String insuranceNewName = UUID.randomUUID().toString() + insuranceName;
+            File insuranceFile = new File(saveLocation + "/" + insuranceNewName);
+            FileOutputStream insuranceFos = new FileOutputStream(insuranceFile);
+            insuranceFos.write(insurance.getBytes());
+            insuranceFos.close();
+            car.setInsurancePath(saveLocation + "/" + insuranceNewName);
+
+            carService.addCar(car);
+
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        car.setRegistrationPaperPath(saveLocation + "/" + registrationPaperNewName);
-
-        carService.addCar(car);
-
         return "redirect:/home";
-
     }
+
 
 }
 
