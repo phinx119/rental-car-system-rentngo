@@ -43,7 +43,7 @@ public class CarOwnerController {
      * @author phinx
      * @description show home page for role car owner
      */
-    @GetMapping("/home")
+    @GetMapping({ "/home"})
     public String viewCarOwnerHome(Model model) {
         CustomUserDetails userDetails = userService.getUserDetail();
         if (userDetails != null) {
@@ -74,7 +74,7 @@ public class CarOwnerController {
     }
 
     @GetMapping("/display-car-detail/{id}")
-    public String editCarDetail(Model model, @PathVariable long id) {
+    public String carDetail(Model model, @PathVariable long id) {
         Optional<Car> carOptional = carService.findbyId(id);
         Car car = carOptional.orElse(null);
 
@@ -82,6 +82,24 @@ public class CarOwnerController {
         return "car-detail";
     }
 
+    @GetMapping("/edit-car/{id}")
+    public String editCarDetail(Model model, @PathVariable long id) {
+        Optional<Car> carOptional = carService.findbyId(id);
+        Car car = carOptional.orElse(null);
+
+        model.addAttribute("car", car);
+        return "edit-car-detial-page";
+    }
+    @PostMapping("/edit-car/{id}")
+    public String editCarInfoDetail(Model model, @PathVariable long id) {
+        Optional<Car> carOptional = carService.findbyId(id);
+        Car car = carOptional.orElse(null);
+
+        model.addAttribute("car", car);
+        return "edit-car-detial-page";
+    }
+
+  
     @PostMapping(path = "/addnewcar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String addNewCar(@ModelAttribute("car") CarDto car,
                             @RequestPart("registrationPaper") MultipartFile registrationPaper,
