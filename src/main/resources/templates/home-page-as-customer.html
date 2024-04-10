@@ -19,40 +19,48 @@
 
 
 <!-- Display for customer -->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-6 bg-primary text-white p-5">
-            <h2>Looking for a vehicle?</h2>
-            <p>Find the ideal car rental for your trip.</p>
+<div class="container-fluid py-4">
+    <div class="row align-items-md-stretch">
+        <div class="col-md-6">
+            <div class="h-100 p-5 text-white bg-dark rounded">
+                <h2>Looking for a vehicle?</h2>
+                <h2>You're at the right place.</h2>
+                <p>We have a large selection of locally owned cars
+                    available for you to choose from. Rental plans are
+                    customized to suit your needs. With over 300 cars located
+                    nationwide we will have something for you.</p>
+            </div>
         </div>
-        <div class="col-md-6 bg-secondary text-white p-5">
-            <form id="searchForm">
-                <div class="form-group">
-                    <label for="pickupLocation">Pickup Location</label>
-                    <input type="text" class="form-control" id="pickupLocation" placeholder="Enter pickup location">
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="pickupDate">Pickup Date</label>
-                        <input type="date" class="form-control" id="pickupDate">
+        <div class="col-md-6">
+            <div class="h-100 p-5 bg-light border rounded">
+                <form id="searchForm">
+                    <div class="form-group">
+                        <label for="pickupLocation">Pickup Location</label>
+                        <input type="text" class="form-control" id="pickupLocation" placeholder="Enter pickup location">
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="pickupTime">Pickup Time</label>
-                        <input type="time" class="form-control" id="pickupTime">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="pickupDate">Pickup Date</label>
+                            <input type="date" class="form-control" id="pickupDate">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="pickupTime">Pickup Time</label>
+                            <input type="time" class="form-control" id="pickupTime">
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="dropOffDate">Drop-off Date</label>
-                        <input type="date" class="form-control" id="dropOffDate">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="dropOffDate">Drop-off Date</label>
+                            <input type="date" class="form-control" id="dropOffDate">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="dropOffTime">Drop-off Time</label>
+                            <input type="time" class="form-control" id="dropOffTime">
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="dropOffTime">Drop-off Time</label>
-                        <input type="time" class="form-control" id="dropOffTime">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-light">Search</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
