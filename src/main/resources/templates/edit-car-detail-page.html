@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <style>
     .checked {
@@ -97,277 +98,245 @@
 </div>
 
 
-<div class="bg-white mt-4">
-    <div class="row justify-content-left p-0">
-        <div class="col-1 p-0">
-            <button class="btn btn-outline-primary btn-block btn-sm active" id="basicInfoBtn"><a class="text-dark" href="#">Information</a></button>
-        </div>
-        <div class="col-1 p-0">
-            <button class="btn btn-outline-primary btn-block btn-sm" id="detailCarBtn"><a class="text-dark" href="#">Details</a></button>
-        </div>
-        <div class="col-1 p-0">
-            <button class="btn btn-outline-primary btn-block btn-sm" id="pricingCarBtn"><a class="text-dark" href="#">Pricing</a></button>
+<div class="w3-container">
+    <h2>Manage user</h2>
+    <div class="w3-bar w3-light-grey">
+        <button class="w3-bar-item w3-button tablink w3-grey" onclick="changeTab(event,'firstTabBtn')">Car Information</button>
+        <button class="w3-bar-item w3-button tablink" onclick="changeTab(event,'secondTabBtn')">Car Details</button>
+        <button class="w3-bar-item w3-button tablink" onclick="changeTab(event,'thirdTabBtn')">Car Pricing</button>
+
+    </div>
+    <!--Tab 1: car information-->
+    <div id="firstTabBtn" class="w3-container w3-border city">
+        <div class="row justify-content p-4">
+            <div class="col-md-6">
+                <!-- Car Information -->
+                <h4>Car Information</h4>
+                <ul class="list-unstyled">
+                    <li><strong>License Plate:</strong> ABC123</li>
+                    <li><strong>Brand Name:</strong> Example Brand</li>
+                    <li><strong>Production Year:</strong> 2022</li>
+                    <li><strong>Transmission:</strong> Automatic</li>
+                    <li><strong>Color:</strong> Red</li>
+                    <li><strong>Model:</strong> Example Model</li>
+                    <li><strong>No. of Seats:</strong> 5</li>
+                    <li><strong>Fuel:</strong> Petrol</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <!-- Document Table -->
+                <h4>Documents</h4>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Note</th>
+                        <th>Link</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Registration</td>
+                        <td>Note about registration</td>
+                        <td><a href="#">Link to registration document</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Certificate</td>
+                        <td>Note about certificate</td>
+                        <td><a href="#">Link to certificate document</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Insurance</td>
+                        <td>Note about insurance</td>
+                        <td><a href="#">Link to insurance document</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p class="small">Please contact us if you need to update car information.</p>
+            </div>
         </div>
     </div>
-</div>
-
-<!--Tab 1: Basic information-->
-<div class="container-fluid bg-light mt-4" id="carInformation">
-    <div class="row justify-content p-4">
-        <div class="col-md-6">
-            <!-- Car Information -->
-            <h4>Car Information</h4>
-            <ul class="list-unstyled">
-                <li><strong>License Plate:</strong> ABC123</li>
-                <li><strong>Brand Name:</strong> Example Brand</li>
-                <li><strong>Production Year:</strong> 2022</li>
-                <li><strong>Transmission:</strong> Automatic</li>
-                <li><strong>Color:</strong> Red</li>
-                <li><strong>Model:</strong> Example Model</li>
-                <li><strong>No. of Seats:</strong> 5</li>
-                <li><strong>Fuel:</strong> Petrol</li>
-            </ul>
-        </div>
-        <div class="col-md-6">
-            <!-- Document Table -->
-            <h4>Documents</h4>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Name</th>
-                    <th>Note</th>
-                    <th>Link</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Registration</td>
-                    <td>Note about registration</td>
-                    <td><a href="#">Link to registration document</a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Certificate</td>
-                    <td>Note about certificate</td>
-                    <td><a href="#">Link to certificate document</a></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Insurance</td>
-                    <td>Note about insurance</td>
-                    <td><a href="#">Link to insurance document</a></td>
-                </tr>
-                </tbody>
-            </table>
-            <p class="small">Please contact us if you need to update car information.</p>
-        </div>
+    <!--Tab 2: car detail-->
+    <div id="secondTabBtn" class="w3-container w3-border city" style="display:none">
+        <form>
+            <div class="row justify-content-between p-4">
+                <div class="col-md-5">
+                    <!-- Detail Information -->
+                    <h4>Detail Information</h4>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="mileageInput">Mileage:</label>
+                            <input type="text" id="mileageInput" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="fuelConsumptionInput">Fuel Consumption (L/100km):</label>
+                            <input type="text" id="fuelConsumptionInput" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addressInput">Address:</label>
+                        <input type="text" id="addressInput" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="cityInput">City:</label>
+                        <input type="text" id="cityInput" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="districtInput">District:</label>
+                        <input type="text" id="districtInput" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="wardInput">Ward:</label>
+                        <input type="text" id="wardInput" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="houseNumberInput">House number:</label>
+                        <input type="text" id="houseNumberInput" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="descriptionInput">Description:</label>
+                        <textarea type="text" id="descriptionInput" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <!-- Additional Functions -->
+                    <h4>Additional Functions</h4>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="checkbox" id="bluetoothCheckbox">
+                            <label for="bluetoothCheckbox">Bluetooth</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="gpsCheckbox">
+                            <label for="gpsCheckbox">GPS</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="checkbox" id="cameraCheckbox">
+                            <label for="cameraCheckbox">Camera</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="sunRoofCheckbox">
+                            <label for="sunRoofCheckbox">Sun Roof</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="checkbox" id="childSeatCheckbox">
+                            <label for="childSeatCheckbox">Child Seat</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="childLockCheckbox">
+                            <label for="childLockCheckbox">Child Lock</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="checkbox" id="dvdCheckbox">
+                            <label for="dvdCheckbox">DVD</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="usbCheckbox">
+                            <label for="usbCheckbox">USB</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="frontImage">Front Image:</label>
+                        <input type="file" class="form-control-file" id="frontImage" name="frontImage">
+                    </div>
+                    <div class="form-group">
+                        <label for="backImage">Back Image:</label>
+                        <input type="file" class="form-control-file" id="backImage" name="backImage">
+                    </div>
+                    <div class="form-group">
+                        <label for="leftImage">Left Image:</label>
+                        <input type="file" class="form-control-file" id="leftImage" name="leftImage">
+                    </div>
+                    <div class="form-group">
+                        <label for="rightImage">Right Image:</label>
+                        <input type="file" class="form-control-file" id="rightImage" name="rightImage">
+                    </div>
+                    <div class="text-center">
+                        <button type="reset" class="btn btn-secondary">Discard</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-</div>
-
-<!--Tab 2: Car Details-->
-<div class="container-fluid bg-light mt-4" id="carDetailInformation" style="display: none;">
-    <form>
-        <div class="row justify-content-between p-4">
-            <div class="col-md-5">
-                <!-- Detail Information -->
-                <h4>Detail Information</h4>
-                <div class="form-group row">
-                    <div class="col-md-6">
-                        <label for="mileageInput">Mileage:</label>
-                        <input type="text" id="mileageInput" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="fuelConsumptionInput">Fuel Consumption (L/100km):</label>
-                        <input type="text" id="fuelConsumptionInput" class="form-control">
+    <!--Tab 3: car pricing-->
+    <div id="thirdTabBtn" class="w3-container w3-border city" style="display:none">
+        <form>
+            <div class="row justify-content-between p-4">
+                <div class="col-md-5">
+                    <!-- Detail Information -->
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="basePriceInput">Base price:</label>
+                            <input type="text" id="basePriceInput" class="form-control"> VND/day
+                        </div>
+                        <div class="col-md-6">
+                            <label for="requireDepositInput">Required deposit:</label>
+                            <input type="text" id="requireDepositInput" class="form-control"> VND
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="addressInput">Address:</label>
-                    <input type="text" id="addressInput" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="cityInput">City:</label>
-                    <input type="text" id="cityInput" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="districtInput">District:</label>
-                    <input type="text" id="districtInput" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="wardInput">Ward:</label>
-                    <input type="text" id="wardInput" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="houseNumberInput">House number:</label>
-                    <input type="text" id="houseNumberInput" class="form-control">
-                </div>
-            </div>
-            <div class="col-md-5">
-                <!-- Additional Functions -->
-                <h4>Additional Functions</h4>
-                <div class="form-group row">
-                    <div class="col-md-6">
-                        <input type="checkbox" id="bluetoothCheckbox">
-                        <label for="bluetoothCheckbox">Bluetooth</label>
+                <div class="col-md-5">
+                    <!-- Term of use -->
+                    <h4>Term of use</h4>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="checkbox" id="noSmokeCheckbox">
+                            <label for="noSmokeCheckbox">No smoking</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="noPetCheckbox">
+                            <label for="noPetCheckbox">No pet</label>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <input type="checkbox" id="gpsCheckbox">
-                        <label for="gpsCheckbox">GPS</label>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-6">
-                        <input type="checkbox" id="cameraCheckbox">
-                        <label for="cameraCheckbox">Camera</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="checkbox" id="sunRoofCheckbox">
-                        <label for="sunRoofCheckbox">Sun Roof</label>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-6">
-                        <input type="checkbox" id="childSeatCheckbox">
-                        <label for="childSeatCheckbox">Child Seat</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="checkbox" id="childLockCheckbox">
-                        <label for="childLockCheckbox">Child Lock</label>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-6">
-                        <input type="checkbox" id="dvdCheckbox">
-                        <label for="dvdCheckbox">DVD</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="checkbox" id="usbCheckbox">
-                        <label for="usbCheckbox">USB</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="frontImage">Front Image:</label>
-                    <input type="file" class="form-control-file" id="frontImage" name="frontImage">
-                </div>
-                <div class="form-group">
-                    <label for="backImage">Back Image:</label>
-                    <input type="file" class="form-control-file" id="backImage" name="backImage">
-                </div>
-                <div class="form-group">
-                    <label for="leftImage">Left Image:</label>
-                    <input type="file" class="form-control-file" id="leftImage" name="leftImage">
-                </div>
-                <div class="form-group">
-                    <label for="rightImage">Right Image:</label>
-                    <input type="file" class="form-control-file" id="rightImage" name="rightImage">
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12 text-center mt-4">
-            <button type="reset" class="btn btn-secondary">Discard</button>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
-</div>
-
-
-<!--Tab 3: pricing-->
-<div class="container-fluid bg-light mt-4" id="carPricing" style="display: none;">
-    <form>
-        <div class="row justify-content-between p-4">
-            <div class="col-md-5">
-                <!-- Detail Information -->
-                <div class="form-group row">
-                    <div class="col-md-6">
-                        <label for="basePriceInput">Base price:</label>
-                        <input type="text" id="basePriceInput" class="form-control"> VND/day
-                    </div>
-                    <div class="col-md-6">
-                        <label for="requireDepositInput">Required deposit:</label>
-                        <input type="text" id="requireDepositInput" class="form-control"> VND
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="checkbox" id="noFoodCheckbox">
+                            <label for="noFoodCheckbox">No food in car</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="otherCheckbox">
+                            <label for="otherCheckbox">Other</label>
+                        </div>
+                        <hr class="my-4">
+                        <div class="text-center">
+                            <button type="reset" class="btn btn-secondary">Discard</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
-                <!-- Term of use -->
-                <h4>Term of use</h4>
-                <div class="form-group row">
-                    <div class="col-md-6">
-                        <input type="checkbox" id="noSmokeCheckbox">
-                        <label for="noSmokeCheckbox">No smoking</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="checkbox" id="noPetCheckbox">
-                        <label for="noPetCheckbox">No pet</label>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-6">
-                        <input type="checkbox" id="noFoodCheckbox">
-                        <label for="noFoodCheckbox">No food in car</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="checkbox" id="otherCheckbox">
-                        <label for="otherCheckbox">Other</label>
-                    </div>
-                    <hr class="my-4">
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12 text-center mt-4">
-            <button type="reset" class="btn btn-secondary">Discard</button>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
 <script>
-    // Get buttons
-    const basicInfoBtn = document.getElementById('basicInfoBtn');
-    const detailCarBtn = document.getElementById('detailCarBtn');
-    const pricingCarBtn = document.getElementById('pricingCarBtn');
-
-    // Get sections
-    const carInformation = document.getElementById('carInformation');
-    const carDetailInformation = document.getElementById('carDetailInformation');
-    const carPricing = document.getElementById('carPricing');
-
-    // Function to remove active class from all buttons
-    function removeActiveClassFromButtons() {
-        basicInfoBtn.classList.remove('active');
-        detailCarBtn.classList.remove('active');
-        pricingCarBtn.classList.remove('active');
+    function changeTab(evt, tab) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("city");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" w3-grey", "");
+        }
+        document.getElementById(tab).style.display = "block";
+        evt.currentTarget.className += " w3-grey";
     }
-
-    // Event listeners
-    basicInfoBtn.addEventListener('click', function() {
-        carInformation.style.display = 'block';
-        carDetailInformation.style.display = 'none';
-        carPricing.style.display = 'none';
-        removeActiveClassFromButtons();
-        basicInfoBtn.classList.add('active');
-    });
-
-    detailCarBtn.addEventListener('click', function() {
-        carInformation.style.display = 'none';
-        carDetailInformation.style.display = 'block';
-        carPricing.style.display = 'none';
-        removeActiveClassFromButtons();
-        detailCarBtn.classList.add('active');
-    });
-
-    pricingCarBtn.addEventListener('click', function() {
-        carInformation.style.display = 'none';
-        carDetailInformation.style.display = 'none';
-        carPricing.style.display = 'block';
-        removeActiveClassFromButtons();
-        pricingCarBtn.classList.add('active');
-    });
 
 </script>
 

@@ -1,6 +1,6 @@
-<nav th:fragment="header" class="navbar navbar-expand-lg navbar-light bg-light">
+<nav th:fragment="header" class="navbar navbar-expand-lg navbar-light bg-secondary">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand text-light" href="#">
             <i class="fas fa-car"></i>
             RentN'Go
         </a>
@@ -11,17 +11,17 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#why-us-section">ABOUT US</a>
+                    <a class="nav-link text-light" href="#why-us-section">ABOUT US</a>
                 </li>
                 <li class="nav-item" th:unless="${#authorization.expression('isAuthenticated()')}">
                     <!-- Content for authenticated users -->
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
+                    <a class="nav-link text-light" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
                 </li>
                 <li class="nav-item" th:unless="${#authorization.expression('isAuthenticated()')}">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#signupModal">Sign Up</a>
+                    <a class="nav-link text-light" href="#" data-toggle="modal" data-target="#signupModal">Sign Up</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Welcome
                     </a>
