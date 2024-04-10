@@ -87,14 +87,15 @@ public class CarOwnerController {
         return "car-detail";
     }
 
-    @GetMapping("/edit-car/{id}")
-    public String editCarDetail(Model model, @PathVariable long id) {
-        Optional<Car> carOptional = carService.findbyId(id);
-        Car car = carOptional.orElse(null);
-
-        model.addAttribute("car", car);
-        return "edit-car-detial-page";
-    }
+//    @GetMapping("/edit-car/{id}")
+//    public String editCarDetail(Model model, @PathVariable long id,@ModelAttribute("car") Car car) {
+//        Optional<Car> carOptional = carService.findbyId(id);
+//        Car car = carOptional.orElse(null);
+//        CarDto carDto = new CarDto();
+//
+//        model.addAttribute("car", car);
+//        return "edit-car-detial-page";
+//    }
     @PostMapping("/edit-car/{id}")
     public String editCarInfoDetail(Model model, @PathVariable long id) {
         Optional<Car> carOptional = carService.findbyId(id);
