@@ -29,7 +29,7 @@
         <img src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png">
     </div>
     <div class="col-md-6">
-        <h3 th:text="${car.name}"></h3>
+        <h3></h3>
         <table class="info-car">
             <tr>
                 <td><strong>Ratings:</strong></td>
@@ -45,28 +45,28 @@
             <tr>
                 <td><strong>No.of rides:</strong></td>
                 <td>
-                    <strong>0</strong>
+                    <strong th:text="${car.numberOfSeats}"></strong>
 
                 </td>
             </tr>
             <tr>
                 <td><strong>Price:</strong></td>
                 <td>
-                    <strong>900k/day</strong>
+                    <strong th:text="${car.basePrice}+ '/day'"></strong>
 
                 </td>
             </tr>
             <tr>
                 <td><strong>Location:</strong></td>
                 <td>
-                    <strong>Cau giay, Ha Noi</strong>
+                    <strong th:text="${car.address}"></strong>
 
                 </td>
             </tr>
             <tr>
                 <td><strong>Status:</strong></td>
                 <td>
-                    <strong>Avaliable</strong>
+                    <strong >Avaliable</strong>
 
                 </td>
             </tr>
@@ -86,16 +86,20 @@
 <div class="info-detail row ml-5 mt-4">
     <div class="col-md-6 info-detail-items ">
         <div>
-            <strong>License plate:</strong>
+            <strong>License plate: </strong>
+            <strong th:text="${car.licensePlate}"></strong>
         </div>
         <div>
             <strong>Brand name:</strong>
+            <strong th:text="${car.brand}"></strong>
         </div>
         <div>
             <strong>Production year:</strong>
+            <strong th:text="${car.productionYear}"></strong>
         </div>
         <div>
             <strong>Transmission:</strong>
+            <strong th:text="${car.transmissionType}"></strong>
         </div>
         <div>
             <strong>Document</strong>
@@ -131,29 +135,37 @@
     <div class="col-md-6 info-detail-items ">
         <div>
             <strong>Color:</strong>
+            <strong th:text="${car.color}"></strong>
         </div>
         <div>
             <strong>Model:</strong>
+            <strong th:text="${car.model}"></strong>
         </div>
         <div>
             <strong>No.of seats:</strong>
+            <strong th:text="${car.numberOfSeats}"></strong>
         </div>
         <div>
             <strong>Fuel:</strong>
+            <strong th:text="${car.fuelType}"></strong>
+
         </div>
     </div>
 
 </div>
 
 <div class="details  ml-5 mt-4" style="display: none;">
-    <strong>Mileage: </strong><br/>
-    <strong>Fuel consumption: 18 liters/100 km  </strong>
+    <strong>Mileage: </strong>
+    <strong th:text="${car.mileage}"></strong><br/>
+    <strong th:text="'Fuel consumption: '+${car.fuelType} +'liters/100 km'"  >  </strong>
     <br/>
-    <strong>Address: </strong><br/>
+  <strong>Address: </strong>
+ <strong th:text="${car.mileage}"></strong><br/>
     <span>Note: Full Address will be available after you've paid the deposit to rent</span><br/>
     <strong>Description: </strong><br/>
-    <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non itaque minima voluptatum eligendi consectetur sint odit! Adipisci vitae fugit doloribus
-        sunt, culpa numquam minima ab. Ad rem pariatur architecto?</span><br/>
+    <span th:text="${car.description}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non itaque minima voluptatum eligendi consectetur sint odit! Adipisci vitae fugit doloribus
+    sunt, culpa numquam minima ab. Ad rem pariatur architecto?</span><br/>
+
     <strong>Additional functions: </strong><br/>
     <table class="table">
         <tr>
@@ -236,13 +248,13 @@
 <div class="term ml-5 mt-4" style="display: none;">
     <table class="table">
         <tr>
-            <td> <strong>Base price</strong></td>
-            <td> <strong>900,000</strong></td>
+            <td> <strong >Base price</strong></td>
+            <td> <strong th:text="${car.basePrice}">900,000</strong></td>
             <td> <strong>VND/Day</strong></td>
         </tr>
         <tr>
             <td> <strong>Request deposit</strong></td>
-            <td> <strong>900,000</strong></td>
+            <td> <strong th:text="${car.deposit}" >900,000</strong></td>
             <td> <strong>VND/Day</strong></td>
         </tr>
         <tr>
