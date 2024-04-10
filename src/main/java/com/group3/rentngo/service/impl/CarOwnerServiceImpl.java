@@ -16,7 +16,6 @@ public class CarOwnerServiceImpl implements CarOwnerService {
     private UserRepository userRepository;
     private CarRepository carRepository;
     private FeedbackRepository feedbackRepository;
-
     private static BookingRepository bookingRepository;
 
     @Autowired
