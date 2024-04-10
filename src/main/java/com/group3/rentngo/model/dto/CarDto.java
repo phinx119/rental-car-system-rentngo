@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.sql.Blob;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * DTO for {@link Car}
@@ -75,25 +77,35 @@ public class CarDto implements Serializable {
 
     @NotNull(message = "Mandatory information.")
     MultipartFile registrationPaper;
+    String registrationPaperPath;
 
     @NotNull(message = "Mandatory information.")
     MultipartFile certificateOfInspection;
+    String certificateOfInspectionPath;
 
     @NotNull(message = "Mandatory information.")
     MultipartFile insurance;
+    String insurancePath;
 
     @NotNull(message = "Mandatory information.")
     MultipartFile frontImage;
+    public String frontImagePath;
 
     @NotNull(message = "Mandatory information.")
     MultipartFile backImage;
+    public String backImagePath;
 
     @NotNull(message = "Mandatory information.")
     MultipartFile leftImage;
+    public String leftImagePath;
 
     @NotNull(message = "Mandatory information.")
     MultipartFile rightImage;
+    public String rightImagePath;
 
     @NotNull(message = "Mandatory information.")
     CarOwner carOwner;
+
+
+
 }

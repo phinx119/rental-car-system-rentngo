@@ -1,10 +1,8 @@
 package com.group3.rentngo.controller;
 
 import com.group3.rentngo.model.dto.CarDto;
-import com.group3.rentngo.model.entity.Car;
-import com.group3.rentngo.model.entity.CarOwner;
-import com.group3.rentngo.model.entity.CustomUserDetails;
-import com.group3.rentngo.model.entity.PaymentHistory;
+import com.group3.rentngo.model.entity.*;
+import org.springframework.http.MediaType;
 import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CarService;
 import com.group3.rentngo.service.UserService;
@@ -34,10 +32,7 @@ public class CarOwnerController {
     private final CarOwnerService carOwnerService;
     private final VNPayService vnPayService;
 
-    public CarOwnerController(UserService userService,
-                              CarService carService,
-                              CarOwnerService carOwnerService,
-                              VNPayService vnPayService) {
+    public CarOwnerController(UserService userService, CarService carService, CarOwnerService carOwnerService, VNPayService vnPayService) {
         this.userService = userService;
         this.carService = carService;
         this.carOwnerService = carOwnerService;
@@ -104,30 +99,94 @@ public class CarOwnerController {
         return "edit-car-detial-page";
     }
 
-    @PostMapping("/addnewcar")
-    public String addNewCar(@RequestParam("registrationPaper") MultipartFile registrationPaper,
-                            @ModelAttribute("car") CarDto car) {
-
-        String saveLocation = "src/main/resources/static/images/car";
-        String registrationPaperName = registrationPaper.getOriginalFilename();
-        String registrationPaperNewName = UUID.randomUUID().toString() + registrationPaperName;
+  
+    @PostMapping(path = "/addnewcar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String addNewCar(@ModelAttribute("car") CarDto car,
+                            @RequestPart("registrationPaper") MultipartFile registrationPaper,
+                            @RequestPart("inspectionCertificate") MultipartFile inspectionCertificate,
+                            @RequestPart("insurance") MultipartFile insurance,
+                            @RequestPart("frontImage") MultipartFile frontImage,
+                            @RequestPart("backImage") MultipartFile backImage,
+                            @RequestPart("leftImage") MultipartFile leftImage,
+                            @RequestPart("rightImage") MultipartFile rightImage) {
+        String saveLocation = "src/main/resources/static/images/document";
+        String saveLocationCarImage = "src/main/resources/static/images/car";
+        CarImage carImage = new CarImage();
         try {
-            File saveLocationFile = new File(saveLocation);
-            if (!saveLocationFile.exists()) {
-                saveLocationFile.mkdirs();
-            }
+            // Lưu registrationPaper
+            String registrationPaperName = registrationPaper.getOriginalFilename();
+            String registrationPaperNewName = UUID.randomUUID().toString() + registrationPaperName;
             File registrationPaperFile = new File(saveLocation + "/" + registrationPaperNewName);
-            FileOutputStream fos = new FileOutputStream(registrationPaperFile);
-            fos.write(registrationPaper.getBytes());
-            fos.close();
+            FileOutputStream registrationFos = new FileOutputStream(registrationPaperFile);
+            registrationFos.write(registrationPaper.getBytes());
+            registrationFos.close();
+            car.setRegistrationPaperPath(saveLocation + "/" + registrationPaperNewName);
+
+            // Lưu inspectionCertificate
+            String inspectionCertificateName = inspectionCertificate.getOriginalFilename();
+            String inspectionCertificateNewName = UUID.randomUUID().toString() + inspectionCertificateName;
+            File inspectionCertificateFile = new File(saveLocation + "/" + inspectionCertificateNewName);
+            FileOutputStream inspectionFos = new FileOutputStream(inspectionCertificateFile);
+            inspectionFos.write(inspectionCertificate.getBytes());
+            inspectionFos.close();
+            car.setCertificateOfInspectionPath(saveLocation + "/" + inspectionCertificateNewName);
+
+            // Lưu insurance
+            String insuranceName = insurance.getOriginalFilename();
+            String insuranceNewName = UUID.randomUUID().toString() + insuranceName;
+            File insuranceFile = new File(saveLocation + "/" + insuranceNewName);
+            FileOutputStream insuranceFos = new FileOutputStream(insuranceFile);
+            insuranceFos.write(insurance.getBytes());
+            insuranceFos.close();
+            car.setInsurancePath(saveLocation + "/" + insuranceNewName);
+            //Lưu ảnh trước
+            String frontImageName = frontImage.getOriginalFilename();
+            String frontImageNewName = UUID.randomUUID().toString() + frontImageName;
+            File frontImageFile = new File(saveLocationCarImage + "/" + frontImageNewName);
+            FileOutputStream frontImageFos = new FileOutputStream(frontImageFile);
+            frontImageFos.write(frontImage.getBytes());
+            frontImageFos.close();
+            carImage.setFrontImagePath(saveLocationCarImage + "/" + frontImageNewName);
+
+            // Lưu ảnh sau
+            String backImageName = backImage.getOriginalFilename();
+            String backImageNewName = UUID.randomUUID().toString() + backImageName;
+            File backImageFile = new File(saveLocationCarImage + "/" + backImageNewName);
+            FileOutputStream backImageFos = new FileOutputStream(backImageFile);
+            backImageFos.write(backImage.getBytes());
+            backImageFos.close();
+            carImage.setBackImagePath(saveLocationCarImage + "/" + backImageNewName);
+
+            // Lưu ảnh trái
+            String leftImageName = leftImage.getOriginalFilename();
+            String leftImageNewName = UUID.randomUUID().toString() + leftImageName;
+            File leftImageFile = new File(saveLocationCarImage + "/" + leftImageNewName);
+            FileOutputStream leftImageFos = new FileOutputStream(leftImageFile);
+            leftImageFos.write(leftImage.getBytes());
+            leftImageFos.close();
+            carImage.setLeftImagePath(saveLocationCarImage + "/" + leftImageNewName);
+
+            // Lưu ảnh phải
+            String rightImageName = rightImage.getOriginalFilename();
+            String rightImageNewName = UUID.randomUUID().toString() + rightImageName;
+            File rightImageFile = new File(saveLocationCarImage + "/" + rightImageNewName);
+            FileOutputStream rightImageFos = new FileOutputStream(rightImageFile);
+            rightImageFos.write(rightImage.getBytes());
+            rightImageFos.close();
+            carImage.setRightImagePath(saveLocationCarImage + "/" + rightImageNewName);
+
+
+
+            carService.addCarImage(carImage);
+            carService.addCar(car,carImage);
+
         } catch (Exception e) {
             System.out.println(e);
         }
-        // car.setRegistrationPaper(saveLocation + "/" + registrationPaperNewName);
-        carService.addCar(car);
 
         return "redirect:/home";
     }
+
 
     @GetMapping("/view-wallet")
     public String viewWallet(Model model) {
