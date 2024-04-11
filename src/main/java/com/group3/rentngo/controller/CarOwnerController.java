@@ -7,6 +7,7 @@ import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CarService;
 import com.group3.rentngo.service.UserService;
 import com.group3.rentngo.service.VNPayService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,7 @@ public class CarOwnerController {
      * @author phinx
      * @description show home page for role car owner
      */
-    @GetMapping({ "/home"})
+    @GetMapping({"/home"})
     public String viewCarOwnerHome(Model model) {
         CustomUserDetails userDetails = userService.getUserDetail();
         if (userDetails != null) {
@@ -90,6 +91,7 @@ public class CarOwnerController {
         model.addAttribute("car", car);
         return "edit-car-detial-page";
     }
+
     @PostMapping("/edit-car/{id}")
     public String editCarInfoDetail(Model model, @PathVariable long id) {
         Optional<Car> carOptional = carService.findbyId(id);
@@ -99,7 +101,7 @@ public class CarOwnerController {
         return "edit-car-detial-page";
     }
 
-  
+
     @PostMapping(path = "/addnewcar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String addNewCar(@ModelAttribute("car") CarDto car,
                             @RequestPart("registrationPaper") MultipartFile registrationPaper,
@@ -112,6 +114,11 @@ public class CarOwnerController {
         String saveLocation = "src/main/resources/static/images/document";
         String saveLocationCarImage = "src/main/resources/static/images/car";
         CarImage carImage = new CarImage();
+        CarOwner carOwner = new CarOwner();
+        UserDetails userDetails = userService.getUserDetail();
+
+        System.out.println("email=" + userDetails.getUsername());
+        carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
         try {
             // Lưu registrationPaper
             String registrationPaperName = registrationPaper.getOriginalFilename();
@@ -176,9 +183,10 @@ public class CarOwnerController {
             carImage.setRightImagePath(saveLocationCarImage + "/" + rightImageNewName);
 
 
+             car.setCarOwner(carOwner);
 
             carService.addCarImage(carImage);
-            carService.addCar(car,carImage);
+            carService.addCar(car, carImage);
 
         } catch (Exception e) {
             System.out.println(e);

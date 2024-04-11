@@ -21,4 +21,7 @@ public interface CarOwnerRepository extends JpaRepository<CarOwner, Long> {
     @Modifying
     @Query("update CarOwner c set c.wallet = ?1 where c.email = ?2")
     int updateWalletByEmail(BigDecimal wallet, String email);
+
+
+
 }

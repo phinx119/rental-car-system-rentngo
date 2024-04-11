@@ -10,4 +10,5 @@ public interface CarOwnerService {
     CarOwner findCarOwnerByPhone(String phone);
     List<CarOwner> findAll();
     void updateWallet(String email, String totalPrice);
+
 }
