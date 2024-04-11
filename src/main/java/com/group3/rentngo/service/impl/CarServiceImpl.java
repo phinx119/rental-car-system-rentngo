@@ -2,7 +2,9 @@ package com.group3.rentngo.service.impl;
 
 import com.group3.rentngo.model.dto.CarDto;
 import com.group3.rentngo.model.entity.Car;
-import com.group3.rentngo.repository.*;
+import com.group3.rentngo.repository.BookingRepository;
+import com.group3.rentngo.repository.CarOwnerRepository;
+import com.group3.rentngo.repository.CarRepository;
 import com.group3.rentngo.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +14,9 @@ import java.util.Optional;
 
 @Service
 public class CarServiceImpl implements CarService {
-    private CarRepository carRepository;
-    private CarOwnerRepository carOwnerRepository;
-    private BookingRepository bookingRepository;
+    private final CarRepository carRepository;
+    private final CarOwnerRepository carOwnerRepository;
+    private final BookingRepository bookingRepository;
 
     @Autowired
     public CarServiceImpl(CarRepository carRepository,

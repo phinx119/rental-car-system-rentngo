@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.sql.Blob;
 
 @AllArgsConstructor
@@ -14,7 +15,7 @@ import java.sql.Blob;
 @Setter
 @Entity
 @Table(name = "car_image")
-public class CarImage {
+public class CarImage implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

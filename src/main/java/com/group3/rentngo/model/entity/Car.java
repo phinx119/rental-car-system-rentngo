@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Nationalized;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -15,25 +17,30 @@ import java.util.Collection;
 @Setter
 @Entity
 @Table(name = "car")
-public class Car {
+public class Car implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(nullable = false)
+    @Nationalized
     private String name;
 
     @Column(nullable = false, unique = true)
+    @Nationalized
     private String licensePlate;
 
     @Column(nullable = false)
+    @Nationalized
     private String brand;
 
     @Column(nullable = false)
+    @Nationalized
     private String model;
 
     @Column(nullable = false)
+    @Nationalized
     private String color;
 
     @Column(nullable = false)
@@ -43,15 +50,19 @@ public class Car {
     private int productionYear;
 
     @Column(nullable = false)
+    @Nationalized
     private String transmissionType;
 
     @Column(nullable = false)
+    @Nationalized
     private String fuelType;
 
     @Column(nullable = false)
+    @Nationalized
     private long mileage;
 
     @Column(nullable = false)
+    @Nationalized
     private String fuelConsumption;
 
     @Column(nullable = false)
@@ -61,32 +72,34 @@ public class Car {
     private double deposit;
 
     @Column(nullable = false)
+    @Nationalized
     private String address;
 
     @Column(nullable = false)
+    @Nationalized
     private String description;
 
     @Column(nullable = false)
     private String additionalFunctions;
 
     @Column(nullable = false)
+    @Nationalized
     private String termOfUse;
 
     @Transient
     private MultipartFile registrationPaper;
-    @Column(name = "registrationpaperpath", nullable = false)
+    @Column(nullable = false)
     private String registrationPaperPath;
 
     @Transient
     private MultipartFile certificateOfInspection;
-    @Column(name = "certificateofinspectionpath")
+    @Column(nullable = false)
     private String certificateOfInspectionPath;
 
     @Transient
     private MultipartFile insurance;
-    @Column(name = "insurancepath")
+    @Column(nullable = false)
     private String insurancePath;
-
 
     @ManyToOne
     @JoinColumn(name = "car_owner_id")

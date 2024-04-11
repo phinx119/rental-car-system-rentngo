@@ -1,6 +1,5 @@
 package com.group3.rentngo.config;
 
-import com.group3.rentngo.security.CustomLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,13 +49,11 @@ public class SpringSecurity {
                                 .loginPage("/home")
                                 .loginProcessingUrl("/home/login")
                                 .defaultSuccessUrl("/home", true)
-                                .permitAll()
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .deleteCookies("JSESSIONID")
+                                //.deleteCookies("JSESSIONID")
                                 .logoutSuccessHandler(logoutSuccessHandler())
-                                .permitAll()
                 ).exceptionHandling(
                         httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
                                 .accessDeniedPage("/error-403")

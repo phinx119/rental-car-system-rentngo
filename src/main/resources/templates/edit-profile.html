@@ -1,24 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
+    <link rel="shortcut icon" href="#">
     <link rel="stylesheet" th:href="@{/css/profile.css}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<!--<header class="row">-->
-<!--    <strong ><i class="fa-solid fa-car mr-3 " ></i>Rent a car today</strong>-->
-<!--    <div>-->
-<!--        <a href="#">ABOUT US</a>-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <span class="ml-5">Welcome,user</span>-->
-<!--    </div>-->
-
-<!--</header>-->
 
 <header th:insert="~{fragments/header.html :: header}"></header>
 
@@ -32,72 +23,95 @@
 <h3 class="profile-header">My Profile</h3>
 <div class=" row profile-information">
     <button id="personalBtn" style="border-right: none;"><a href="#">Personal information</a></button>
-    <button id="securityBtn" ><a href="#">Security</a></button>
+    <button id="securityBtn"><a href="#">Security</a></button>
 </div>
+
 <div class="personal-information">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="personal-information-items">
-                <strong>Full Name</strong><br/>
-                <input type="text" th:value="*{customer.name}"/>
-            </div>
-            <div class="personal-information-items">
-                <strong>Phone number</strong><br/>
-                <input type="text" th:value="*{customer.phone}"/>
-            </div>
-            <div class="personal-information-items">
-                <strong>National ID No</strong><br/>
-                <input type="text" th:value="*{customer.nationalId}"/>
-            </div>
-            <div class="address">
-                <strong>Address</strong><br/>
-                <select >
-                    <option  disabled selected hidden>city/prince</option>
-                    <option value="Ha Noi">Ha Noi</option>
-                    <option value="Ho Chi Minh">Ho Chi Minh</option>
-                    <option value="Da Nang">Da Nang</option>
-                    <option value="Ha Long">Ha Long</option>
-                </select>
-                <select>
-                    <option  disabled selected hidden>district</option>
-                    <option value="Ha Noi">Ha Noi</option>
-                    <option value="Ho Chi Minh">Ho Chi Minh</option>
-                    <option value="Da Nang">Da Nang</option>
-                    <option value="Ha Long">Ha Long</option>
-                </select>
-                <select>
-                    <option  disabled selected hidden>ward</option>
-                    <option value="Ha Noi">Ha Noi</option>
-                    <option value="Ho Chi Minh">Ho Chi Minh</option>
-                    <option value="Da Nang">Da Nang</option>
-                    <option value="Ha Long">Ha Long</option>
-                </select>
-                <br/>
-                <input class="street" type="text" placeholder="House number,Street">
-            </div>
-        </div>
+    <form method="post" role="form"
+          th:action="@{/admin/update-user-profile/{role}(role=${role})}"
+          th:object="${updateProfileDto}">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="hidden" name="id" th:field="*{id}"/>
+                <div class="personal-information-items">
+                    <strong>Full Name</strong><br/>
+                    <input type="text" name="name" th:field="*{name}"/>
+                    <p th:errors="*{name}" class="text-danger"
+                       th:if="${#fields.hasErrors('name')}"></p>
+                </div>
+                <div class="personal-information-items">
+                    <strong>Phone number</strong><br/>
+                    <input type="text" name="phone" th:field="*{phone}"/>
+                    <p th:errors="*{phone}" class="text-danger"
+                       th:if="${#fields.hasErrors('phone')}"></p>
+                </div>
+                <div class="personal-information-items">
+                    <strong>National ID No</strong><br/>
+                    <input type="text" name="nationalId" th:field="*{nationalId}"/>
+                    <p th:errors="*{nationalId}" class="text-danger"
+                       th:if="${#fields.hasErrors('nationalId')}"></p>
+                </div>
+                <div class="address">
+                    <!--City-->
+                    <input type="hidden" id="city-input" th:value="*{city}">
+                    <strong>Address</strong><br/>
+                    <select id="city" name="city" th:field="*{city}">
+                        <option value="" selected hidden>City</option>
+                    </select>
+                    <p th:errors="*{city}" class="text-danger"
+                       th:if="${#fields.hasErrors('city')}"></p>
 
-        <div class="col-md-6">
-            <div class="personal-information-items">
-                <strong>Date of birth</strong><br/>
-                <input type="date" th:value="*{customer.dateOfBirth}"/>
-                <i class="fa-regular fa-calendar-days"></i>
-            </div>
-            <div class="personal-information-items">
-                <strong>Email Address</strong><br/>
-                <input type="text" th:value="*{customer.email}"/>
-            </div>
-            <div class="personal-information-items">
-                <strong>Driving Scense</strong><br/>
-                <input type="text" th:value="*{customer.drivingLicense}"/>
-            </div>
-        </div>
-        <div class="save-information mt-3 ">
-            <a href="#" class="discard-link mr-3">Discard</a>
-            <a href="#" class="btn btn-primary">Save</a>
-        </div>
+                    <!--District-->
+                    <input type="hidden" id="district-input" th:value="*{district}">
+                    <select id="district" name="district" th:field="*{district}">
+                        <option value="" selected hidden>District</option>
+                    </select>
+                    <p th:errors="*{district}" class="text-danger"
+                       th:if="${#fields.hasErrors('district')}"></p>
 
-    </div>
+                    <!--Ward-->
+                    <input type="hidden" id="ward-input" th:value="*{ward}">
+                    <select id="ward" name="ward" th:field="*{ward}">
+                        <option value="" selected hidden>Ward</option>
+                    </select>
+                    <p th:errors="*{ward}" class="text-danger"
+                       th:if="${#fields.hasErrors('ward')}"></p>
+
+                    <br/>
+
+                    <input type="text" class="street" id="house-number-and-street" th:field="*{houseNumberAndStreet}"
+                           placeholder="House number, Street">
+                    <p th:errors="*{houseNumberAndStreet}" class="text-danger"
+                       th:if="${#fields.hasErrors('houseNumberAndStreet')}"></p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="personal-information-items">
+                    <strong>Date of birth</strong><br/>
+                    <input type="date" name="dateOfBirth" th:field="*{dateOfBirth}"/>
+                    <p th:errors="*{dateOfBirth}" class="text-danger"
+                       th:if="${#fields.hasErrors('dateOfBirth')}"></p>
+                </div>
+                <div class="personal-information-items">
+                    <strong>Email Address</strong><br/>
+                    <input type="text" name="email" th:field="*{email}" readonly/>
+                    <p th:errors="*{email}" class="text-danger"
+                       th:if="${#fields.hasErrors('email')}"></p>
+                </div>
+                <div class="personal-information-items">
+                    <strong>Driving license</strong><br/>
+                    <input type="text" name="drivingLicense" th:field="*{drivingLicense}"/>
+                    <p th:errors="*{drivingLicense}" class="text-danger"
+                       th:if="${#fields.hasErrors('drivingLicense')}"></p>
+                </div>
+            </div>
+            <div class="save-information mt-3 ">
+                <button type="reset" class="btn btn-warning">Discard</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <!-- ChangePassword -->
@@ -109,7 +123,7 @@
             <input class="mb-3" type="password"/>
             <br/>
             <strong>Confirm password</strong><br/>
-            <input  class="mb-3" type="password"/>
+            <input class="mb-3" type="password"/>
         </div>
     </div>
     <div class="save-information mt-3 ">
@@ -153,21 +167,104 @@
         <p class="mb-0">&copy; 2024 Your Company. All rights reserved.</p>
     </div>
 </footer>
-<script>
-    let personalInformation = document.querySelector(".personal-information");
-    let security = document.querySelector(".security");
-    let personalBtn = document.getElementById("personalBtn");
-    let securityBtn = document.getElementById("securityBtn");
-    securityBtn.addEventListener("click", function() {
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+<script th:inline="javascript">
+    let city = [[${updateProfileDto.city}]];
+    let district = [[${updateProfileDto.city}]];
+    let ward = [[${updateProfileDto.city}]];
+
+    let cities = document.getElementById('city');
+    let districts = document.getElementById('district');
+    let wards = document.getElementById('ward');
+    let Parameter = {
+        url: 'https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json',
+        method: 'GET',
+        responseType: 'application/json',
+    };
+    let promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        // Render options for cities
+        for (const x of data) {
+            cities.options[cities.options.length] = new Option(x.Name, x.Name);
+        }
+
+        // Select city based on value from updateProfileDto
+        let cityValue = [[${updateProfileDto.city}]];
+        if (cityValue) {
+            cities.value = cityValue;
+        }
+
+        // Render districts for selected city
+        cities.onchange = function () {
+            districts.length = 1;
+            wards.length = 1;
+            if (this.value != "") {
+                const result = data.find(n => n.Name === this.value);
+                if (result) {
+                    for (const k of result.Districts) {
+                        districts.options[districts.options.length] = new Option(k.Name, k.Name);
+                    }
+                }
+            }
+        };
+
+        // Select district based on value from updateProfileDto
+        let districtValue = [[${updateProfileDto.district}]];
+        if (districtValue) {
+            cities.dispatchEvent(new Event('change')); // Trigger change event to render districts
+            setTimeout(() => { // Wait for districts to render
+                districts.value = districtValue;
+                districts.dispatchEvent(new Event('change')); // Trigger change event to render wards
+            }, 0);
+        }
+
+        // Render wards for selected district
+        districts.onchange = function () {
+            wards.length = 1;
+            const selectedCity = data.find((n) => n.Name === cities.value);
+            if (this.value != "") {
+                const selectedDistrict = selectedCity.Districts.find(n => n.Name === this.value);
+                if (selectedDistrict) {
+                    for (const w of selectedDistrict.Wards) {
+                        wards.options[wards.options.length] = new Option(w.Name, w.Name);
+                    }
+                }
+            }
+        };
+
+        // Select ward based on value from updateProfileDto
+        let wardValue = [[${updateProfileDto.ward}]];
+        if (wardValue) {
+            cities.dispatchEvent(new Event('change')); // Trigger change event to render districts
+            setTimeout(() => { // Wait for districts to render
+                districts.dispatchEvent(new Event('change')); // Trigger change event to render wards
+                setTimeout(() => { // Wait for wards to render
+                    wards.value = wardValue;
+                }, 0);
+            }, 0);
+        }
+    }
+
+    let personalInformation = document.querySelector('.personal-information');
+    let security = document.querySelector('.security');
+    let personalBtn = document.getElementById('personalBtn');
+    let securityBtn = document.getElementById('securityBtn');
+    securityBtn.addEventListener('click', function () {
         // personalInformation.classList.add("hide");
-        personalInformation.style.display = "none";
-        security.style.display = "block";
+        personalInformation.style.display = 'none';
+        security.style.display = 'block';
     });
 
     // Hiển thị lại phần tử personalInformation khi bấm vào nút personalBtn
-    personalBtn.addEventListener("click", function() {
-        security.style.display = "none";
-        personalInformation.style.display = "block";
+    personalBtn.addEventListener('click', function () {
+        security.style.display = 'none';
+        personalInformation.style.display = 'block';
     });
 </script>
 </body>
