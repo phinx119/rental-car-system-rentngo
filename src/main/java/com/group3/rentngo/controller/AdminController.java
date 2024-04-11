@@ -54,6 +54,10 @@ public class AdminController {
         return "manage-user-page";
     }
 
+    /**
+     * @author phinx
+     * @description show car owner detail
+     */
     @GetMapping("/view-car-owner-detail")
     public String viewCarOwnerDetail(@RequestParam("id") Long carOwnerId, Model model) {
         Optional<CarOwner> carOwnerDetail = carOwnerService.findCarOwnerById(carOwnerId);
@@ -67,6 +71,10 @@ public class AdminController {
         return "edit-profile";
     }
 
+    /**
+     * @author phinx
+     * @description show customer detail
+     */
     @GetMapping("/view-customer-detail")
     public String viewCustomerDetail(@RequestParam("id") Long customerId, Model model) {
         Optional<Customer> customerDetail = customerService.findCustomerById(customerId);
@@ -80,6 +88,10 @@ public class AdminController {
         return "edit-profile";
     }
 
+    /**
+     * @author phinx
+     * @description update user detail
+     */
     @PostMapping("/update-user-profile/{role}")
     public String updateUserInfo(@PathVariable("role") String role,
                                  @Valid @ModelAttribute("updateProfileDto") UpdateProfileDto updateProfileDto,
@@ -103,7 +115,7 @@ public class AdminController {
                 carOwnerService.updateProfile(updateProfileDto);
             }
             if (role.equals("ROLE_CUSTOMER")) {
-
+                customerService.updateProfile(updateProfileDto);
             }
         }
         return "redirect:/admin/view-car-owner-detail?id=" + updateProfileDto.getId();

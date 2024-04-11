@@ -40,21 +40,37 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(customerId);
     }
 
+    /**
+     * @author phinx
+     * @description get customer by email
+     */
     @Override
     public Customer findCustomerByEmail(String email) {
         return customerRepository.findByEmail(email);
     }
 
+    /**
+     * @author phinx
+     * @description get customer by phone
+     */
     @Override
     public Customer findCustomerByPhone(String phone) {
         return customerRepository.findByPhone(phone);
     }
 
+    /**
+     * @author phinx
+     * @description get customer list
+     */
     @Override
     public List<Customer> findAll() {
         return customerRepository.findAll();
     }
 
+    /**
+     * @author phinx
+     * @description update customer information
+     */
     @Override
     public void updateProfile(UpdateProfileDto updateProfileDto) throws ParseException {
         String name = updateProfileDto.getName();
@@ -75,6 +91,10 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.updateProfile(name, dateOfBirth, nationalId, phone, email, address, drivingLicense, id);
     }
 
+    /**
+     * @author phinx
+     * @description update customer wallet
+     */
     @Override
     public void updateWallet(String email, String totalPrice) {
         Customer customer = customerRepository.findByEmail(email);
@@ -85,6 +105,10 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.updateWalletByEmail(updatedWallet, email);
     }
 
+    /**
+     * @author phinx
+     * @description map data from dto to customer
+     */
     @Override
     public UpdateProfileDto getDtoFromCustomer(Customer customer) {
         UpdateProfileDto updateProfileDto = new UpdateProfileDto();

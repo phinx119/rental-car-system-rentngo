@@ -160,6 +160,10 @@ public class VNPayServiceImpl implements VNPayService {
         }
     }
 
+    /**
+     * @author phinx
+     * @description insert new payment history
+     */
     @Override
     public void saveNewPaymentHistory(String orderType, String totalPrice, String paymentTime) throws ParseException {
         // create new payment history
@@ -189,6 +193,10 @@ public class VNPayServiceImpl implements VNPayService {
         }
     }
 
+    /**
+     * @author phinx
+     * @description get payment history list
+     */
     @Override
     public List<PaymentHistory> findAll() {
         return paymentHistoryRepository.findAll();

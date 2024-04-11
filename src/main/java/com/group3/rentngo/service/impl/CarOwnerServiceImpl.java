@@ -39,31 +39,55 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         this.commonUtil = commonUtil;
     }
 
+    /**
+     * @author phinx
+     * @description get car owner by email
+     */
     @Override
     public CarOwner findCarOwnerByEmail(String email) {
         return carOwnerRepository.findByEmail(email);
     }
 
+    /**
+     * @author thiendd
+     * @description get car owner by user id
+     */
     @Override
     public CarOwner findCarOwnerByIdUser(long id) {
         return carOwnerRepository.findByUser_Id(id);
     }
 
+    /**
+     * @author phinx
+     * @description get car owner by phone
+     */
     @Override
     public CarOwner findCarOwnerByPhone(String phone) {
         return carOwnerRepository.findByPhone(phone);
     }
 
+    /**
+     * @author phinx
+     * @description get car owner by car owner id
+     */
     @Override
     public Optional<CarOwner> findCarOwnerById(Long carOwnerId) {
         return carOwnerRepository.findById(carOwnerId);
     }
 
+    /**
+     * @author phinx
+     * @description get car owner list
+     */
     @Override
     public List<CarOwner> findAll() {
         return carOwnerRepository.findAll();
     }
 
+    /**
+     * @author phinx
+     * @description update car owner information
+     */
     @Override
     public void updateProfile(UpdateProfileDto updateProfileDto) throws ParseException {
         String name = updateProfileDto.getName();
@@ -84,6 +108,10 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         carOwnerRepository.updateProfile(name, dateOfBirth, nationalId, phone, email, address, drivingLicense, id);
     }
 
+    /**
+     * @author phinx
+     * @description update car owner wallet
+     */
     @Override
     public void updateWallet(String email, String totalPrice) {
         CarOwner carOwner = carOwnerRepository.findByEmail(email);
@@ -94,6 +122,10 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         carOwnerRepository.updateWalletByEmail(updatedWallet, email);
     }
 
+    /**
+     * @author phinx
+     * @description map data from dto to car owner
+     */
     @Override
     public UpdateProfileDto getDtoFromCarOwner(CarOwner carOwner) {
         UpdateProfileDto updateProfileDto = new UpdateProfileDto();
