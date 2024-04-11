@@ -36,7 +36,7 @@
     <h2>Manage user</h2>
     <div class="w3-bar w3-light-grey">
         <button class="w3-bar-item w3-button tablink w3-grey" onclick="changeTab(event,'firstTabBtn')">Car Owner List</button>
-        <button class="w3-bar-item w3-button tablink" onclick="changeTab(event,'secondTabBtn')">User List</button>
+        <button class="w3-bar-item w3-button tablink" onclick="changeTab(event,'secondTabBtn')">Customer List</button>
 
     </div>
     <!--Tab 1: car owner list-->
@@ -44,13 +44,14 @@
         <div class="row justify-content p-4">
             <div>
                 <h3>Manage car owner</h3>
-                <p>There are <span th:text="${carOwnerList.size()}"></span> cars available.</p>
+                <p>There are <span th:text="${carOwnerList.size()}"></span> car owners available.</p>
             </div>
 
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Action</th>
@@ -61,11 +62,12 @@
                     <td colspan="6">No car owner available.</td>
                 </tr>
                 <tr th:each="carOwner : ${carOwnerList}">
-                    <td th:text="${carOwner.getUser().getId()}"></td>
-                    <td th:text="${carOwner.getEmail()}"></td>
-                    <td th:text="${carOwner.getPhone()}"></td>
+                    <td th:text="${carOwner.user.id}"></td>
+                    <td th:text="${carOwner.name}"></td>
+                    <td th:text="${carOwner.email}"></td>
+                    <td th:text="${carOwner.phone}"></td>
                     <td>
-                        <button class="btn btn-secondary btn-sm">View Details</button>
+                        <a th:href="@{/admin/view-car-owner-detail(id=${carOwner.id})}" class="btn btn-secondary btn-sm">View Details</a>
                     </td>
                 </tr>
                 </tbody>
@@ -77,13 +79,14 @@
         <div class="row justify-content p-4">
             <div>
                 <h3>Manage customer</h3>
-                <p>There are  users available.</p>
+                <p>There are <span th:text="${customerList.size()}"></span> customers available.</p>
             </div>
 
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Action</th>
@@ -91,14 +94,15 @@
                 </thead>
                 <tbody>
                 <tr th:if="${customerList.isEmpty()}">
-                    <td colspan="6">No car owner available.</td>
+                    <td colspan="6">No customer available.</td>
                 </tr>
                 <tr th:each="customer : ${customerList}">
-                    <td th:text="${customer.getUser().getId()}"></td>
-                    <td th:text="${customer.getEmail()}"></td>
-                    <td th:text="${customer.getPhone()}"></td>
+                    <td th:text="${customer.user.id}"></td>
+                    <td th:text="${customer.name}"></td>
+                    <td th:text="${customer.email}"></td>
+                    <td th:text="${customer.phone}"></td>
                     <td>
-                        <a th:href="@{/admin/view-customer-detail(id=${customer.getId()})}" class="btn btn-secondary btn-sm">View Details</a>
+                        <a th:href="@{/admin/view-customer-detail(id=${customer.id})}" class="btn btn-secondary btn-sm">View Details</a>
                     </td>
                 </tr>
                 </tbody>

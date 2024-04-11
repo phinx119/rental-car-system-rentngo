@@ -8,8 +8,14 @@ import java.text.SimpleDateFormat;
 
 @Component
 public class CommonUtil {
-    public Date parseDate(String dateString) throws ParseException {
+    public Date parseDateTime(String dateString) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        java.util.Date utilDate = formatter.parse(dateString);
+        return new Date(utilDate.getTime());
+    }
+
+    public Date parseDate(String dateString) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date utilDate = formatter.parse(dateString);
         return new Date(utilDate.getTime());
     }

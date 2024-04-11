@@ -168,7 +168,7 @@ public class VNPayServiceImpl implements VNPayService {
         paymentHistory.setType(orderType);
 
         // parse string to sql date
-        Date createDate = commonUtil.parseDate(paymentTime);
+        Date createDate = commonUtil.parseDateTime(paymentTime);
         paymentHistory.setCreateDate(createDate);
 
         // get user information to add to new payment history

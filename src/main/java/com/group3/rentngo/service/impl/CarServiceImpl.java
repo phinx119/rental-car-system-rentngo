@@ -13,10 +13,11 @@ import java.util.Optional;
 
 @Service
 public class CarServiceImpl implements CarService {
-    private CarRepository carRepository;
-    private CarOwnerRepository carOwnerRepository;
-    private BookingRepository bookingRepository;
-private CarImageRepository carImageRepository;
+    private final CarRepository carRepository;
+    private final CarOwnerRepository carOwnerRepository;
+    private final BookingRepository bookingRepository;
+    private final CarImageRepository carImageRepository;
+  
     @Autowired
     public CarServiceImpl(CarRepository carRepository,
                           CarOwnerRepository carOwnerRepository,

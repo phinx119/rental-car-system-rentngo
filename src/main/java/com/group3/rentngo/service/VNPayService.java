@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface VNPayService {
     String createOrder(int total, String orderType, String urlReturn);
+
     int orderReturn(HttpServletRequest request);
+
     void saveNewPaymentHistory(String orderType, String totalPrice, String paymentTime) throws ParseException;
+
     List<PaymentHistory> findAll();
 }
