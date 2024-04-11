@@ -1,4 +1,4 @@
-package com.group3.rentngo.security;
+package com.group3.rentngo.config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

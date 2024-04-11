@@ -42,6 +42,10 @@ public class UserServiceImpl implements UserService {
         this.emailService = emailService;
     }
 
+    /**
+     * @author phinx
+     * @description get user detail
+     */
     @Override
     public CustomUserDetails getUserDetail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -172,6 +176,10 @@ public class UserServiceImpl implements UserService {
         emailService.sendEmail(email, "Important Notification", model, "email/template");
     }
 
+    /**
+     * @author phinx
+     * @description reset password
+     */
     @Override
     public void resetPassword(ResetPasswordDto resetPasswordDto) {
         String encodedPassword = passwordEncoder.encode(resetPasswordDto.getPassword());
