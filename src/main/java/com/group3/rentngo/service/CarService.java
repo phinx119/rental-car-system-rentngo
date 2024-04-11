@@ -12,7 +12,7 @@ public interface CarService {
 
     Optional<Car> findbyId(Long id);
 
-    void addCar(CarDto carDto);
+    void addCar(CarDto carDto, CarImage carImage);
 
     void addCarImage(CarImage carImage );
 }

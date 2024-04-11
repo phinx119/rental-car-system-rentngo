@@ -25,6 +25,11 @@ public class BookingServiceImpl implements BookingService {
         this.carRepository = carRepository;
         this.feedbackRepository = feedbackRepository;
     }
+
+    /**
+     * @author thiendd
+     * @description
+     */
     @Override
     public void changeBookingStatus(int id) {
         bookingRepository.updateById(id);

@@ -21,10 +21,13 @@ public class FeedbackServiceImpl implements FeedbackService {
         this.bookingRepository = bookingRepository;
     }
 
+    /**
+     * @author tiennq
+     * @description
+     */
     @Override
     public List<Feedback> showFeedback() {
         List<Feedback> feedbacks = feedbackRepository.findAll();
         return feedbacks;
     }
-
 }
