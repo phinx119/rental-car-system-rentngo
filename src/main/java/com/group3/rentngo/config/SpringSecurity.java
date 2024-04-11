@@ -40,6 +40,7 @@ public class SpringSecurity {
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/car-owner/**").hasAnyRole("ADMIN", "CAR_OWNER")
                                 .requestMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
+                                .requestMatchers("/update-user-profile").hasAnyRole("ADMIN", "CAR_OWNER", "CUSTOMER")
                                 .requestMatchers("/vnpay/**").hasAnyRole("ADMIN", "CAR_OWNER", "CUSTOMER")
                                 .requestMatchers("/reset-password/**", "/error-403").permitAll()
                                 .requestMatchers("/js/**", "/css/**", "/images/**").permitAll()

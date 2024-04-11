@@ -28,7 +28,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Transactional
     @Modifying
     @Query("""
-            update Customer c set c.name = ?1, c.dateOfBirth = ?2, c.nationalId = ?3, c.phone = ?4, c.email = ?5, c.address = ?6, c.drivingLicense = ?7
-            where c.id = ?8""")
-    int updateProfile(String name, Date dateOfBirth, String nationalId, String phone, String email, String address, String drivingLicense, Long id);
+            update Customer c set c.name = ?1, c.dateOfBirth = ?2, c.nationalId = ?3, c.phone = ?4, c.address = ?5, c.drivingLicense = ?6
+            where c.id = ?7""")
+    int updateProfile(String name, Date dateOfBirth, String nationalId, String phone, String address, String drivingLicense, Long id);
 }

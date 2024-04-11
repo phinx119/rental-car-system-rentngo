@@ -1,12 +1,14 @@
 package com.group3.rentngo.controller;
 
 import com.group3.rentngo.model.dto.CarDto;
+import com.group3.rentngo.model.dto.UpdateProfileDto;
 import com.group3.rentngo.model.entity.*;
 import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CarService;
 import com.group3.rentngo.service.UserService;
 import com.group3.rentngo.service.VNPayService;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +34,10 @@ public class CarOwnerController {
     private final CarOwnerService carOwnerService;
     private final VNPayService vnPayService;
 
-    public CarOwnerController(UserService userService, CarService carService, CarOwnerService carOwnerService, VNPayService vnPayService) {
+    public CarOwnerController(UserService userService,
+                              CarService carService,
+                              CarOwnerService carOwnerService,
+                              VNPayService vnPayService) {
         this.userService = userService;
         this.carService = carService;
         this.carOwnerService = carOwnerService;
@@ -51,6 +56,23 @@ public class CarOwnerController {
             model.addAttribute("id", id);
         }
         return "home-page-as-car-owner";
+    }
+
+    /**
+     * @author phinx
+     * @description show car owner detail
+     */
+    @GetMapping("/view-car-owner-detail")
+    public String viewCarOwnerDetail(Model model) {
+        UserDetails userDetails = userService.getUserDetail();
+
+        CarOwner carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
+
+        UpdateProfileDto updateProfileDto = carOwnerService.getDtoFromCarOwner(carOwner);
+
+        model.addAttribute("updateProfileDto", updateProfileDto);
+
+        return "edit-profile";
     }
 
     /**

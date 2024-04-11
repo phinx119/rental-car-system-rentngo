@@ -1,7 +1,9 @@
 package com.group3.rentngo.controller;
 
+import com.group3.rentngo.common.CommonUtil;
 import com.group3.rentngo.model.dto.ResetPasswordDto;
 import com.group3.rentngo.model.dto.SignupDto;
+import com.group3.rentngo.model.dto.UpdateProfileDto;
 import com.group3.rentngo.model.dto.UserDto;
 import com.group3.rentngo.model.entity.CustomUserDetails;
 import com.group3.rentngo.service.CarOwnerService;
@@ -10,6 +12,7 @@ import com.group3.rentngo.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,25 +21,31 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.text.ParseException;
+import java.util.Date;
+
 /**
  * @author phinx
  * @description controller class contain authorization function
  */
 @Controller
 public class AuthController {
-    private UserService userService;
-    private CarOwnerService carOwnerService;
-    private CustomerService customerService;
-    private HttpSession session;
+    private final UserService userService;
+    private final CarOwnerService carOwnerService;
+    private final CustomerService customerService;
+    private final CommonUtil commonUtil;
+    private final HttpSession session;
 
     @Autowired
     public AuthController(UserService userService,
                           CarOwnerService carOwnerService,
                           CustomerService customerService,
+                          CommonUtil commonUtil,
                           HttpSession session) {
         this.userService = userService;
         this.carOwnerService = carOwnerService;
         this.customerService = customerService;
+        this.commonUtil = commonUtil;
         this.session = session;
     }
 
@@ -177,5 +186,54 @@ public class AuthController {
     @GetMapping("/error-403")
     public String showError403() {
         return "error/403";
+    }
+
+    /**
+     * @author phinx
+     * @description update user detail
+     */
+    @PostMapping("/update-user-profile")
+    public String updateUserInfo(@Valid @ModelAttribute("updateProfileDto") UpdateProfileDto updateProfileDto,
+                                 BindingResult result,
+                                 Model model)
+            throws ParseException {
+        if (updateProfileDto.getDateOfBirth() == null || updateProfileDto.getDateOfBirth().isEmpty()) {
+            result.rejectValue("dateOfBirth", null, "This field is required.");
+        } else if (commonUtil.parseDate(updateProfileDto.getDateOfBirth()).compareTo(new Date()) > 0) {
+            result.rejectValue("dateOfBirth", null, "Not earlier than current date.");
+        }
+
+        model.addAttribute("updateProfileDto", updateProfileDto);
+        if (result.hasErrors()) {
+            model.addAttribute("errors", result.getAllErrors());
+            model.addAttribute("updateProfileDto", updateProfileDto);
+
+            return "edit-profile";
+        } else {
+            if (updateProfileDto.getRole().equals("ROLE_CAR_OWNER")) {
+                carOwnerService.updateProfile(updateProfileDto);
+            }
+            if (updateProfileDto.getRole().equals("ROLE_CUSTOMER")) {
+                customerService.updateProfile(updateProfileDto);
+            }
+        }
+
+        UserDetails userDetails = userService.getUserDetail();
+        if (userDetails != null) {
+            boolean isAdmin = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+            boolean isCarOwner = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CAR_OWNER"));
+            boolean isCustomer = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CUSTOMER"));
+            session.setAttribute("email", userDetails.getUsername());
+            if (isAdmin) {
+                return "redirect:/admin/view-car-owner-detail?id=" + updateProfileDto.getId();
+            }
+            if (isCarOwner) {
+                return "redirect:/car-owner/view-car-owner-detail";
+            }
+            if (isCustomer) {
+                return "redirect:/customer/view-car-owner-detail";
+            }
+        }
+        return "redirect:/home";
     }
 }
