@@ -94,7 +94,6 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         Date dateOfBirth = commonUtil.parseDate(updateProfileDto.getDateOfBirth());
         String nationalId = updateProfileDto.getNationalId();
         String phone = updateProfileDto.getPhone();
-        String email = updateProfileDto.getEmail();
         String address = updateProfileDto.getHouseNumberAndStreet()
                 .concat("-")
                 .concat(updateProfileDto.getWard())
@@ -105,7 +104,7 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         String drivingLicense = updateProfileDto.getDrivingLicense();
         Long id = updateProfileDto.getId();
 
-        carOwnerRepository.updateProfile(name, dateOfBirth, nationalId, phone, email, address, drivingLicense, id);
+        carOwnerRepository.updateProfile(name, dateOfBirth, nationalId, phone, address, drivingLicense, id);
     }
 
     /**
