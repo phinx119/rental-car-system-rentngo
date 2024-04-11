@@ -9,6 +9,25 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
+<style>
+    html {
+        height: 100%;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+    }
+
+    .w3-container {
+        flex: 1;
+    }
+
+    footer {
+        flex-shrink: 0;
+    }
+</style>
 <body>
 
 <header th:insert="~{fragments/header.html :: header}"></header>

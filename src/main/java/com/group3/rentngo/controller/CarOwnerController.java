@@ -1,11 +1,8 @@
 package com.group3.rentngo.controller;
 
 import com.group3.rentngo.model.dto.CarDto;
-import com.group3.rentngo.model.entity.Car;
+import com.group3.rentngo.model.entity.*;
 import org.springframework.http.MediaType;
-import com.group3.rentngo.model.entity.CarOwner;
-import com.group3.rentngo.model.entity.CustomUserDetails;
-import com.group3.rentngo.model.entity.PaymentHistory;
 import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CarService;
 import com.group3.rentngo.service.UserService;
@@ -35,10 +32,7 @@ public class CarOwnerController {
     private final CarOwnerService carOwnerService;
     private final VNPayService vnPayService;
 
-    public CarOwnerController(UserService userService,
-                              CarService carService,
-                              CarOwnerService carOwnerService,
-                              VNPayService vnPayService) {
+    public CarOwnerController(UserService userService, CarService carService, CarOwnerService carOwnerService, VNPayService vnPayService) {
         this.userService = userService;
         this.carService = carService;
         this.carOwnerService = carOwnerService;
@@ -49,7 +43,7 @@ public class CarOwnerController {
      * @author phinx
      * @description show home page for role car owner
      */
-    @GetMapping("/home")
+    @GetMapping({ "/home"})
     public String viewCarOwnerHome(Model model) {
         CustomUserDetails userDetails = userService.getUserDetail();
         if (userDetails != null) {
@@ -80,7 +74,7 @@ public class CarOwnerController {
     }
 
     @GetMapping("/display-car-detail/{id}")
-    public String editCarDetail(Model model, @PathVariable long id) {
+    public String carDetail(Model model, @PathVariable long id) {
         Optional<Car> carOptional = carService.findbyId(id);
         Car car = carOptional.orElse(null);
 
@@ -88,13 +82,36 @@ public class CarOwnerController {
         return "car-detail";
     }
 
+    @GetMapping("/edit-car/{id}")
+    public String editCarDetail(Model model, @PathVariable long id) {
+        Optional<Car> carOptional = carService.findbyId(id);
+        Car car = carOptional.orElse(null);
+
+        model.addAttribute("car", car);
+        return "edit-car-detial-page";
+    }
+    @PostMapping("/edit-car/{id}")
+    public String editCarInfoDetail(Model model, @PathVariable long id) {
+        Optional<Car> carOptional = carService.findbyId(id);
+        Car car = carOptional.orElse(null);
+
+        model.addAttribute("car", car);
+        return "edit-car-detial-page";
+    }
+
+  
     @PostMapping(path = "/addnewcar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String addNewCar(@ModelAttribute("car") CarDto car,
                             @RequestPart("registrationPaper") MultipartFile registrationPaper,
                             @RequestPart("inspectionCertificate") MultipartFile inspectionCertificate,
-                            @RequestPart("insurance") MultipartFile insurance) {
+                            @RequestPart("insurance") MultipartFile insurance,
+                            @RequestPart("frontImage") MultipartFile frontImage,
+                            @RequestPart("backImage") MultipartFile backImage,
+                            @RequestPart("leftImage") MultipartFile leftImage,
+                            @RequestPart("rightImage") MultipartFile rightImage) {
         String saveLocation = "src/main/resources/static/images/document";
-
+        String saveLocationCarImage = "src/main/resources/static/images/car";
+        CarImage carImage = new CarImage();
         try {
             // Lưu registrationPaper
             String registrationPaperName = registrationPaper.getOriginalFilename();
@@ -122,8 +139,46 @@ public class CarOwnerController {
             insuranceFos.write(insurance.getBytes());
             insuranceFos.close();
             car.setInsurancePath(saveLocation + "/" + insuranceNewName);
+            //Lưu ảnh trước
+            String frontImageName = frontImage.getOriginalFilename();
+            String frontImageNewName = UUID.randomUUID().toString() + frontImageName;
+            File frontImageFile = new File(saveLocationCarImage + "/" + frontImageNewName);
+            FileOutputStream frontImageFos = new FileOutputStream(frontImageFile);
+            frontImageFos.write(frontImage.getBytes());
+            frontImageFos.close();
+            carImage.setFrontImagePath(saveLocationCarImage + "/" + frontImageNewName);
 
-            carService.addCar(car);
+            // Lưu ảnh sau
+            String backImageName = backImage.getOriginalFilename();
+            String backImageNewName = UUID.randomUUID().toString() + backImageName;
+            File backImageFile = new File(saveLocationCarImage + "/" + backImageNewName);
+            FileOutputStream backImageFos = new FileOutputStream(backImageFile);
+            backImageFos.write(backImage.getBytes());
+            backImageFos.close();
+            carImage.setBackImagePath(saveLocationCarImage + "/" + backImageNewName);
+
+            // Lưu ảnh trái
+            String leftImageName = leftImage.getOriginalFilename();
+            String leftImageNewName = UUID.randomUUID().toString() + leftImageName;
+            File leftImageFile = new File(saveLocationCarImage + "/" + leftImageNewName);
+            FileOutputStream leftImageFos = new FileOutputStream(leftImageFile);
+            leftImageFos.write(leftImage.getBytes());
+            leftImageFos.close();
+            carImage.setLeftImagePath(saveLocationCarImage + "/" + leftImageNewName);
+
+            // Lưu ảnh phải
+            String rightImageName = rightImage.getOriginalFilename();
+            String rightImageNewName = UUID.randomUUID().toString() + rightImageName;
+            File rightImageFile = new File(saveLocationCarImage + "/" + rightImageNewName);
+            FileOutputStream rightImageFos = new FileOutputStream(rightImageFile);
+            rightImageFos.write(rightImage.getBytes());
+            rightImageFos.close();
+            carImage.setRightImagePath(saveLocationCarImage + "/" + rightImageNewName);
+
+
+
+            carService.addCarImage(carImage);
+            carService.addCar(car,carImage);
 
         } catch (Exception e) {
             System.out.println(e);

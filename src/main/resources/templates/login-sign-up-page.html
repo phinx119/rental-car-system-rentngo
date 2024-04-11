@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentN'Go</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+
+<style>
+    .vertical-line {
+        border-left: 1px solid #ccc;
+        height: 100%;
+    }
+</style>
+<body>
+
+<header th:insert="~{fragments/header.html :: header}"></header>
+
+<div class="container-fluid mt-5">
+    <div class="row justify-content-end">
+        <div class="col-md-12">
+            <div class="text-right">
+                <button type="button" class="btn btn-outline-dark btn-sm rounded-circle" aria-label="Close"
+                        onclick="redirectToHomepage()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-between p-4">
+        <div class="col-md-6">
+            <div class="col-md-6 mx-auto">
+                <!-- Log in -->
+                <h4 class="mb-4"><b>LOG IN USING YOUR ACCOUNT</b></h4>
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">Invalid Email or Password</div>
+                </div>
+                <form method="post" role="form" th:action="@{/home/login}">
+                    <div class="form-group">
+                        <label for="loginEmail">Email address</label>
+                        <input type="email" class="form-control" id="loginEmail" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    <!-- Toggle buttons -->
+                    <!--                    <button type="button" class="btn btn-secondary" onclick="toggleButtons()">Show Login Options</button>-->
+
+                    <!-- Hidden buttons -->
+                    <div id="hiddenButtons" style="display: none;">
+                        <button type="button" class="btn btn-outline-info" onclick="autoFill('admin')">Admin</button>
+                        <button type="button" class="btn btn-outline-info" onclick="autoFill('user')">User</button>
+                        <button type="button" class="btn btn-outline-info" onclick="autoFill('carOwner')">Car Owner</button>
+                    </div>
+                    <br>
+
+                    <div class="text-center text-primary">
+                        <a href="#"><i> Forget your password? </i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6 vertical-line">
+            <div class="col-md-6 mx-auto">
+                <!-- Sign up -->
+                <h4 class="mb-4"><b>NOT A MEMBER YET</b></h4>
+                <form method="post" role="form" th:action="@{/home/signup}" th:object="${signupDto}">
+                    <div class="form-group">
+                        <label for="signupName">Name</label>
+                        <input type="text" th:field="*{name}" class="form-control"
+                               id="signupName"
+                               placeholder="Enter Name">
+                        <p th:errors="*{name}" class="text-danger"
+                           th:if="${#fields.hasErrors('name')}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email address</label>
+                        <input type="email" th:field="*{email}" class="form-control" id="signupEmail" placeholder="Enter email">
+                        <p th:errors="*{email}" class="text-danger"
+                           th:if="${#fields.hasErrors('email')}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPhoneNumber">Phone number</label>
+                        <input type="text" th:field="*{phone}" class="form-control" id="signupPhoneNumber" placeholder="Enter Phone number">
+                        <p th:errors="*{phone}" class="text-danger"
+                           th:if="${#fields.hasErrors('phone')}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" th:field="*{password}" class="form-control" id="signupPassword" placeholder="Password">
+                        <p th:errors="*{password}" class="text-danger"
+                           th:if="${#fields.hasErrors('password')}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" th:field="*{confirmPassword}" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                        <p th:errors="*{confirmPassword}" class="text-danger" id="alertConfirmPassword"
+                           th:if="${#fields.hasErrors('confirmPassword')}"></p>
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <div class="form-check">
+                                <input type="radio" th:field="*{role}" class="form-check-input" id="rentCarRadio" name="userType"
+                                       value="renter">
+                                <label class="form-check-label" for="rentCarRadio">I want to rent a car</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check">
+                                <input type="radio" th:field="*{role}" class="form-check-input" id="carOwnerRadio" name="userType"
+                                       value="owner">
+                                <label class="form-check-label" for="carOwnerRadio">I am a car owner</label>
+                            </div>
+                        </div>
+                        <br>
+                        <p th:errors="*{role}" class="text-danger"
+                           th:if="${#fields.hasErrors('role')}"></p>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input type="checkbox" th:field="*{agreePrivacy}" th:value="true" class="form-check-input" id="agreeCheckbox">
+                        <label class="form-check-label" for="agreeCheckbox">I agree to the privacy policy</label>
+                        <p th:errors="*{agreePrivacy}" class="text-danger"
+                           th:if="${#fields.hasErrors('agreePrivacy')}"></p>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="~{fragments/footer.html :: footer}"></footer>
+
+<script>
+    function redirectToHomepage() {
+        window.location.href = "/home";
+    }
+
+    function autofillAdminCredentials() {
+        // Admin credentials
+        var adminEmail = "admin@example.com";
+        var adminPassword = "admin123";
+
+        // Set values for email and password fields
+        document.getElementById("loginEmail").value = adminEmail;
+        document.getElementById("loginPassword").value = adminPassword;
+    }
+</script>
+<script th:src="@{/js/script.js}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+</body>
+</html>

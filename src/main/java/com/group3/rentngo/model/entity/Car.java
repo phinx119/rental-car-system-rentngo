@@ -111,4 +111,8 @@ public class Car implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_image_id")
     private CarImage carImage;
+
+
+
+
 }

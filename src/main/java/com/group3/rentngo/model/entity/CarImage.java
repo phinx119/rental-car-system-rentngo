@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.sql.Blob;
@@ -21,19 +22,25 @@ public class CarImage implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Lob
-    @Column(nullable = false)
-    private Blob frontImage;
 
-    @Lob
     @Column(nullable = false)
-    private Blob backImage;
+    public String frontImagePath;
 
-    @Lob
-    @Column(nullable = false)
-    private Blob leftImage;
 
-    @Lob
     @Column(nullable = false)
-    private Blob rightImage;
+    public String backImagePath;
+
+
+    @Column(nullable = false)
+    public String leftImagePath;
+
+
+    @Column(nullable = false)
+    public String rightImagePath;
+
+
+    @OneToOne(mappedBy = "carImage", cascade = CascadeType.ALL)
+    private Car car;
+
+
 }
