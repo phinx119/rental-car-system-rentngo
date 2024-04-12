@@ -279,7 +279,7 @@ public class CarOwnerController {
                 carImage.setLeftImagePath(carService.storeFile(saveLocationCarImage, leftImage));
                 carImage.setRightImagePath(carService.storeFile(saveLocationCarImage, rightImage));
                 car.setCarOwner(carOwner);
-                carService.addCarImage(carImage);
+              //  carService.addCarImage(carImage);
                 carService.addCar(car, carImage);
             } catch (Exception e) {
                 System.out.println(e);
