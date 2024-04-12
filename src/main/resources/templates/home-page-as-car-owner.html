@@ -2,9 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>RentN'Go</title>
-    <th:block th:include="fragments/styles.html :: headFragment"></th:block>
+    <th:block th:include="~{fragments/styles.html :: headFragment}"></th:block>
 </head>
 <style>
+    .bg{
+        background-color: #CFCFCF;
+    }
     html {
         scroll-behavior: smooth;
     }
@@ -16,9 +19,9 @@
 
 <!-- Display for car owner -->
 <div class="container-fluid py-4">
-    <div class="p-5 mb-4 bg-light border rounded">
+    <div class="p-5 mb-4 bg border rounded">
         <div class="container-fluid py-5">
-            <h2 class="text-left">Have a car for rent? Don't miss your benefits.</h2>
+            <h2 class="text-left"><b>Have a car for rent? Don't miss your benefits.</b></h2>
             <p class="text-center"></p>
             <div class="row">
                 <div class="col-md-4 reason">
