@@ -153,6 +153,11 @@ public class CarOwnerController {
         String saveLocation = "src/main/resources/static/images/document";
         String saveLocationCarImage = "src/main/resources/static/images/car";
         CarImage carImage = new CarImage();
+        CarOwner carOwner = new CarOwner();
+        UserDetails userDetails = userService.getUserDetail();
+
+        //System.out.println("email=" + userDetails.getUsername());
+        carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
         try {
             // Lưu registrationPaper
             String registrationPaperName = registrationPaper.getOriginalFilename();
@@ -217,6 +222,8 @@ public class CarOwnerController {
             rightImageFos.close();
             carImage.setRightImagePath(saveLocationCarImage + "/" + rightImageNewName);
 
+            car.setCarOwner(carOwner);
+
             carService.addCarImage(carImage);
             carService.addCar(car, carImage);
         } catch (Exception e) {
@@ -247,6 +254,3 @@ public class CarOwnerController {
         return "vnpay/view-wallet";
     }
 }
-
-
-
