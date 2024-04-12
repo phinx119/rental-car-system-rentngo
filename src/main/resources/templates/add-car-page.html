@@ -48,17 +48,16 @@
                             <div class="form-group">
                                 <label for="carName">Car Name:</label>
                                 <input type="text" class="form-control" th:field="*{name}" id="carName" name="carName" oninput="updatePreview()" placeholder="Enter car name">
-                                <!--                                <p th:errors="*{licensePlate}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                <p th:errors="*{name}" class="text-danger" th:if="${#fields.hasErrors('name')}"></p>
+
 
                             </div>
                             <div class="form-group">
 
                                 <label for="licensePlate">License Plate:</label>
                                 <input type="text" class="form-control" th:field="*{licensePlate}" id="licensePlate" name="licensePlate" placeholder="Enter license plate">
-                                <div th:if="${#fields.hasErrors('licensePlate')}" class="alert alert-danger" role="alert">
-                                    <span th:errors="*{licensePlate}"></span>
-                                </div>
+                                <p th:errors="*{licensePlate}" class="text-danger" th:if="${#fields.hasErrors('licensePlate')}"></p>
+
 
                             </div>
                         </div>
@@ -72,8 +71,8 @@
                                     <option value="green">Green</option>
                                     <!-- Add more options as needed -->
                                 </select>
-                                <!--                                <p th:errors="*{color}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                  <p th:errors="*{color}" class="text-danger" th:if="${#fields.hasErrors('color')}"></p>
+
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -86,8 +85,8 @@
                                     <option value="Ford">Ford</option>
                                     <!-- Add more options as needed -->
                                 </select>
-                                <!--                                <p th:errors="*{brand}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                <p th:errors="*{brand}" class="text-danger" th:if="${#fields.hasErrors('brand')}"></p>
+
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -100,8 +99,8 @@
                                     <option value="Truck">Truck</option>
                                     <!-- Add more options as needed -->
                                 </select>
-                                <!--                                <p th:errors="*{model}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                  <p th:errors="*{model}" class="text-danger" th:if="${#fields.hasErrors('model')}"></p>
+
                             </div>
                         </div>
                     </div>
@@ -113,8 +112,8 @@
                             <div class="form-group">
                                 <label for="productionYear">Production Year:</label>
                                 <input type="number" class="form-control" id="productionYear" name="productionYear" placeholder="Enter production year" th:field="*{productionYear}">
-                                <!--                                <p th:errors="*{productionYear}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                  <p th:errors="*{productionYear}" class="text-danger" th:if="${#fields.hasErrors('productionYear')}"></p>
+
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -127,8 +126,8 @@
                                     <option value="5">5</option>
                                     <!-- Add more options as needed -->
                                 </select>
-                                <!--                                <p th:errors="*{numberOfSeats}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                  <p th:errors="*{numberOfSeats}" class="text-danger" th:if="${#fields.hasErrors('numberOfSeats')}"></p>
+
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -143,8 +142,8 @@
                                     <label class="form-check-label" for="manual">Manual</label>
                                 </div>
 
-                                <!--                                <p th:errors="*{transmissionType}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                  <p th:errors="*{transmissionType}" class="text-danger" th:if="${#fields.hasErrors('transmissionType')}"></p>
+
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -158,8 +157,8 @@
                                     <input class="form-check-input" type="radio" name="fuel" id="diesel" value="Diesel" th:field="*{fuelType}">
                                     <label class="form-check-label" for="diesel">Diesel</label>
                                 </div>
-                                <!--                                <p th:errors="*{fuelType}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                  <p th:errors="*{fuelType}" class="text-danger" th:if="${#fields.hasErrors('fuelType')}"></p>
+
                             </div>
                         </div>
                     </div>
@@ -175,18 +174,24 @@
                             <div class="form-group">
                                 <label for="registrationPaper">Registration Paper:</label>
                                 <input type="file" class="form-control-file" id="registrationPaper" name="registrationPaper" th:field="*{registrationPaper}" multiple="multiple" >
+                                  <p th:errors="*{registrationPaper}" class="text-danger" th:if="${#fields.hasErrors('registrationPaper')}"></p>
+
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="inspectionCertificate">Certification of Inspection:</label>
                                 <input type="file" class="form-control-file" id="inspectionCertificate" name="inspectionCertificate" >
+                                  <p th:errors="*{certificateOfInspection}" class="text-danger" th:if="${#fields.hasErrors('certificateOfInspection')}"></p>
+
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="insurance">Insurance:</label>
                                 <input type="file" class="form-control-file" id="insurance" name="insurance" >
+                                  <p th:errors="*{insurance}" class="text-danger" th:if="${#fields.hasErrors('insurance')}"></p>
+
                             </div>
                         </div>
                     </div>
@@ -202,26 +207,26 @@
                             <div class="form-group">
                                 <label for="mileage">Mileage:</label>
                                 <input type="text" class="form-control" id="mileage" name="mileage" placeholder="Enter mileage" th:field="*{mileage}">
-                                <!--                                <p th:errors="*{mileage}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                 <p th:errors="*{mileage}" class="text-danger" th:if="${#fields.hasErrors('mileage')}"></p>
+
                             </div>
                             <div class="form-group">
                                 <label for="fuelConsumption">Fuel Consumption (L/100km):</label>
                                 <input type="text" class="form-control" id="fuelConsumption" name="fuelConsumption" placeholder="Enter fuel consumption" th:field="*{fuelConsumption}" >
-                                <!--                                <p th:errors="*{fuelConsumption}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                  <p th:errors="*{fuelConsumption}" class="text-danger" th:if="${#fields.hasErrors('fuelConsumption')}"></p>
+
                             </div>
                             <div class="form-group">
                                 <label for="address">Address:</label>
                                 <input type="text" class="form-control" id="address" name="address" oninput="updatePreview()" placeholder="Enter address" >
-                                <!--                                <p th:errors="*{address}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                <p th:errors="*{address}" class="text-danger" th:if="${#fields.hasErrors('address')}"></p>
+
                             </div>
                             <div class="form-group">
                                 <label for="city">City:</label>
                                 <input type="text" class="form-control" id="city" name="city" placeholder="Enter city"  >
-                                <!--                                <p th:errors="*{address}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                <p th:errors="*{address}" class="text-danger" th:if="${#fields.hasErrors('address')}"></p>
+
                             </div>
 
 
@@ -232,20 +237,20 @@
                             <div class="form-group">
                                 <label for="district">District:</label>
                                 <input type="text" class="form-control" id="district" name="district" placeholder="Enter district" >
-                                <!--                                <p th:errors="*{address}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                <p th:errors="*{address}" class="text-danger" th:if="${#fields.hasErrors('address')}"></p>
+
                             </div>
                             <div class="form-group">
                                 <label for="ward">Ward:</label>
                                 <input type="text" class="form-control" id="ward" name="ward" placeholder="Enter ward" >
-                                <!--                                <p th:errors="*{address}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                <p th:errors="*{address}" class="text-danger" th:if="${#fields.hasErrors('address')}"></p>
+
                             </div>
                             <div class="form-group">
                                 <label for="houseNumber">House Number:</label>
                                 <input type="text" class="form-control" id="houseNumber" name="houseNumber" placeholder="Enter house number" >
-                                <!--                                <p th:errors="*{address}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                  <p th:errors="*{address}" class="text-danger" th:if="${#fields.hasErrors('address')}"></p>
+
                             </div>
                         </div>
                     </div>
@@ -307,20 +312,28 @@
                             <div class="form-group">
                                 <label for="frontImage">Front Image:</label>
                                 <input type="file" class="form-control-file" id="frontImage" name="frontImage">
+                                  <p th:errors="*{frontImage}" class="text-danger" th:if="${#fields.hasErrors('frontImage')}"></p>
+
                             </div>
                             <div class="form-group">
                                 <label for="backImage">Back Image:</label>
                                 <input type="file" class="form-control-file" id="backImage" name="backImage" >
+                                  <p th:errors="*{backImage}" class="text-danger" th:if="${#fields.hasErrors('backImage')}"></p>
+
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="leftImage">Left Image:</label>
                                 <input type="file" class="form-control-file" id="leftImage" name="leftImage">
+                                 <p th:errors="*{leftImage}" class="text-danger" th:if="${#fields.hasErrors('leftImage')}"></p>
+
                             </div>
                             <div class="form-group">
                                 <label for="rightImage">Right Image:</label>
                                 <input type="file" class="form-control-file" id="rightImage" name="rightImage" >
+                                  <p th:errors="*{rightImage}" class="text-danger" th:if="${#fields.hasErrors('rightImage')}"></p>
+
                             </div>
                         </div>
                     </div>
@@ -333,12 +346,14 @@
                     <div class="form-group">
                         <label for="basePrice">Base Price per Day (VND):</label>
                         <input type="number" class="form-control" id="basePrice" name="basePrice" oninput="updatePreview()" placeholder="Enter base price" th:field="*{basePrice}">
-                        <!--                        <p th:errors="*{basePrice}" class="text-danger"-->
-                        <!--                           th:if="${#fields.hasErrors()}"></p>-->
+                         <p th:errors="*{basePrice}" class="text-danger" th:if="${#fields.hasErrors('basePrice')}"></p>
+
                     </div>
                     <div class="form-group">
                         <label for="requiredDeposit">Required Deposit (VND):</label>
                         <input type="number" class="form-control" id="requiredDeposit" name="requiredDeposit" placeholder="Enter required deposit" th:field="*{deposit}">
+                          <p th:errors="*{deposit}" class="text-danger" th:if="${#fields.hasErrors('deposit')}"></p>
+
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -361,10 +376,15 @@
                             <input class="form-check-input" type="checkbox" id="other" name="terms" value="Other" th:field="*{termOfUse}">
                             <label class="form-check-label" for="other">Other</label>
                         </div>
+
+                         <p th:errors="*{termOfUse}" class="text-danger" th:if="${#fields.hasErrors('termOfUse')}"></p>
+
                     </div>
                     <div class="form-group">
                         <label for="note">Note:</label>
                         <textarea class="form-control" id="note" name="note" rows="3" placeholder="Please specify any additional notes" th:field="*{description}"></textarea>
+                          <p th:errors="*{description}" class="text-danger" th:if="${#fields.hasErrors('description')}"></p>
+
                     </div>
                 </div>
             </div>

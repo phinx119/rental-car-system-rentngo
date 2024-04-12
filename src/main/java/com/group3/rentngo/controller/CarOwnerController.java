@@ -162,6 +162,28 @@ public class CarOwnerController {
                             Model model,
                             BindingResult bindingResult) {
 
+        if(registrationPaper.isEmpty()) {
+            bindingResult.rejectValue("registrationPaper", null, "Registration Paper is empty");
+        }
+        if(inspectionCertificate.isEmpty()) {
+            bindingResult.rejectValue("certificateOfInspection", null, "Inspection Certificate is empty");
+        }
+        if(insurance.isEmpty()) {
+            bindingResult.rejectValue("insurance", null, "Insurance is empty");
+        }
+        if(frontImage.isEmpty()) {
+            bindingResult.rejectValue("frontImage", null, "Front Image is empty");
+        }
+        if(backImage.isEmpty()) {
+            bindingResult.rejectValue("backImage", null, "Back Image is empty");
+        }
+        if(leftImage.isEmpty()) {
+            bindingResult.rejectValue("leftImage", null, "Left Image is empty");
+        }
+        if(rightImage.isEmpty()) {
+            bindingResult.rejectValue("rightImage", null, "Right Image is empty");
+        }
+
         if (car.getName() == null || car.getName().isEmpty()) {
             bindingResult.rejectValue("name", null, "Name is required");
         }
@@ -234,9 +256,7 @@ public class CarOwnerController {
             bindingResult.rejectValue("registrationPaper", null, "Registration paper is required");
         }
 
-        if (car.getCertificateOfInspection() == null) {
-            bindingResult.rejectValue("certificateOfInspection", null, "Certificate of inspection is required");
-        }
+
 
         if (car.getInsurance() == null) {
             bindingResult.rejectValue("insurance", null, "Insurance is required");
@@ -256,6 +276,10 @@ public class CarOwnerController {
 
         if (car.getRightImage() == null) {
             bindingResult.rejectValue("rightImage", null, "Right image is required");
+        }
+
+        if(bindingResult.hasErrors()){
+            return "add-car-page";
         }
         String checkLicensePlate = carOwnerService.findCarByLicensePlate(car.getLicensePlate());
         if (checkLicensePlate != null) {
