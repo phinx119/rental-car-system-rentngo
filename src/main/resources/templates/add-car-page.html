@@ -55,10 +55,12 @@
 
                             </div>
                             <div class="form-group">
+
                                 <label for="licensePlate">License Plate:</label>
                                 <input type="text" class="form-control" th:field="*{licensePlate}" id="licensePlate" name="licensePlate" placeholder="Enter license plate">
-                                <!--                                <p th:errors="*{licensePlate}" class="text-danger"-->
-                                <!--                                   th:if="${#fields.hasErrors()}"></p>-->
+                                <div th:if="${#fields.hasErrors('licensePlate')}" class="alert alert-danger" role="alert">
+                                    <span th:errors="*{licensePlate}"></span>
+                                </div>
 
                             </div>
                         </div>

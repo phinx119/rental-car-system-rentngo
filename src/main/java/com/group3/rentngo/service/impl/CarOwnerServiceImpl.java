@@ -1,5 +1,6 @@
 package com.group3.rentngo.service.impl;
 
+import com.group3.rentngo.model.entity.Car;
 import com.group3.rentngo.model.entity.CarOwner;
 import com.group3.rentngo.repository.*;
 import com.group3.rentngo.service.CarOwnerService;
@@ -57,6 +58,10 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         carOwnerRepository.updateWalletByEmail(updatedWallet, email);
     }
 
+    @Override
+    public String findCarByLicensePlate(String licensePlate) {
+        return carRepository.findCarByLicensePlate(licensePlate);
+    }
 
 
 }
