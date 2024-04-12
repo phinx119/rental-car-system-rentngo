@@ -117,7 +117,7 @@ public class CarOwnerController {
         CarOwner carOwner = new CarOwner();
         UserDetails userDetails = userService.getUserDetail();
 
-        System.out.println("email=" + userDetails.getUsername());
+        //System.out.println("email=" + userDetails.getUsername());
         carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
         try {
             // Lưu registrationPaper
