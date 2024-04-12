@@ -160,49 +160,130 @@ public class CarOwnerController {
                             @RequestPart("leftImage") MultipartFile leftImage,
                             @RequestPart("rightImage") MultipartFile rightImage,
                             Model model,
-                            BindingResult result) {
+                            BindingResult bindingResult) {
 
+        if (car.getName() == null || car.getName().isEmpty()) {
+            bindingResult.rejectValue("name", null, "Name is required");
+        }
+
+        if (car.getLicensePlate() == null || car.getLicensePlate().isEmpty()) {
+            bindingResult.rejectValue("licensePlate", null, "License plate is required");
+        }
+
+        if (car.getBrand() == null || car.getBrand().isEmpty()) {
+            bindingResult.rejectValue("brand", null, "Brand is required");
+        }
+
+        if (car.getModel() == null || car.getModel().isEmpty()) {
+            bindingResult.rejectValue("model", null, "Model is required");
+        }
+
+        if (car.getColor() == null || car.getColor().isEmpty()) {
+            bindingResult.rejectValue("color", null, "Color is required");
+        }
+
+        if (car.getNumberOfSeats() <= 0) {
+            bindingResult.rejectValue("numberOfSeats", null, "Number of seats must be positive");
+        }
+
+        if (car.getProductionYear() <= 0) {
+            bindingResult.rejectValue("productionYear", null, "Production year must be positive");
+        }
+
+        if (car.getTransmissionType() == null || car.getTransmissionType().isEmpty()) {
+            bindingResult.rejectValue("transmissionType", null, "Transmission type is required");
+        }
+
+        if (car.getFuelType() == null || car.getFuelType().isEmpty()) {
+            bindingResult.rejectValue("fuelType", null, "Fuel type is required");
+        }
+
+        if (car.getMileage() <= 0) {
+            bindingResult.rejectValue("mileage", null, "Mileage must be positive");
+        }
+
+        if (car.getFuelConsumption() == null || car.getFuelConsumption().isEmpty()) {
+            bindingResult.rejectValue("fuelConsumption", null, "Fuel consumption is required");
+        }
+
+        if (car.getBasePrice() <= 0) {
+            bindingResult.rejectValue("basePrice", null, "Base price must be positive");
+        }
+
+        if (car.getDeposit() <= 0) {
+            bindingResult.rejectValue("deposit", null, "Deposit must be positive");
+        }
+
+        if (car.getAddress() == null || car.getAddress().isEmpty()) {
+            bindingResult.rejectValue("address", null, "Address is required");
+        }
+
+        if (car.getDescription() == null || car.getDescription().isEmpty()) {
+            bindingResult.rejectValue("description", null, "Description is required");
+        }
+
+        if (car.getAdditionalFunctions() == null || car.getAdditionalFunctions().isEmpty()) {
+            bindingResult.rejectValue("additionalFunctions", null, "Additional functions are required");
+        }
+
+        if (car.getTermOfUse() == null || car.getTermOfUse().isEmpty()) {
+            bindingResult.rejectValue("termOfUse", null, "Term of use is required");
+        }
+
+        if (car.getRegistrationPaper() == null) {
+            bindingResult.rejectValue("registrationPaper", null, "Registration paper is required");
+        }
+
+        if (car.getCertificateOfInspection() == null) {
+            bindingResult.rejectValue("certificateOfInspection", null, "Certificate of inspection is required");
+        }
+
+        if (car.getInsurance() == null) {
+            bindingResult.rejectValue("insurance", null, "Insurance is required");
+        }
+
+        if (car.getFrontImage() == null) {
+            bindingResult.rejectValue("frontImage", null, "Front image is required");
+        }
+
+        if (car.getBackImage() == null) {
+            bindingResult.rejectValue("backImage", null, "Back image is required");
+        }
+
+        if (car.getLeftImage() == null) {
+            bindingResult.rejectValue("leftImage", null, "Left image is required");
+        }
+
+        if (car.getRightImage() == null) {
+            bindingResult.rejectValue("rightImage", null, "Right image is required");
+        }
         String checkLicensePlate = carOwnerService.findCarByLicensePlate(car.getLicensePlate());
-
-
-
         if (checkLicensePlate != null) {
-
-
-
-
-            result.rejectValue("licensePlate", null, "Biển số đã tồn tại trong hệ thống");
+            bindingResult.rejectValue("licensePlate", null, "Biển số đã tồn tại trong hệ thống");
             return "add-car-page";
         }
+
         else{
             String saveLocation = "src/main/resources/static/images/document";
             String saveLocationCarImage = "src/main/resources/static/images/car";
             CarImage carImage = new CarImage();
             CarOwner carOwner = new CarOwner();
             UserDetails userDetails = userService.getUserDetail();
-
-            //System.out.println("email=" + userDetails.getUsername());
             carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
             try {
-
                 car.setRegistrationPaperPath(carService.storeFile(saveLocation, registrationPaper));
                 car.setCertificateOfInspectionPath(carService.storeFile(saveLocation, inspectionCertificate));
                 car.setInsurancePath(carService.storeFile(saveLocation, insurance));
-
                 carImage.setFrontImagePath(carService.storeFile(saveLocationCarImage, frontImage));
                 carImage.setBackImagePath(carService.storeFile(saveLocationCarImage, backImage));
                 carImage.setLeftImagePath(carService.storeFile(saveLocationCarImage, leftImage));
                 carImage.setRightImagePath(carService.storeFile(saveLocationCarImage, rightImage));
-
                 car.setCarOwner(carOwner);
-
                 carService.addCarImage(carImage);
                 carService.addCar(car, carImage);
-
             } catch (Exception e) {
                 System.out.println(e);
             }
-
             return "redirect:/home";
         }
 
