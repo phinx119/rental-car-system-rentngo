@@ -77,7 +77,6 @@ public class CustomerServiceImpl implements CustomerService {
         Date dateOfBirth = commonUtil.parseDate(updateProfileDto.getDateOfBirth());
         String nationalId = updateProfileDto.getNationalId();
         String phone = updateProfileDto.getPhone();
-        String email = updateProfileDto.getEmail();
         String address = updateProfileDto.getHouseNumberAndStreet()
                 .concat("-")
                 .concat(updateProfileDto.getWard())
@@ -88,7 +87,7 @@ public class CustomerServiceImpl implements CustomerService {
         String drivingLicense = updateProfileDto.getDrivingLicense();
         Long id = updateProfileDto.getId();
 
-        customerRepository.updateProfile(name, dateOfBirth, nationalId, phone, email, address, drivingLicense, id);
+        customerRepository.updateProfile(name, dateOfBirth, nationalId, phone, address, drivingLicense, id);
     }
 
     /**

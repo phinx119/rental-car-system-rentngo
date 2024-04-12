@@ -26,11 +26,12 @@
 
 <div class="personal-information">
     <form method="post" role="form"
-          th:action="@{/admin/update-user-profile/{role}(role=${role})}"
+          th:action="@{/update-user-profile}"
           th:object="${updateProfileDto}">
         <div class="row">
             <div class="col-md-6">
                 <input type="hidden" name="id" th:field="*{id}"/>
+                <input type="hidden" name="role" th:field="*{role}"/>
                 <div class="personal-information-items">
                     <strong>Full Name</strong><br/>
                     <input type="text" name="name" th:field="*{name}"/>
@@ -93,9 +94,8 @@
                 </div>
                 <div class="personal-information-items">
                     <strong>Email Address</strong><br/>
-                    <input type="text" name="email" th:field="*{email}" readonly/>
-                    <p th:errors="*{email}" class="text-danger"
-                       th:if="${#fields.hasErrors('email')}"></p>
+                    <input type="hidden" name="email" th:field="*{email}"/>
+                    <span class="border border-secondary rounded p-1" th:text="*{email}"></span>
                 </div>
                 <div class="personal-information-items">
                     <strong>Driving license</strong><br/>
@@ -167,6 +167,9 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script th:inline="javascript">
     let city = [[${updateProfileDto.city}]];

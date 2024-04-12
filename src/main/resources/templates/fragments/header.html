@@ -26,9 +26,10 @@
                         Welcome
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">My Profile</a>
+                        <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}"
+                           th:href="@{/car-owner/view-car-owner-detail}">My Profile</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-                           href="#">Admin Dashboard</a>
+                           th:href="@{/admin/list-user}">Admin Dashboard</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}"
                            th:href="@{'/car-owner/view-list-car/' + ${id}}">My Car</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}"

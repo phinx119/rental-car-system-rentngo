@@ -7,14 +7,12 @@ import com.group3.rentngo.model.entity.Customer;
 import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CustomerService;
 import com.group3.rentngo.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +63,7 @@ public class AdminController {
 
         UpdateProfileDto updateProfileDto = carOwnerService.getDtoFromCarOwner(carOwner);
 
-        model.addAttribute("role", updateProfileDto.getRole());
+        //model.addAttribute("role", updateProfileDto.getRole());
         model.addAttribute("updateProfileDto", updateProfileDto);
 
         return "edit-profile";
@@ -82,42 +80,9 @@ public class AdminController {
 
         UpdateProfileDto updateProfileDto = customerService.getDtoFromCustomer(customer);
 
-        model.addAttribute("role", updateProfileDto.getRole());
+        //model.addAttribute("role", updateProfileDto.getRole());
         model.addAttribute("updateProfileDto", updateProfileDto);
 
         return "edit-profile";
-    }
-
-    /**
-     * @author phinx
-     * @description update user detail
-     */
-    @PostMapping("/update-user-profile/{role}")
-    public String updateUserInfo(@PathVariable("role") String role,
-                                 @Valid @ModelAttribute("updateProfileDto") UpdateProfileDto updateProfileDto,
-                                 BindingResult result,
-                                 Model model)
-            throws ParseException {
-        if (updateProfileDto.getDateOfBirth() == null || updateProfileDto.getDateOfBirth().isEmpty()) {
-            result.rejectValue("dateOfBirth", null, "This field is required.");
-        } else if (commonUtil.parseDate(updateProfileDto.getDateOfBirth()).compareTo(new Date()) > 0) {
-            result.rejectValue("dateOfBirth", null, "Not earlier than current date.");
-        }
-
-        model.addAttribute("updateProfileDto", updateProfileDto);
-        if (result.hasErrors()) {
-            model.addAttribute("errors", result.getAllErrors());
-            model.addAttribute("updateProfileDto", updateProfileDto);
-
-            return "edit-profile";
-        } else {
-            if (role.equals("ROLE_CAR_OWNER")) {
-                carOwnerService.updateProfile(updateProfileDto);
-            }
-            if (role.equals("ROLE_CUSTOMER")) {
-                customerService.updateProfile(updateProfileDto);
-            }
-        }
-        return "redirect:/admin/view-car-owner-detail?id=" + updateProfileDto.getId();
     }
 }
