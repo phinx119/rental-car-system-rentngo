@@ -8,12 +8,17 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.Optional;
 
 @Repository
 public interface CarOwnerRepository extends JpaRepository<CarOwner, Long> {
     CarOwner findByEmail(String email);
     
     CarOwner findByPhone(String phone);
+
+    @Override
+    Optional<CarOwner> findById(Long aLong);
 
     CarOwner findByUser_Id(Long id);
 
@@ -22,6 +27,10 @@ public interface CarOwnerRepository extends JpaRepository<CarOwner, Long> {
     @Query("update CarOwner c set c.wallet = ?1 where c.email = ?2")
     int updateWalletByEmail(BigDecimal wallet, String email);
 
-
-
+    @Transactional
+    @Modifying
+    @Query("""
+            update CarOwner c set c.name = ?1, c.dateOfBirth = ?2, c.nationalId = ?3, c.phone = ?4, c.address = ?5, c.drivingLicense = ?6
+            where c.id = ?7""")
+    int updateProfile(String name, Date dateOfBirth, String nationalId, String phone, String address, String drivingLicense, Long id);
 }

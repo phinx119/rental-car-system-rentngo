@@ -1,6 +1,12 @@
 package com.group3.rentngo.controller;
 
+import com.group3.rentngo.model.dto.UpdateProfileDto;
+import com.group3.rentngo.model.entity.Customer;
+import com.group3.rentngo.service.CustomerService;
+import com.group3.rentngo.service.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,6 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
+    private final UserService userService;
+    private final CustomerService customerService;
+
+    public CustomerController(UserService userService,
+                              CustomerService customerService) {
+        this.userService = userService;
+        this.customerService = customerService;
+    }
+
     /**
      * @author phinx
      * @description show home page for role cuatomer
@@ -22,10 +37,18 @@ public class CustomerController {
 
     /**
      * @author phinx
-     * @description show customer profile page
+     * @description show customer detail
      */
-    @GetMapping("/edit-profile")
-    public String editProfile() {
+    @GetMapping("/view-customer-detail")
+    public String viewCarOwnerDetail(Model model) {
+        UserDetails userDetails = userService.getUserDetail();
+
+        Customer customer = customerService.findCustomerByEmail(userDetails.getUsername());
+
+        UpdateProfileDto updateProfileDto = customerService.getDtoFromCustomer(customer);
+
+        model.addAttribute("updateProfileDto", updateProfileDto);
+
         return "edit-profile";
     }
 

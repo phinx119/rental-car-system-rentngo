@@ -1,13 +1,13 @@
 package com.group3.rentngo.service.impl;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import java.util.Locale;
 import java.util.Map;
 
@@ -21,6 +21,10 @@ public class EmailService {
         this.templateEngine = templateEngine;
     }
 
+    /**
+     * @author phinx
+     * @description send email
+     */
     public void sendEmail(String to, String subject, Map<String, Object> model, String templateName) {
         MimeMessage message = javaMailSender.createMimeMessage();
         try {

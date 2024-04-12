@@ -160,6 +160,10 @@ public class VNPayServiceImpl implements VNPayService {
         }
     }
 
+    /**
+     * @author phinx
+     * @description insert new payment history
+     */
     @Override
     public void saveNewPaymentHistory(String orderType, String totalPrice, String paymentTime) throws ParseException {
         // create new payment history
@@ -168,7 +172,7 @@ public class VNPayServiceImpl implements VNPayService {
         paymentHistory.setType(orderType);
 
         // parse string to sql date
-        Date createDate = commonUtil.parseDate(paymentTime);
+        Date createDate = commonUtil.parseDateTime(paymentTime);
         paymentHistory.setCreateDate(createDate);
 
         // get user information to add to new payment history
@@ -189,6 +193,10 @@ public class VNPayServiceImpl implements VNPayService {
         }
     }
 
+    /**
+     * @author phinx
+     * @description get payment history list
+     */
     @Override
     public List<PaymentHistory> findAll() {
         return paymentHistoryRepository.findAll();

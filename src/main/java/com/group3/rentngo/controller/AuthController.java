@@ -1,7 +1,9 @@
 package com.group3.rentngo.controller;
 
+import com.group3.rentngo.common.CommonUtil;
 import com.group3.rentngo.model.dto.ResetPasswordDto;
 import com.group3.rentngo.model.dto.SignupDto;
+import com.group3.rentngo.model.dto.UpdateProfileDto;
 import com.group3.rentngo.model.dto.UserDto;
 import com.group3.rentngo.model.entity.CustomUserDetails;
 import com.group3.rentngo.service.CarOwnerService;
@@ -10,13 +12,14 @@ import com.group3.rentngo.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.util.Date;
 
 /**
  * @author phinx
@@ -24,19 +27,22 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class AuthController {
-    private UserService userService;
-    private CarOwnerService carOwnerService;
-    private CustomerService customerService;
-    private HttpSession session;
+    private final UserService userService;
+    private final CarOwnerService carOwnerService;
+    private final CustomerService customerService;
+    private final CommonUtil commonUtil;
+    private final HttpSession session;
 
     @Autowired
     public AuthController(UserService userService,
                           CarOwnerService carOwnerService,
                           CustomerService customerService,
+                          CommonUtil commonUtil,
                           HttpSession session) {
         this.userService = userService;
         this.carOwnerService = carOwnerService;
         this.customerService = customerService;
+        this.commonUtil = commonUtil;
         this.session = session;
     }
 
@@ -62,14 +68,20 @@ public class AuthController {
                 return "redirect:/customer/home";
             }
         }
+        return "home-page";
+    }
 
-        UserDto userDto = new UserDto();
+    /**
+     * @author phinx
+     * @description redirect to home page for each actor
+     */
+    @GetMapping(value = "/home/login-signup")
+    public String showLoginSignupPage(Model model) {
         SignupDto signupDto = new SignupDto();
 
-        model.addAttribute("userDto", userDto);
+        model.addAttribute("email", "");
         model.addAttribute("signupDto", signupDto);
-
-        return "home-page";
+        return "login-sign-up-page";
     }
 
     /**
@@ -100,11 +112,10 @@ public class AuthController {
 
         if (result.hasErrors()) {
             UserDto userDto = new UserDto();
-          
+
             model.addAttribute("userDto", userDto);
             model.addAttribute("signupDto", signupDto);
-            model.addAttribute("errors", result.getAllErrors());
-            return "home-page";
+            return "login-sign-up-page";
         } else {
             userService.saveUser(signupDto);
             return "redirect:/home";
@@ -116,20 +127,25 @@ public class AuthController {
      * @description get input email, check existed to reset password
      */
     @PostMapping("/home/check-existed-email")
-    public String checkExistedEmail(@Valid @ModelAttribute("userDto") UserDto userDto,
-                                    BindingResult result,
+    public String checkExistedEmail(@RequestParam("email") String email,
                                     Model model) {
-        if (userService.findUserByEmail(userDto.getEmail()) == null) {
-            result.rejectValue("email", null, "Email address does not exist in the system.");
-        }
-        result.getAllErrors();
-        if (result.hasErrors()) {
-            model.addAttribute("userDto", userDto);
-            model.addAttribute("errors", result.getAllErrors());
-            return "home-page";
+        if (email.isEmpty()) {
+            model.addAttribute("emailError", "Email cannot be empty");
+            SignupDto signupDto = new SignupDto();
+
+            model.addAttribute("email", "");
+            model.addAttribute("signupDto", signupDto);
+            return "login-sign-up-page";
+        } else if (userService.findUserByEmail(email) == null) {
+            model.addAttribute("emailError", "Email address does not exist in the system.");
+            SignupDto signupDto = new SignupDto();
+
+            model.addAttribute("email", "");
+            model.addAttribute("signupDto", signupDto);
+            return "login-sign-up-page";
         } else {
-            userService.sendComplexEmail(userDto.getEmail(), "<a href=\"http://localhost:8080/reset-password/" + userDto.getEmail() + "\">Reset password link</a>");
-            return "redirect:/home";
+            userService.sendComplexEmail(email, "<a href=\"http://localhost:8080/reset-password/" + email + "\">Reset password link</a>");
+            return "redirect:/home/login-signup";
         }
     }
 
@@ -177,5 +193,54 @@ public class AuthController {
     @GetMapping("/error-403")
     public String showError403() {
         return "error/403";
+    }
+
+    /**
+     * @author phinx
+     * @description update user detail
+     */
+    @PostMapping("/update-user-profile")
+    public String updateUserInfo(@Valid @ModelAttribute("updateProfileDto") UpdateProfileDto updateProfileDto,
+                                 BindingResult result,
+                                 Model model)
+            throws ParseException {
+        if (updateProfileDto.getDateOfBirth() == null || updateProfileDto.getDateOfBirth().isEmpty()) {
+            result.rejectValue("dateOfBirth", null, "This field is required.");
+        } else if (commonUtil.parseDate(updateProfileDto.getDateOfBirth()).compareTo(new Date()) > 0) {
+            result.rejectValue("dateOfBirth", null, "Not earlier than current date.");
+        }
+
+        model.addAttribute("updateProfileDto", updateProfileDto);
+        if (result.hasErrors()) {
+            model.addAttribute("errors", result.getAllErrors());
+            model.addAttribute("updateProfileDto", updateProfileDto);
+
+            return "edit-profile";
+        } else {
+            if (updateProfileDto.getRole().equals("ROLE_CAR_OWNER")) {
+                carOwnerService.updateProfile(updateProfileDto);
+            }
+            if (updateProfileDto.getRole().equals("ROLE_CUSTOMER")) {
+                customerService.updateProfile(updateProfileDto);
+            }
+        }
+
+        UserDetails userDetails = userService.getUserDetail();
+        if (userDetails != null) {
+            boolean isAdmin = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+            boolean isCarOwner = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CAR_OWNER"));
+            boolean isCustomer = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CUSTOMER"));
+            session.setAttribute("email", userDetails.getUsername());
+            if (isAdmin) {
+                return "redirect:/admin/view-car-owner-detail?id=" + updateProfileDto.getId();
+            }
+            if (isCarOwner) {
+                return "redirect:/car-owner/view-car-owner-detail";
+            }
+            if (isCustomer) {
+                return "redirect:/customer/view-car-owner-detail";
+            }
+        }
+        return "redirect:/home";
     }
 }

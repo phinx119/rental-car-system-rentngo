@@ -1,4 +1,4 @@
-package com.group3.rentngo.security;
+package com.group3.rentngo.config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +14,6 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
             throws IOException, ServletException {
         // Invalidate session on logout
         request.getSession().invalidate();
-        response.sendRedirect("/login?logout");
+        response.sendRedirect("/home?logout");
     }
 }
