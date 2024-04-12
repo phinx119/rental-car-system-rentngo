@@ -1,8 +1,12 @@
 package com.group3.rentngo.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @AllArgsConstructor
@@ -11,7 +15,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

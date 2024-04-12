@@ -1,8 +1,13 @@
 package com.group3.rentngo.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Nationalized;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -13,13 +18,14 @@ import java.util.Collection;
 @Setter
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @Column
+    @Nationalized
     private String name;
 
     @Column
@@ -35,6 +41,7 @@ public class Customer {
     private String email;
 
     @Column
+    @Nationalized
     private String address;
 
     @Column(unique = true)

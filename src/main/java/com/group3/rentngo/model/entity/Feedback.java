@@ -1,8 +1,13 @@
 package com.group3.rentngo.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Nationalized;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 @AllArgsConstructor
@@ -11,7 +16,7 @@ import java.sql.Date;
 @Setter
 @Entity
 @Table(name = "feedback")
-public class Feedback {
+public class Feedback implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -21,6 +26,7 @@ public class Feedback {
     private int ratings;
 
     @Column(nullable = false)
+    @Nationalized
     private String content;
 
     @Column(nullable = false)

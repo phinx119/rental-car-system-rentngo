@@ -1,12 +1,14 @@
 package com.group3.rentngo.controller;
 
 import com.group3.rentngo.model.dto.CarDto;
+import com.group3.rentngo.model.dto.UpdateProfileDto;
 import com.group3.rentngo.model.entity.*;
-import org.springframework.http.MediaType;
 import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CarService;
 import com.group3.rentngo.service.UserService;
 import com.group3.rentngo.service.VNPayService;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +34,10 @@ public class CarOwnerController {
     private final CarOwnerService carOwnerService;
     private final VNPayService vnPayService;
 
-    public CarOwnerController(UserService userService, CarService carService, CarOwnerService carOwnerService, VNPayService vnPayService) {
+    public CarOwnerController(UserService userService,
+                              CarService carService,
+                              CarOwnerService carOwnerService,
+                              VNPayService vnPayService) {
         this.userService = userService;
         this.carService = carService;
         this.carOwnerService = carOwnerService;
@@ -43,7 +48,7 @@ public class CarOwnerController {
      * @author phinx
      * @description show home page for role car owner
      */
-    @GetMapping({ "/home"})
+    @GetMapping({"/home"})
     public String viewCarOwnerHome(Model model) {
         CustomUserDetails userDetails = userService.getUserDetail();
         if (userDetails != null) {
@@ -51,6 +56,23 @@ public class CarOwnerController {
             model.addAttribute("id", id);
         }
         return "home-page-as-car-owner";
+    }
+
+    /**
+     * @author phinx
+     * @description show car owner detail
+     */
+    @GetMapping("/view-car-owner-detail")
+    public String viewCarOwnerDetail(Model model) {
+        UserDetails userDetails = userService.getUserDetail();
+
+        CarOwner carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
+
+        UpdateProfileDto updateProfileDto = carOwnerService.getDtoFromCarOwner(carOwner);
+
+        model.addAttribute("updateProfileDto", updateProfileDto);
+
+        return "edit-profile";
     }
 
     /**
@@ -64,7 +86,10 @@ public class CarOwnerController {
         return "add-car-page";
     }
 
-    //List car of owner
+    /**
+     * @author thiendd
+     * @description show list car of owner
+     */
     @GetMapping("/view-list-car/{id}")
     public String listCarOfOwner(Model model, @PathVariable long id) {
         CarOwner carOwner = carOwnerService.findCarOwnerByIdUser(id);
@@ -73,6 +98,10 @@ public class CarOwnerController {
         return "list-car-page";
     }
 
+    /**
+     * @author thiendd
+     * @description
+     */
     @GetMapping("/display-car-detail/{id}")
     public String carDetail(Model model, @PathVariable long id) {
         Optional<Car> carOptional = carService.findbyId(id);
@@ -89,15 +118,24 @@ public class CarOwnerController {
         return "car-detail";
     }
 
-//    @GetMapping("/edit-car/{id}")
-//    public String editCarDetail(Model model, @PathVariable long id,@ModelAttribute("car") Car car) {
-//        Optional<Car> carOptional = carService.findbyId(id);
-//        Car car = carOptional.orElse(null);
-//        CarDto carDto = new CarDto();
-//
-//        model.addAttribute("car", car);
-//        return "edit-car-detial-page";
-//    }
+
+    /**
+     * @author thiendd
+     * @description
+     */
+    @GetMapping("/edit-car/{id}")
+    public String editCarDetail(Model model, @PathVariable long id) {
+        Optional<Car> carOptional = carService.findbyId(id);
+        Car car = carOptional.orElse(null);
+
+        model.addAttribute("car", car);
+        return "edit-car-detial-page";
+    }
+
+    /**
+     * @author thiendd
+     * @description
+     */
     @PostMapping("/edit-car/{id}")
     public String editCarInfoDetail(Model model, @PathVariable long id) {
         Optional<Car> carOptional = carService.findbyId(id);
@@ -106,7 +144,10 @@ public class CarOwnerController {
         return "edit-car-detial-page";
     }
 
-  
+    /**
+     * @author thiendd
+     * @description
+     */
     @PostMapping(path = "/addnewcar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String addNewCar(@ModelAttribute("car") CarDto car,
                             @RequestPart("registrationPaper") MultipartFile registrationPaper,
@@ -153,6 +194,7 @@ public class CarOwnerController {
             insuranceFos.write(insurance.getBytes());
             insuranceFos.close();
             car.setInsurancePath(saveLocation + "/" + insuranceNewName);
+
             //Lưu ảnh trước
             String frontImageName = frontImage.getOriginalFilename();
             String frontImageNewName = UUID.randomUUID().toString() + frontImageName;
@@ -189,19 +231,18 @@ public class CarOwnerController {
             rightImageFos.close();
             carImage.setRightImagePath(saveLocationCarImage + "/" + rightImageNewName);
 
-
-
             carService.addCarImage(carImage);
-            carService.addCar(car,carImage);
-
+            carService.addCar(car, carImage);
         } catch (Exception e) {
             System.out.println(e);
         }
-
         return "redirect:/home";
     }
 
-
+    /**
+     * @author phinx
+     * @description show user wallet
+     */
     @GetMapping("/view-wallet")
     public String viewWallet(Model model) {
         // get wallet

@@ -1,6 +1,5 @@
 package com.group3.rentngo.config;
 
-import com.group3.rentngo.security.CustomLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +40,7 @@ public class SpringSecurity {
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/car-owner/**").hasAnyRole("ADMIN", "CAR_OWNER")
                                 .requestMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
+                                .requestMatchers("/update-user-profile").hasAnyRole("ADMIN", "CAR_OWNER", "CUSTOMER")
                                 .requestMatchers("/vnpay/**").hasAnyRole("ADMIN", "CAR_OWNER", "CUSTOMER")
                                 .requestMatchers("/reset-password/**", "/error-403").permitAll()
                                 .requestMatchers("/js/**", "/css/**", "/images/**").permitAll()
@@ -50,13 +50,11 @@ public class SpringSecurity {
                                 .loginPage("/home")
                                 .loginProcessingUrl("/home/login")
                                 .defaultSuccessUrl("/home", true)
-                                .permitAll()
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .deleteCookies("JSESSIONID")
+                                //.deleteCookies("JSESSIONID")
                                 .logoutSuccessHandler(logoutSuccessHandler())
-                                .permitAll()
                 ).exceptionHandling(
                         httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
                                 .accessDeniedPage("/error-403")

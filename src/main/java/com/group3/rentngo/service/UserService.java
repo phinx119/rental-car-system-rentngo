@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface UserService {
     CustomUserDetails getUserDetail();
+
     void saveAdmin(UserDto userDto);
 
     void saveUser(SignupDto signupDto);
