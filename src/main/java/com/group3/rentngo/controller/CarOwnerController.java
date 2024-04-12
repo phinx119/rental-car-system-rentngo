@@ -77,7 +77,14 @@ public class CarOwnerController {
     public String carDetail(Model model, @PathVariable long id) {
         Optional<Car> carOptional = carService.findbyId(id);
         Car car = carOptional.orElse(null);
-
+        String carOption = car.getAdditionalFunctions();
+        String carTerm = car.getTermOfUse();
+        model.addAttribute("carRegistrationPaper", car.getRegistrationPaperPath());
+        model.addAttribute("carCertificateOfInspection", car.getCertificateOfInspectionPath());
+        model.addAttribute("carInsurance", car.getInsurancePath());
+        System.out.println(car.getRegistrationPaperPath()+" " + car.getCertificateOfInspectionPath()+ " " +car.getInsurancePath());
+        model.addAttribute("carTerm",carTerm);
+        model.addAttribute("carOption",carOption);
         model.addAttribute("car", car);
         return "car-detail";
     }
@@ -95,7 +102,6 @@ public class CarOwnerController {
     public String editCarInfoDetail(Model model, @PathVariable long id) {
         Optional<Car> carOptional = carService.findbyId(id);
         Car car = carOptional.orElse(null);
-
         model.addAttribute("car", car);
         return "edit-car-detial-page";
     }
@@ -113,6 +119,13 @@ public class CarOwnerController {
         String saveLocation = "src/main/resources/static/images/document";
         String saveLocationCarImage = "src/main/resources/static/images/car";
         CarImage carImage = new CarImage();
+
+        File documentpath=new File(saveLocation);
+
+        if(documentpath.exists()==false){
+            documentpath.mkdir();
+        }
+
         try {
             // Lưu registrationPaper
             String registrationPaperName = registrationPaper.getOriginalFilename();
