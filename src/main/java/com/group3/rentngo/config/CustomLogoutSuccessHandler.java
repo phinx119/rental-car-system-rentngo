@@ -14,6 +14,6 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
             throws IOException, ServletException {
         // Invalidate session on logout
         request.getSession().invalidate();
-        response.sendRedirect("/login?logout");
+        response.sendRedirect("/home?logout");
     }
 }
