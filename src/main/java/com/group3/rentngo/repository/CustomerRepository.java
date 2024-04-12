@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Optional;
 
 @Repository
@@ -24,4 +25,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query("update Customer c set c.wallet = ?1 where c.email = ?2")
     int updateWalletByEmail(BigDecimal wallet, String email);
 
+    @Transactional
+    @Modifying
+    @Query("""
+            update Customer c set c.name = ?1, c.dateOfBirth = ?2, c.nationalId = ?3, c.phone = ?4, c.address = ?5, c.drivingLicense = ?6
+            where c.id = ?7""")
+    int updateProfile(String name, Date dateOfBirth, String nationalId, String phone, String address, String drivingLicense, Long id);
 }

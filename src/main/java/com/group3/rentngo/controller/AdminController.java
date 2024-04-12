@@ -1,8 +1,9 @@
 package com.group3.rentngo.controller;
 
+import com.group3.rentngo.common.CommonUtil;
+import com.group3.rentngo.model.dto.UpdateProfileDto;
 import com.group3.rentngo.model.entity.CarOwner;
 import com.group3.rentngo.model.entity.Customer;
-import com.group3.rentngo.model.entity.User;
 import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CustomerService;
 import com.group3.rentngo.service.UserService;
@@ -25,13 +26,16 @@ public class AdminController {
     private UserService userService;
     private CarOwnerService carOwnerService;
     private CustomerService customerService;
+    private CommonUtil commonUtil;
 
     public AdminController(UserService userService,
                            CarOwnerService carOwnerService,
-                           CustomerService customerService) {
+                           CustomerService customerService,
+                           CommonUtil commonUtil) {
         this.userService = userService;
         this.carOwnerService = carOwnerService;
         this.customerService = customerService;
+        this.commonUtil = commonUtil;
     }
 
     /**
@@ -48,11 +52,37 @@ public class AdminController {
         return "manage-user-page";
     }
 
+    /**
+     * @author phinx
+     * @description show car owner detail
+     */
+    @GetMapping("/view-car-owner-detail")
+    public String viewCarOwnerDetail(@RequestParam("id") Long carOwnerId, Model model) {
+        Optional<CarOwner> carOwnerDetail = carOwnerService.findCarOwnerById(carOwnerId);
+        CarOwner carOwner = carOwnerDetail.orElse(null);
+
+        UpdateProfileDto updateProfileDto = carOwnerService.getDtoFromCarOwner(carOwner);
+
+        //model.addAttribute("role", updateProfileDto.getRole());
+        model.addAttribute("updateProfileDto", updateProfileDto);
+
+        return "edit-profile";
+    }
+
+    /**
+     * @author phinx
+     * @description show customer detail
+     */
     @GetMapping("/view-customer-detail")
-    public String viewUserDetail(@RequestParam("id") Long customerId, Model model) {
+    public String viewCustomerDetail(@RequestParam("id") Long customerId, Model model) {
         Optional<Customer> customerDetail = customerService.findCustomerById(customerId);
         Customer customer = customerDetail.orElse(null);
-        model.addAttribute("customer", customer); ;
+
+        UpdateProfileDto updateProfileDto = customerService.getDtoFromCustomer(customer);
+
+        //model.addAttribute("role", updateProfileDto.getRole());
+        model.addAttribute("updateProfileDto", updateProfileDto);
+
         return "edit-profile";
     }
 }

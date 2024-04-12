@@ -1,17 +1,3 @@
-header{
-    display: flex;
-    justify-content: space-between ;
-    align-items: center;
-    background-color: hsl(0,0%,40%);
-    color: white;
-}
-header a{
-
-    color: white;
-}
-header strong{
-    font-size: 35px;
-}
 .breadcrumb{
     background: white !important;
     margin: 0 !important;
@@ -33,7 +19,7 @@ header strong{
 .personal-information{
     margin-left: 30px;
     margin-top: 20px;
-    border: 1px s;
+    border: 1px;
 }
 .personal-information-items{
     margin-bottom: 20px;

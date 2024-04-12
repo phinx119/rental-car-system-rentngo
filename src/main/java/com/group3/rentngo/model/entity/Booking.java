@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "booking")
-public class Booking {
+public class Booking implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "booking_no", nullable = false)

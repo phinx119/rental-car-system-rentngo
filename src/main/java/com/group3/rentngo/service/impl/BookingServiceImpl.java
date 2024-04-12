@@ -1,16 +1,19 @@
 package com.group3.rentngo.service.impl;
 
-import com.group3.rentngo.repository.*;
+import com.group3.rentngo.repository.BookingRepository;
+import com.group3.rentngo.repository.CarRepository;
+import com.group3.rentngo.repository.CustomerRepository;
+import com.group3.rentngo.repository.FeedbackRepository;
 import com.group3.rentngo.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BookingServiceImpl implements BookingService {
-    private BookingRepository bookingRepository;
-    private CustomerRepository customerRepository;
-    private CarRepository carRepository;
-    private FeedbackRepository feedbackRepository;
+    private final BookingRepository bookingRepository;
+    private final CustomerRepository customerRepository;
+    private final CarRepository carRepository;
+    private final FeedbackRepository feedbackRepository;
 
     @Autowired
     public BookingServiceImpl(BookingRepository bookingRepository,
@@ -22,6 +25,11 @@ public class BookingServiceImpl implements BookingService {
         this.carRepository = carRepository;
         this.feedbackRepository = feedbackRepository;
     }
+
+    /**
+     * @author thiendd
+     * @description
+     */
     @Override
     public void changeBookingStatus(int id) {
         bookingRepository.updateById(id);

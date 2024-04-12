@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Nationalized;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -16,7 +18,7 @@ import java.sql.Date;
 @Setter
 @Entity
 @Table(name = "payment_history")
-public class PaymentHistory {
+public class PaymentHistory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -36,6 +38,7 @@ public class PaymentHistory {
     private Booking booking;
 
     @Column
+    @Nationalized
     private String note;
 
     @ManyToOne
