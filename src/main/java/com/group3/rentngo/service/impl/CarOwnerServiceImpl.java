@@ -150,4 +150,10 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         updateProfileDto.setDrivingLicense(carOwner.getDrivingLicense());
         return updateProfileDto;
     }
+
+    @Override
+    public String findCarByLicensePlate(String licensePlate) {
+        return carRepository.findCarByLicensePlate(licensePlate);
+    }
+
 }

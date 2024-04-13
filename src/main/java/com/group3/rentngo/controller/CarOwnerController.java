@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -148,6 +149,7 @@ public class CarOwnerController {
      * @author thiendd
      * @description
      */
+
     @PostMapping(path = "/addnewcar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String addNewCar(@ModelAttribute("car") CarDto car,
                             @RequestPart("registrationPaper") MultipartFile registrationPaper,
@@ -156,95 +158,162 @@ public class CarOwnerController {
                             @RequestPart("frontImage") MultipartFile frontImage,
                             @RequestPart("backImage") MultipartFile backImage,
                             @RequestPart("leftImage") MultipartFile leftImage,
-                            @RequestPart("rightImage") MultipartFile rightImage) {
-        String saveLocation = "src/main/resources/static/images/document";
-        String saveLocationCarImage = "src/main/resources/static/images/car";
-        CarImage carImage = new CarImage();
+                            @RequestPart("rightImage") MultipartFile rightImage,
+                            Model model,
+                            BindingResult bindingResult) {
 
-        File documentpath=new File(saveLocation);
-
-        if(documentpath.exists()==false){
-            documentpath.mkdir();
+        if(registrationPaper.isEmpty()) {
+            bindingResult.rejectValue("registrationPaper", null, "Registration Paper is empty");
+        }
+        if(inspectionCertificate.isEmpty()) {
+            bindingResult.rejectValue("certificateOfInspection", null, "Inspection Certificate is empty");
+        }
+        if(insurance.isEmpty()) {
+            bindingResult.rejectValue("insurance", null, "Insurance is empty");
+        }
+        if(frontImage.isEmpty()) {
+            bindingResult.rejectValue("frontImage", null, "Front Image is empty");
+        }
+        if(backImage.isEmpty()) {
+            bindingResult.rejectValue("backImage", null, "Back Image is empty");
+        }
+        if(leftImage.isEmpty()) {
+            bindingResult.rejectValue("leftImage", null, "Left Image is empty");
+        }
+        if(rightImage.isEmpty()) {
+            bindingResult.rejectValue("rightImage", null, "Right Image is empty");
         }
 
-        CarOwner carOwner = new CarOwner();
-        UserDetails userDetails = userService.getUserDetail();
-
-        //System.out.println("email=" + userDetails.getUsername());
-        carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
-        try {
-            // Lưu registrationPaper
-            String registrationPaperName = registrationPaper.getOriginalFilename();
-            String registrationPaperNewName = UUID.randomUUID().toString() + registrationPaperName;
-            File registrationPaperFile = new File(saveLocation + "/" + registrationPaperNewName);
-            FileOutputStream registrationFos = new FileOutputStream(registrationPaperFile);
-            registrationFos.write(registrationPaper.getBytes());
-            registrationFos.close();
-            car.setRegistrationPaperPath(saveLocation + "/" + registrationPaperNewName);
-
-            // Lưu inspectionCertificate
-            String inspectionCertificateName = inspectionCertificate.getOriginalFilename();
-            String inspectionCertificateNewName = UUID.randomUUID().toString() + inspectionCertificateName;
-            File inspectionCertificateFile = new File(saveLocation + "/" + inspectionCertificateNewName);
-            FileOutputStream inspectionFos = new FileOutputStream(inspectionCertificateFile);
-            inspectionFos.write(inspectionCertificate.getBytes());
-            inspectionFos.close();
-            car.setCertificateOfInspectionPath(saveLocation + "/" + inspectionCertificateNewName);
-
-            // Lưu insurance
-            String insuranceName = insurance.getOriginalFilename();
-            String insuranceNewName = UUID.randomUUID().toString() + insuranceName;
-            File insuranceFile = new File(saveLocation + "/" + insuranceNewName);
-            FileOutputStream insuranceFos = new FileOutputStream(insuranceFile);
-            insuranceFos.write(insurance.getBytes());
-            insuranceFos.close();
-            car.setInsurancePath(saveLocation + "/" + insuranceNewName);
-
-            //Lưu ảnh trước
-            String frontImageName = frontImage.getOriginalFilename();
-            String frontImageNewName = UUID.randomUUID().toString() + frontImageName;
-            File frontImageFile = new File(saveLocationCarImage + "/" + frontImageNewName);
-            FileOutputStream frontImageFos = new FileOutputStream(frontImageFile);
-            frontImageFos.write(frontImage.getBytes());
-            frontImageFos.close();
-            carImage.setFrontImagePath(saveLocationCarImage + "/" + frontImageNewName);
-
-            // Lưu ảnh sau
-            String backImageName = backImage.getOriginalFilename();
-            String backImageNewName = UUID.randomUUID().toString() + backImageName;
-            File backImageFile = new File(saveLocationCarImage + "/" + backImageNewName);
-            FileOutputStream backImageFos = new FileOutputStream(backImageFile);
-            backImageFos.write(backImage.getBytes());
-            backImageFos.close();
-            carImage.setBackImagePath(saveLocationCarImage + "/" + backImageNewName);
-
-            // Lưu ảnh trái
-            String leftImageName = leftImage.getOriginalFilename();
-            String leftImageNewName = UUID.randomUUID().toString() + leftImageName;
-            File leftImageFile = new File(saveLocationCarImage + "/" + leftImageNewName);
-            FileOutputStream leftImageFos = new FileOutputStream(leftImageFile);
-            leftImageFos.write(leftImage.getBytes());
-            leftImageFos.close();
-            carImage.setLeftImagePath(saveLocationCarImage + "/" + leftImageNewName);
-
-            // Lưu ảnh phải
-            String rightImageName = rightImage.getOriginalFilename();
-            String rightImageNewName = UUID.randomUUID().toString() + rightImageName;
-            File rightImageFile = new File(saveLocationCarImage + "/" + rightImageNewName);
-            FileOutputStream rightImageFos = new FileOutputStream(rightImageFile);
-            rightImageFos.write(rightImage.getBytes());
-            rightImageFos.close();
-            carImage.setRightImagePath(saveLocationCarImage + "/" + rightImageNewName);
-
-            car.setCarOwner(carOwner);
-
-            carService.addCarImage(carImage);
-            carService.addCar(car, carImage);
-        } catch (Exception e) {
-            System.out.println(e);
+        if (car.getName() == null || car.getName().isEmpty()) {
+            bindingResult.rejectValue("name", null, "Name is required");
         }
-        return "redirect:/home";
+
+        if (car.getLicensePlate() == null || car.getLicensePlate().isEmpty()) {
+            bindingResult.rejectValue("licensePlate", null, "License plate is required");
+        }
+
+        if (car.getBrand() == null || car.getBrand().isEmpty()) {
+            bindingResult.rejectValue("brand", null, "Brand is required");
+        }
+
+        if (car.getModel() == null || car.getModel().isEmpty()) {
+            bindingResult.rejectValue("model", null, "Model is required");
+        }
+
+        if (car.getColor() == null || car.getColor().isEmpty()) {
+            bindingResult.rejectValue("color", null, "Color is required");
+        }
+
+        if (car.getNumberOfSeats() <= 0) {
+            bindingResult.rejectValue("numberOfSeats", null, "Number of seats must be positive");
+        }
+
+        if (car.getProductionYear() <= 0) {
+            bindingResult.rejectValue("productionYear", null, "Production year must be positive");
+        }
+
+        if (car.getTransmissionType() == null || car.getTransmissionType().isEmpty()) {
+            bindingResult.rejectValue("transmissionType", null, "Transmission type is required");
+        }
+
+        if (car.getFuelType() == null || car.getFuelType().isEmpty()) {
+            bindingResult.rejectValue("fuelType", null, "Fuel type is required");
+        }
+
+        if (car.getMileage() <= 0) {
+            bindingResult.rejectValue("mileage", null, "Mileage must be positive");
+        }
+
+        if (car.getFuelConsumption() == null || car.getFuelConsumption().isEmpty()) {
+            bindingResult.rejectValue("fuelConsumption", null, "Fuel consumption is required");
+        }
+
+        if (car.getBasePrice() <= 0) {
+            bindingResult.rejectValue("basePrice", null, "Base price must be positive");
+        }
+
+        if (car.getDeposit() <= 0) {
+            bindingResult.rejectValue("deposit", null, "Deposit must be positive");
+        }
+
+        if (car.getAddress() == null || car.getAddress().isEmpty()) {
+            bindingResult.rejectValue("address", null, "Address is required");
+        }
+
+        if (car.getDescription() == null || car.getDescription().isEmpty()) {
+            bindingResult.rejectValue("description", null, "Description is required");
+        }
+
+        if (car.getAdditionalFunctions() == null || car.getAdditionalFunctions().isEmpty()) {
+            bindingResult.rejectValue("additionalFunctions", null, "Additional functions are required");
+        }
+
+        if (car.getTermOfUse() == null || car.getTermOfUse().isEmpty()) {
+            bindingResult.rejectValue("termOfUse", null, "Term of use is required");
+        }
+
+        if (car.getRegistrationPaper() == null) {
+            bindingResult.rejectValue("registrationPaper", null, "Registration paper is required");
+        }
+
+
+
+        if (car.getInsurance() == null) {
+            bindingResult.rejectValue("insurance", null, "Insurance is required");
+        }
+
+        if (car.getFrontImage() == null) {
+            bindingResult.rejectValue("frontImage", null, "Front image is required");
+        }
+
+        if (car.getBackImage() == null) {
+            bindingResult.rejectValue("backImage", null, "Back image is required");
+        }
+
+        if (car.getLeftImage() == null) {
+            bindingResult.rejectValue("leftImage", null, "Left image is required");
+        }
+
+        if (car.getRightImage() == null) {
+            bindingResult.rejectValue("rightImage", null, "Right image is required");
+        }
+
+        if(bindingResult.hasErrors()){
+            return "add-car-page";
+        }
+        String checkLicensePlate = carOwnerService.findCarByLicensePlate(car.getLicensePlate());
+        if (checkLicensePlate != null) {
+            bindingResult.rejectValue("licensePlate", null, "Biển số đã tồn tại trong hệ thống");
+            return "add-car-page";
+        }
+
+        else{
+            String saveLocation = "src/main/resources/static/images/document";
+            String saveLocationCarImage = "src/main/resources/static/images/car";
+            CarImage carImage = new CarImage();
+            CarOwner carOwner = new CarOwner();
+            UserDetails userDetails = userService.getUserDetail();
+            carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
+            try {
+                car.setRegistrationPaperPath(carService.storeFile(saveLocation, registrationPaper));
+                car.setCertificateOfInspectionPath(carService.storeFile(saveLocation, inspectionCertificate));
+                car.setInsurancePath(carService.storeFile(saveLocation, insurance));
+                carImage.setFrontImagePath(carService.storeFile(saveLocationCarImage, frontImage));
+                carImage.setBackImagePath(carService.storeFile(saveLocationCarImage, backImage));
+                carImage.setLeftImagePath(carService.storeFile(saveLocationCarImage, leftImage));
+                carImage.setRightImagePath(carService.storeFile(saveLocationCarImage, rightImage));
+                car.setCarOwner(carOwner);
+              //  carService.addCarImage(carImage);
+                carService.addCar(car, carImage);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return "redirect:/home";
+        }
+
+
     }
+
 
     /**
      * @author phinx

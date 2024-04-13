@@ -23,4 +23,7 @@ public interface CarOwnerService {
     void updateWallet(String email, String totalPrice);
 
     UpdateProfileDto getDtoFromCarOwner(CarOwner carOwner);
+
+    String findCarByLicensePlate(String licensePlate);
+
 }
