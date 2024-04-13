@@ -59,7 +59,7 @@ public class Car implements Serializable {
 
     @Column(nullable = false)
     @Nationalized
-    private long mileage;
+    private double mileage;
 
     @Column(nullable = false)
     @Nationalized
