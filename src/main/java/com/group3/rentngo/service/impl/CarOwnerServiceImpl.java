@@ -2,6 +2,7 @@ package com.group3.rentngo.service.impl;
 
 import com.group3.rentngo.common.CommonUtil;
 import com.group3.rentngo.model.dto.UpdateProfileDto;
+import com.group3.rentngo.model.entity.Car;
 import com.group3.rentngo.model.entity.CarOwner;
 import com.group3.rentngo.model.entity.Role;
 import com.group3.rentngo.repository.*;
@@ -150,4 +151,10 @@ public class CarOwnerServiceImpl implements CarOwnerService {
         updateProfileDto.setDrivingLicense(carOwner.getDrivingLicense());
         return updateProfileDto;
     }
+
+    @Override
+    public Car findCarByLicensePlate(String licensePlate) {
+        return carRepository.findByLicensePlate(licensePlate);
+    }
+
 }

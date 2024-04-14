@@ -1,16 +1,18 @@
 package com.group3.rentngo.model.dto;
 
-import com.group3.rentngo.model.entity.*;
-import jakarta.persistence.Column;
-import jakarta.persistence.Lob;
-import jakarta.validation.constraints.*;
-import lombok.*;
+import com.group3.rentngo.model.entity.Car;
+import com.group3.rentngo.model.entity.CarImage;
+import com.group3.rentngo.model.entity.CarOwner;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
-import java.sql.Blob;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * DTO for {@link Car}
@@ -91,37 +93,43 @@ public class CarDto implements Serializable {
     @NotBlank(message = "Mandatory information.")
     String termOfUse;
 
-    @NotNull(message = "Mandatory information.")
-    MultipartFile registrationPaper;
-    String registrationPaperPath;
+    private String description;
 
-    @NotNull(message = "Mandatory information.")
-    MultipartFile certificateOfInspection;
-    String certificateOfInspectionPath;
+    @NotBlank(message = "Additional functions are required.")
+    private String additionalFunctions;
 
-    @NotNull(message = "Mandatory information.")
-    MultipartFile insurance;
-    String insurancePath;
+    @NotBlank(message = "Term of use is required.")
+    private String termOfUse;
 
-    @NotNull(message = "Mandatory information.")
-    MultipartFile frontImage;
-    public String frontImagePath;
+    @NotNull(message = "Registration paper is required.")
+    private MultipartFile registrationPaper;
+    private String registrationPaperPath;
 
-    @NotNull(message = "Mandatory information.")
-    MultipartFile backImage;
-    public String backImagePath;
+    @NotNull(message = "Certificate of inspection is required.")
+    private MultipartFile certificateOfInspection;
+    private String certificateOfInspectionPath;
 
-    @NotNull(message = "Mandatory information.")
-    MultipartFile leftImage;
-    public String leftImagePath;
+    @NotNull(message = "Insurance document is required.")
+    private MultipartFile insurance;
+    private String insurancePath;
 
-    @NotNull(message = "Mandatory information.")
-    MultipartFile rightImage;
-    public String rightImagePath;
+    @NotNull(message = "Front image is required.")
+    private MultipartFile frontImage;
+    private String frontImagePath;
 
-    @NotNull(message = "Mandatory information.")
-    CarOwner carOwner;
+    @NotNull(message = "Back image is required.")
+    private MultipartFile backImage;
+    private String backImagePath;
 
+    @NotNull(message = "Left image is required.")
+    private MultipartFile leftImage;
+    private String leftImagePath;
 
+    @NotNull(message = "Right image is required.")
+    private MultipartFile rightImage;
+    private String rightImagePath;
 
+    private CarOwner carOwner;
+
+    private CarImage carImage;
 }

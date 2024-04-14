@@ -3,29 +3,43 @@ package com.group3.rentngo.service.impl;
 import com.group3.rentngo.model.dto.CarDto;
 import com.group3.rentngo.model.entity.Car;
 import com.group3.rentngo.model.entity.CarImage;
+import com.group3.rentngo.model.entity.CarOwner;
 import com.group3.rentngo.repository.BookingRepository;
 import com.group3.rentngo.repository.CarImageRepository;
 import com.group3.rentngo.repository.CarOwnerRepository;
 import com.group3.rentngo.repository.CarRepository;
+import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CarService;
+import com.group3.rentngo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CarServiceImpl implements CarService {
+    private final UserService userService;
+    private final CarOwnerService carOwnerService;
     private final CarRepository carRepository;
     private final CarOwnerRepository carOwnerRepository;
     private final BookingRepository bookingRepository;
     private final CarImageRepository carImageRepository;
 
     @Autowired
-    public CarServiceImpl(CarRepository carRepository,
+    public CarServiceImpl(UserService userService,
+                          CarOwnerService carOwnerService,
+                          CarRepository carRepository,
                           CarOwnerRepository carOwnerRepository,
                           BookingRepository bookingRepository,
                           CarImageRepository carImageRepository) {
+        this.userService = userService;
+        this.carOwnerService = carOwnerService;
         this.carRepository = carRepository;
         this.carOwnerRepository = carOwnerRepository;
         this.bookingRepository = bookingRepository;
@@ -46,16 +60,16 @@ public class CarServiceImpl implements CarService {
      * @description
      */
     @Override
-    public Optional<Car> findbyId(Long id) {
+    public Optional<Car> findById(Long id) {
         return carRepository.findById(id);
     }
 
     /**
-     * @author tiennq
-     * @description
+     * @author phinx
+     * @description get car detail form car dto
      */
     @Override
-    public void addCar(CarDto carDto, CarImage carImage) {
+    public Car getCarFromDto(CarDto carDto) {
         Car car = new Car();
         car.setBrand(carDto.getBrand());
         car.setModel(carDto.getModel());
@@ -70,7 +84,13 @@ public class CarServiceImpl implements CarService {
         car.setFuelConsumption(carDto.getFuelConsumption());
         car.setBasePrice(carDto.getBasePrice());
         car.setDeposit(carDto.getDeposit());
-        car.setAddress(carDto.getAddress());
+        car.setAddress(carDto.getHouseNumberAndStreet()
+                .concat("-")
+                .concat(carDto.getWard())
+                .concat("-")
+                .concat(carDto.getDistrict())
+                .concat("-")
+                .concat(carDto.getCity()));
         car.setDescription(carDto.getDescription());
         car.setAdditionalFunctions(carDto.getAdditionalFunctions());
         car.setTermOfUse(carDto.getTermOfUse());
@@ -80,17 +100,58 @@ public class CarServiceImpl implements CarService {
         car.setCarOwner(carDto.getCarOwner());
         car.setCertificateOfInspectionPath(carDto.getCertificateOfInspectionPath());
         car.setInsurancePath(carDto.getInsurancePath());
-        car.setCarImage(carImage);
-        carRepository.save(car);
+        car.setCarImage(carDto.getCarImage());
+        return car;
     }
 
     /**
      * @author tiennq
      * @description
      */
+    public String storeFile(String rootPath, String saveLocation, MultipartFile file) {
+        String originalFilename = file.getOriginalFilename();
+        String newName = UUID.randomUUID().toString() + originalFilename;
+        try {
+            File newFile = new File(rootPath + saveLocation + "/" + newName);
+            FileOutputStream fos = new FileOutputStream(newFile);
+            fos.write(file.getBytes());
+            fos.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return saveLocation + "/" + newName;
+    }
+
+    /**
+     * @author tiennq
+     * @description insert new car
+     */
     @Override
-    public void addCarImage(CarImage carImage) {
-        carImageRepository.save(carImage);
+    public void addCar(CarDto carDto) {
+        // set car owner for car
+        UserDetails userDetails = userService.getUserDetail();
+        CarOwner carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
+        carDto.setCarOwner(carOwner);
+
+        // set document image for car
+        String rootPath = "src/main/resources/static";
+        String saveLocation = "/images/document";
+        carDto.setRegistrationPaperPath(storeFile(rootPath, saveLocation, carDto.getRegistrationPaper()));
+        carDto.setCertificateOfInspectionPath(storeFile(rootPath, saveLocation, carDto.getCertificateOfInspection()));
+        carDto.setInsurancePath(storeFile(rootPath, saveLocation, carDto.getInsurance()));
+
+        // set image outlook image for car
+        String saveLocationCarImage = "/images/car";
+        CarImage carImage = new CarImage();
+        carImage.setFrontImagePath(storeFile(rootPath, saveLocationCarImage, carDto.getFrontImage()));
+        carImage.setBackImagePath(storeFile(rootPath, saveLocationCarImage, carDto.getBackImage()));
+        carImage.setLeftImagePath(storeFile(rootPath, saveLocationCarImage, carDto.getLeftImage()));
+        carImage.setRightImagePath(storeFile(rootPath, saveLocationCarImage, carDto.getRightImage()));
+        carDto.setCarImage(carImage);
+
+        Car car = getCarFromDto(carDto);
+
+        carRepository.save(car);
     }
 
     @Override

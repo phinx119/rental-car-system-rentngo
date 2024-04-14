@@ -118,7 +118,7 @@ public class AuthController {
             return "login-sign-up-page";
         } else {
             userService.saveUser(signupDto);
-            return "redirect:/home";
+            return "redirect:/home/login-signup";
         }
     }
 

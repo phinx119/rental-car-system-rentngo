@@ -3,7 +3,7 @@
 
 <head>
     <title>Edit Profile</title>
-    <th:block th:include="~{fragments/styles.html :: headFragment}"></th:block>
+    <th:block th:insert="~{fragments/styles.html :: headFragment}"></th:block>
     <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 
@@ -52,7 +52,6 @@
                 </div>
                 <div class="address">
                     <!--City-->
-                    <input type="hidden" id="city-input" th:value="*{city}">
                     <strong>Address</strong><br/>
                     <select id="city" name="city" th:field="*{city}">
                         <option value="" selected hidden>City</option>
@@ -61,7 +60,6 @@
                        th:if="${#fields.hasErrors('city')}"></p>
 
                     <!--District-->
-                    <input type="hidden" id="district-input" th:value="*{district}">
                     <select id="district" name="district" th:field="*{district}">
                         <option value="" selected hidden>District</option>
                     </select>
@@ -69,7 +67,6 @@
                        th:if="${#fields.hasErrors('district')}"></p>
 
                     <!--Ward-->
-                    <input type="hidden" id="ward-input" th:value="*{ward}">
                     <select id="ward" name="ward" th:field="*{ward}">
                         <option value="" selected hidden>Ward</option>
                     </select>
@@ -172,10 +169,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script th:inline="javascript">
-    let city = [[${updateProfileDto.city}]];
-    let district = [[${updateProfileDto.city}]];
-    let ward = [[${updateProfileDto.city}]];
-
     let cities = document.getElementById('city');
     let districts = document.getElementById('district');
     let wards = document.getElementById('ward');

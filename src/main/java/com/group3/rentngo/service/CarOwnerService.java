@@ -1,6 +1,7 @@
 package com.group3.rentngo.service;
 
 import com.group3.rentngo.model.dto.UpdateProfileDto;
+import com.group3.rentngo.model.entity.Car;
 import com.group3.rentngo.model.entity.CarOwner;
 
 import java.text.ParseException;
@@ -23,4 +24,6 @@ public interface CarOwnerService {
     void updateWallet(String email, String totalPrice);
 
     UpdateProfileDto getDtoFromCarOwner(CarOwner carOwner);
+
+    Car findCarByLicensePlate(String licensePlate);
 }
