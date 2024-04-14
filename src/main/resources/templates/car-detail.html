@@ -3,7 +3,7 @@
 
 <head>
     <title>RentN'Go</title>
-    <th:block th:include="~{fragments/styles.html :: headFragment}"></th:block>
+    <th:block th:insert="~{fragments/styles.html :: headFragment}"></th:block>
     <link rel="stylesheet" th:href="@{/css/car-detail.css}">
 </head>
 
@@ -22,13 +22,13 @@
         <li class="breadcrumb-item active" aria-current="page">Car details</li>
     </ol>
 </nav>
-<h3 class="ml-5">Card Details</h3>
+<h3 class="ml-5">Car Details</h3>
 <div class=" row card-information ">
     <div class="col-md-6 card-image">
         <img src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png">
     </div>
     <div class="col-md-6">
-        <h3></h3>
+        <h3 th:text="${car.name}"></h3>
         <table class="info-car">
             <tr>
                 <td><strong>Ratings:</strong></td>
@@ -114,17 +114,17 @@
                 <tr>
                     <td >1</td>
                     <td >Registration paper</td>
-                    <td>Verified</td>
+                    <td id="Registration">Not available</td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>Certificate of inspection</td>
-                    <td>Verified</td>
+                    <td id="Certificate">Not available</td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td>Insurance</td>
-                    <td>Not available</td>
+                    <td id="Insurance">Not available</td>
                 </tr>
                 </tbody>
             </table>
@@ -168,80 +168,31 @@
     <strong>Additional functions: </strong><br/>
     <table class="table">
         <tr>
-            <td>
-            <td>
-                Bluetooth
-            </td>
-            <td>
-                <input type="checkbox">
-            </td>
-            </td>
-            <td>
-            <td>
-                Sunroof
-            </td>
-            <td>
-                <input type="checkbox">
-            </td>
-            </td>
-            <td>
-            <td>
-                DVD
-            </td>
-            <td>
-                <input type="checkbox">
-            </td>
-            </td>
+            <td>Bluetooth</td>
+            <td><input type="checkbox"></td>
+            <td>Sun Roof</td>
+            <td><input type="checkbox"></td>
+            <td>DVD</td>
+            <td><input type="checkbox"></td>
         </tr>
         <tr>
-            <td>
-            <td>
-                GPS
-            </td>
-            <td>
-                <input type="checkbox">
-            </td>
-            </td>
-            <td>
-            <td>
-                Child lock
-            </td>
-            <td>
-                <input type="checkbox">
-            </td>
-            </td>
-            <td>
-            <td>
-                USB
-            </td>
-            <td>
-                <input type="checkbox">
-            </td>
-            </td>
+            <td>GPS</td>
+            <td><input type="checkbox"></td>
+            <td>Child Lock</td>
+            <td><input type="checkbox"></td>
+            <td>USB</td>
+            <td><input type="checkbox"></td>
         </tr>
         <tr>
-            <td>
-            <td>
-                Camera
-            </td>
-            <td>
-                <input type="checkbox">
-            </td>
-            </td>
-            <td>
-            <td>
-                Child seat
-            </td>
-            <td>
-                <input type="checkbox">
-            </td>
-            </td>
-            <td>
-
-            </td>
-
+            <td>Camera</td>
+            <td><input type="checkbox"></td>
+            <td>Child Seat</td>
+            <td><input type="checkbox"></td>
+            <td></td>
+            <td></td>
         </tr>
     </table>
+
 </div>
 
 <div class="term ml-5 mt-4" style="display: none;">
@@ -262,15 +213,15 @@
             </td>
         </tr>
         <tr>
-            <td> <strong>No smoking</strong></td>
+            <td> <strong>No Smoking</strong></td>
             <td><input type="checkbox"></td>
 
 
-            <td> <strong>No pet</strong></td>
+            <td> <strong>No Pet</strong></td>
             <td><input type="checkbox"></td>
 
 
-            <td> <strong>No food</strong></td>
+            <td> <strong>No Food</strong></td>
             <td><input type="checkbox"></td>
             <td> <strong>Other</strong></td>
             <td><input type="checkbox"></td>
@@ -280,7 +231,7 @@
 
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
-<script>
+<script th:inline="javascript">
     let infodetail = document.querySelector(".info-detail");
     let details = document.querySelector(".details");
     let term = document.querySelector(".term");
@@ -306,6 +257,38 @@
         details.style.display = "none";
         term.style.display = "block";
     });
+    document.addEventListener("DOMContentLoaded", function() {
+        // Lấy giá trị của carOption từ model.addAttribute("carOption",carOption);
+        var carOptionString = [[${carOption}]];
+        var carTermString = [[${carTerm}]];
+        var carRegistrationPaper = [[${carRegistrationPaper}]];
+        var carCertificateOfInspection = [[${carCertificateOfInspection}]];
+        var carInsurance = [[${carInsurance}]];
+        console.log(carRegistrationPaper,carCertificateOfInspection,carInsurance)
+        if(carRegistrationPaper !== null){
+            document.getElementById("Registration").innerHTML = "Available";
+        }
+        if(carCertificateOfInspection !== null){
+            document.getElementById("Certificate").innerHTML = "Available";
+        }
+        if(carInsurance !== null){
+            document.getElementById("Insurance").innerHTML = "Available";
+        }
+        var carOptions = carOptionString.split(",");
+        var carTerm = carTermString.split(",");
+        console.log(carOptions);
+        console.log(carTerm);
+        var checkboxes = document.querySelectorAll("input[type='checkbox']");
+        checkboxes.forEach(function(checkbox) {
+            if (carOptions.includes(checkbox.parentElement.previousElementSibling.textContent.trim())) {
+                checkbox.checked = true;
+            }
+            if (carTerm.includes(checkbox.parentElement.previousElementSibling.textContent.trim())) {
+                checkbox.checked = true;
+            }
+        });
+    });
+
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

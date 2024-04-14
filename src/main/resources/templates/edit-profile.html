@@ -3,7 +3,7 @@
 
 <head>
     <title>Edit Profile</title>
-    <th:block th:include="~{fragments/styles.html :: headFragment}"></th:block>
+    <th:block th:insert="~{fragments/styles.html :: headFragment}"></th:block>
     <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 
@@ -47,7 +47,7 @@
 
     </div>
     <!--Tab 1: car owner list-->
-    <div id="firstTabBtn" class="w3-container city">
+    <div id="firstTabBtn" class="w3-container tabChange">
         <form method="post" role="form"
               th:action="@{/update-user-profile}"
               th:object="${updateProfileDto}">
@@ -169,7 +169,7 @@
         </form>
     </div>
     <!--Tab 2: User list-->
-    <div id="secondTabBtn" class="w3-container city" style="display:none">
+    <div id="secondTabBtn" class="w3-container tabChange" style="display:none">
         <form>
             <div class="row justify-content p-4">
                 <div class="col-md-5">
@@ -213,7 +213,7 @@
 <script th:inline="javascript">
     function changeTab(evt, tab) {
         var i, x, tablinks;
-        x = document.getElementsByClassName("city");
+        x = document.getElementsByClassName("tabChange");
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
         }
@@ -228,6 +228,7 @@
     let city = [[${updateProfileDto.city}]];
     let district = [[${updateProfileDto.city}]];
     let ward = [[${updateProfileDto.city}]];
+
 
     let cities = document.getElementById('city');
     let districts = document.getElementById('district');

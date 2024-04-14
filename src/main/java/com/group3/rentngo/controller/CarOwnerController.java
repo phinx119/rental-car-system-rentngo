@@ -2,25 +2,26 @@ package com.group3.rentngo.controller;
 
 import com.group3.rentngo.model.dto.CarDto;
 import com.group3.rentngo.model.dto.UpdateProfileDto;
-import com.group3.rentngo.model.entity.*;
+import com.group3.rentngo.model.entity.Car;
+import com.group3.rentngo.model.entity.CarOwner;
+import com.group3.rentngo.model.entity.CustomUserDetails;
+import com.group3.rentngo.model.entity.PaymentHistory;
 import com.group3.rentngo.service.CarOwnerService;
 import com.group3.rentngo.service.CarService;
 import com.group3.rentngo.service.UserService;
 import com.group3.rentngo.service.VNPayService;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author phinx
@@ -76,25 +77,17 @@ public class CarOwnerController {
     }
 
     /**
-     * @author tiennq
-     * @description show add car form
-     */
-    @GetMapping("/add-car-form")
-    public String addNewCar(Model model) {
-        CarDto car = new CarDto();
-        model.addAttribute("car", car);
-        return "add-car-page";
-    }
-
-    /**
      * @author thiendd
      * @description show list car of owner
      */
-    @GetMapping("/view-list-car/{id}")
-    public String listCarOfOwner(Model model, @PathVariable long id) {
-        CarOwner carOwner = carOwnerService.findCarOwnerByIdUser(id);
-        List<Car> list = carService.listCarOfOwner(carOwner.getId());
-        model.addAttribute("list", list);
+    @GetMapping("/view-list-car")
+    public String listCarOfOwner(Model model) {
+        UserDetails userDetails = userService.getUserDetail();
+
+        CarOwner carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
+
+        List<Car> carList = carService.listCarOfOwner(carOwner.getId());
+        model.addAttribute("carList", carList);
         return "list-car-page";
     }
 
@@ -104,125 +97,95 @@ public class CarOwnerController {
      */
     @GetMapping("/display-car-detail/{id}")
     public String carDetail(Model model, @PathVariable long id) {
-        Optional<Car> carOptional = carService.findbyId(id);
+        Optional<Car> carOptional = carService.findById(id);
         Car car = carOptional.orElse(null);
-
+        String carOption = car.getAdditionalFunctions();
+        String carTerm = car.getTermOfUse();
+        model.addAttribute("carRegistrationPaper", car.getRegistrationPaperPath());
+        model.addAttribute("carCertificateOfInspection", car.getCertificateOfInspectionPath());
+        model.addAttribute("carInsurance", car.getInsurancePath());
+        System.out.println(car.getRegistrationPaperPath() + " " + car.getCertificateOfInspectionPath() + " " + car.getInsurancePath());
+        model.addAttribute("carTerm", carTerm);
+        model.addAttribute("carOption", carOption);
         model.addAttribute("car", car);
         return "car-detail";
     }
+
 
     /**
      * @author thiendd
      * @description
      */
     @GetMapping("/edit-car/{id}")
-    public String editCarDetail(Model model, @PathVariable long id) {
-        Optional<Car> carOptional = carService.findbyId(id);
+    public String editCarDetail(Model model, @PathVariable Long id) {
+        Optional<Car> carOptional = carService.findById(id);
         Car car = carOptional.orElse(null);
 
         model.addAttribute("car", car);
-        return "edit-car-detial-page";
+        return "edit-car-detail-page";
     }
 
     /**
-     * @author thiendd
-     * @description
+     * @author tiennq
+     * @description show add car form
      */
-    @PostMapping("/edit-car/{id}")
-    public String editCarInfoDetail(Model model, @PathVariable long id) {
-        Optional<Car> carOptional = carService.findbyId(id);
-        Car car = carOptional.orElse(null);
-
-        model.addAttribute("car", car);
-        return "edit-car-detial-page";
+    @GetMapping("/add-car-form")
+    public String addNewCar(Model model) {
+        CarDto carDto = new CarDto();
+        model.addAttribute("carDto", carDto);
+        return "add-car-page";
     }
 
     /**
-     * @author thiendd
+     * @author tiennq
      * @description
      */
-    @PostMapping(path = "/addnewcar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public String addNewCar(@ModelAttribute("car") CarDto car,
-                            @RequestPart("registrationPaper") MultipartFile registrationPaper,
-                            @RequestPart("inspectionCertificate") MultipartFile inspectionCertificate,
-                            @RequestPart("insurance") MultipartFile insurance,
-                            @RequestPart("frontImage") MultipartFile frontImage,
-                            @RequestPart("backImage") MultipartFile backImage,
-                            @RequestPart("leftImage") MultipartFile leftImage,
-                            @RequestPart("rightImage") MultipartFile rightImage) {
-        String saveLocation = "src/main/resources/static/images/document";
-        String saveLocationCarImage = "src/main/resources/static/images/car";
-        CarImage carImage = new CarImage();
-        try {
-            // Lưu registrationPaper
-            String registrationPaperName = registrationPaper.getOriginalFilename();
-            String registrationPaperNewName = UUID.randomUUID().toString() + registrationPaperName;
-            File registrationPaperFile = new File(saveLocation + "/" + registrationPaperNewName);
-            FileOutputStream registrationFos = new FileOutputStream(registrationPaperFile);
-            registrationFos.write(registrationPaper.getBytes());
-            registrationFos.close();
-            car.setRegistrationPaperPath(saveLocation + "/" + registrationPaperNewName);
-
-            // Lưu inspectionCertificate
-            String inspectionCertificateName = inspectionCertificate.getOriginalFilename();
-            String inspectionCertificateNewName = UUID.randomUUID().toString() + inspectionCertificateName;
-            File inspectionCertificateFile = new File(saveLocation + "/" + inspectionCertificateNewName);
-            FileOutputStream inspectionFos = new FileOutputStream(inspectionCertificateFile);
-            inspectionFos.write(inspectionCertificate.getBytes());
-            inspectionFos.close();
-            car.setCertificateOfInspectionPath(saveLocation + "/" + inspectionCertificateNewName);
-
-            // Lưu insurance
-            String insuranceName = insurance.getOriginalFilename();
-            String insuranceNewName = UUID.randomUUID().toString() + insuranceName;
-            File insuranceFile = new File(saveLocation + "/" + insuranceNewName);
-            FileOutputStream insuranceFos = new FileOutputStream(insuranceFile);
-            insuranceFos.write(insurance.getBytes());
-            insuranceFos.close();
-            car.setInsurancePath(saveLocation + "/" + insuranceNewName);
-
-            //Lưu ảnh trước
-            String frontImageName = frontImage.getOriginalFilename();
-            String frontImageNewName = UUID.randomUUID().toString() + frontImageName;
-            File frontImageFile = new File(saveLocationCarImage + "/" + frontImageNewName);
-            FileOutputStream frontImageFos = new FileOutputStream(frontImageFile);
-            frontImageFos.write(frontImage.getBytes());
-            frontImageFos.close();
-            carImage.setFrontImagePath(saveLocationCarImage + "/" + frontImageNewName);
-
-            // Lưu ảnh sau
-            String backImageName = backImage.getOriginalFilename();
-            String backImageNewName = UUID.randomUUID().toString() + backImageName;
-            File backImageFile = new File(saveLocationCarImage + "/" + backImageNewName);
-            FileOutputStream backImageFos = new FileOutputStream(backImageFile);
-            backImageFos.write(backImage.getBytes());
-            backImageFos.close();
-            carImage.setBackImagePath(saveLocationCarImage + "/" + backImageNewName);
-
-            // Lưu ảnh trái
-            String leftImageName = leftImage.getOriginalFilename();
-            String leftImageNewName = UUID.randomUUID().toString() + leftImageName;
-            File leftImageFile = new File(saveLocationCarImage + "/" + leftImageNewName);
-            FileOutputStream leftImageFos = new FileOutputStream(leftImageFile);
-            leftImageFos.write(leftImage.getBytes());
-            leftImageFos.close();
-            carImage.setLeftImagePath(saveLocationCarImage + "/" + leftImageNewName);
-
-            // Lưu ảnh phải
-            String rightImageName = rightImage.getOriginalFilename();
-            String rightImageNewName = UUID.randomUUID().toString() + rightImageName;
-            File rightImageFile = new File(saveLocationCarImage + "/" + rightImageNewName);
-            FileOutputStream rightImageFos = new FileOutputStream(rightImageFile);
-            rightImageFos.write(rightImage.getBytes());
-            rightImageFos.close();
-            carImage.setRightImagePath(saveLocationCarImage + "/" + rightImageNewName);
-
-            carService.addCarImage(carImage);
-            carService.addCar(car, carImage);
-        } catch (Exception e) {
-            System.out.println(e);
+    @PostMapping(path = "/add-new-car", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String addNewCar(@Valid @ModelAttribute("carDto") CarDto carDto,
+                            BindingResult result,
+                            Model model) {
+        if (carDto.getLicensePlate() != null || !carDto.getLicensePlate().isEmpty()) {
+            if (carOwnerService.findCarByLicensePlate(carDto.getLicensePlate()) != null) {
+                result.rejectValue("licensePlate", null, "License plate already existed. Please try another one.");
+            }
         }
-        return "redirect:/home";
+
+        if (carDto.getRegistrationPaper().isEmpty()){
+            result.rejectValue("registrationPaper", null, "This field is required.");
+        }
+
+        if (carDto.getCertificateOfInspection().isEmpty()){
+            result.rejectValue("certificateOfInspection", null, "This field is required.");
+        }
+
+        if (carDto.getInsurance().isEmpty()){
+            result.rejectValue("insurance", null, "This field is required.");
+        }
+
+        if (carDto.getFrontImage().isEmpty()){
+            result.rejectValue("frontImage", null, "This field is required.");
+        }
+
+        if (carDto.getBackImage().isEmpty()){
+            result.rejectValue("backImage", null, "This field is required.");
+        }
+
+        if (carDto.getLeftImage().isEmpty()){
+            result.rejectValue("leftImage", null, "This field is required.");
+        }
+
+        if (carDto.getRightImage().isEmpty()){
+            result.rejectValue("rightImage", null, "This field is required.");
+        }
+
+        if (result.hasErrors()) {
+            model.addAttribute("carDto", carDto);
+            return "add-car-page";
+        } else {
+            carService.addCar(carDto);
+
+            return "redirect:/car-owner/view-list-car";
+        }
     }
 
     /**
@@ -236,9 +199,11 @@ public class CarOwnerController {
         if (userDetails != null) {
             CarOwner carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
             NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
-            model.addAttribute("wallet", numberFormat.format(carOwner.getWallet()));
-        } else {
-            model.addAttribute("wallet", "No data.");
+            if (carOwner.getWallet() != null) {
+                model.addAttribute("wallet", numberFormat.format(carOwner.getWallet()));
+            } else {
+                model.addAttribute("wallet", "0");
+            }
         }
         // get payment history list
         List<PaymentHistory> paymentHistoryList = vnPayService.findAll();
@@ -247,6 +212,3 @@ public class CarOwnerController {
         return "vnpay/view-wallet";
     }
 }
-
-
-
