@@ -7,6 +7,26 @@
     <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 
+
+<style>
+    html {
+        height: 100%;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .w3-container {
+        flex: 1; /* This will make it take up remaining space */
+    }
+
+    footer {
+        flex-shrink: 0; /* Prevents footer from shrinking */
+    }
+</style>
 <body>
 
 <header th:insert="~{fragments/header.html :: header}"></header>
@@ -18,153 +38,172 @@
         <li class="breadcrumb-item active" aria-current="page">Library</li>
     </ol>
 </nav>
-<h3 class="profile-header">My Profile</h3>
-<div class=" row profile-information">
-    <button id="personalBtn" style="border-right: none;"><a href="#">Personal information</a></button>
-    <button id="securityBtn"><a href="#">Security</a></button>
-</div>
 
-<div class="personal-information">
-    <form method="post" role="form"
-          th:action="@{/update-user-profile}"
-          th:object="${updateProfileDto}">
-        <div class="row">
-            <div class="col-md-6">
-                <input type="hidden" name="id" th:field="*{id}"/>
-                <input type="hidden" name="role" th:field="*{role}"/>
-                <div class="personal-information-items">
-                    <strong>Full Name</strong><br/>
-                    <input type="text" name="name" th:field="*{name}"/>
-                    <p th:errors="*{name}" class="text-danger"
-                       th:if="${#fields.hasErrors('name')}"></p>
+<div class="w3-container">
+    <h2>My profile</h2>
+    <div class="w3-bar w3-light-grey">
+        <button class="w3-bar-item w3-button tablink w3-grey" onclick="changeTab(event,'firstTabBtn')">Personal information</button>
+        <button class="w3-bar-item w3-button tablink" onclick="changeTab(event,'secondTabBtn')">Security</button>
+
+    </div>
+    <!--Tab 1: car owner list-->
+    <div id="firstTabBtn" class="w3-container city">
+        <form method="post" role="form"
+              th:action="@{/update-user-profile}"
+              th:object="${updateProfileDto}">
+            <div class="row justify-content-between p-4">
+                <div class="col-md-5">
+                    <!-- Detail Information -->
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="hidden" name="id" th:field="*{id}"/>
+                            <input type="hidden" name="role" th:field="*{role}"/>
+                            <strong>Full name:</strong><br>
+                            <input class="form-control" type="text" name="name" th:field="*{name}"/>
+                            <p th:errors="*{name}" class="text-danger"
+                               th:if="${#fields.hasErrors('name')}"></p>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <strong>Phone number</strong><br/>
+                            <input class="form-control" type="text" name="phone" th:field="*{phone}"/>
+                            <p th:errors="*{phone}" class="text-danger"
+                               th:if="${#fields.hasErrors('phone')}"></p>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <strong>National ID No</strong><br/>
+                            <input class="form-control" type="text" name="nationalId" th:field="*{nationalId}"/>
+                            <p th:errors="*{nationalId}" class="text-danger"
+                               th:if="${#fields.hasErrors('nationalId')}"></p>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-8">
+                            <!-- City -->
+                            <input type="hidden" id="city-input" th:value="*{city}">
+                            <label for="city"><strong>Address</strong></label><br>
+                            <select id="city" name="city" th:field="*{city}" class="form-control">
+                                <option value="" selected hidden>City</option>
+                            </select>
+                            <p th:errors="*{city}" class="text-danger" th:if="${#fields.hasErrors('city')}"></p>
+                            <br>
+
+                            <!-- District -->
+                            <input type="hidden" id="district-input" th:value="*{district}">
+                            <select id="district" name="district" th:field="*{district}" class="form-control">
+                                <option value="" selected hidden>District</option>
+                            </select>
+                            <p th:errors="*{district}" class="text-danger" th:if="${#fields.hasErrors('district')}"></p>
+                            <br>
+
+                            <!-- Ward -->
+                            <input type="hidden" id="ward-input" th:value="*{ward}">
+                            <select id="ward" name="ward" th:field="*{ward}" class="form-control">
+                                <option value="" selected hidden>Ward</option>
+                            </select>
+                            <p th:errors="*{ward}" class="text-danger" th:if="${#fields.hasErrors('ward')}"></p>
+
+                            <br>
+
+                            <input type="text" class="form-control" id="house-number-and-street" th:field="*{houseNumberAndStreet}" placeholder="House number, Street">
+                            <p th:errors="*{houseNumberAndStreet}" class="text-danger" th:if="${#fields.hasErrors('houseNumberAndStreet')}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Your content for the second column goes here if needed -->
+                        </div>
+                    </div>
+
+
+
                 </div>
-                <div class="personal-information-items">
-                    <strong>Phone number</strong><br/>
-                    <input type="text" name="phone" th:field="*{phone}"/>
-                    <p th:errors="*{phone}" class="text-danger"
-                       th:if="${#fields.hasErrors('phone')}"></p>
-                </div>
-                <div class="personal-information-items">
-                    <strong>National ID No</strong><br/>
-                    <input type="text" name="nationalId" th:field="*{nationalId}"/>
-                    <p th:errors="*{nationalId}" class="text-danger"
-                       th:if="${#fields.hasErrors('nationalId')}"></p>
-                </div>
-                <div class="address">
-                    <!--City-->
-                    <input type="hidden" id="city-input" th:value="*{city}">
-                    <strong>Address</strong><br/>
-                    <select id="city" name="city" th:field="*{city}">
-                        <option value="" selected hidden>City</option>
-                    </select>
-                    <p th:errors="*{city}" class="text-danger"
-                       th:if="${#fields.hasErrors('city')}"></p>
-
-                    <!--District-->
-                    <input type="hidden" id="district-input" th:value="*{district}">
-                    <select id="district" name="district" th:field="*{district}">
-                        <option value="" selected hidden>District</option>
-                    </select>
-                    <p th:errors="*{district}" class="text-danger"
-                       th:if="${#fields.hasErrors('district')}"></p>
-
-                    <!--Ward-->
-                    <input type="hidden" id="ward-input" th:value="*{ward}">
-                    <select id="ward" name="ward" th:field="*{ward}">
-                        <option value="" selected hidden>Ward</option>
-                    </select>
-                    <p th:errors="*{ward}" class="text-danger"
-                       th:if="${#fields.hasErrors('ward')}"></p>
-
-                    <br/>
-
-                    <input type="text" class="street" id="house-number-and-street" th:field="*{houseNumberAndStreet}"
-                           placeholder="House number, Street">
-                    <p th:errors="*{houseNumberAndStreet}" class="text-danger"
-                       th:if="${#fields.hasErrors('houseNumberAndStreet')}"></p>
+                <div class="col-md-5">
+                    <!-- Additional Functions -->
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <strong>Date of birth</strong><br/>
+                            <input class="form-control" type="date" name="dateOfBirth" th:field="*{dateOfBirth}"/>
+                            <p th:errors="*{dateOfBirth}" class="text-danger"
+                               th:if="${#fields.hasErrors('dateOfBirth')}"></p>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <strong>Email Address</strong><br/>
+                            <input class="form-control" type="hidden" name="email" th:field="*{email}"/>
+                            <div class="border border-secondary rounded p-1">
+                                <span th:text="*{email}" class="p-2"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <strong>Driving license</strong><br/>
+                            <input class="form-control" type="text" name="drivingLicense" th:field="*{drivingLicense}"/>
+                            <p th:errors="*{drivingLicense}" class="text-danger"
+                               th:if="${#fields.hasErrors('drivingLicense')}"></p>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="col-md-6">
-                <div class="personal-information-items">
-                    <strong>Date of birth</strong><br/>
-                    <input type="date" name="dateOfBirth" th:field="*{dateOfBirth}"/>
-                    <p th:errors="*{dateOfBirth}" class="text-danger"
-                       th:if="${#fields.hasErrors('dateOfBirth')}"></p>
-                </div>
-                <div class="personal-information-items">
-                    <strong>Email Address</strong><br/>
-                    <input type="hidden" name="email" th:field="*{email}"/>
-                    <span class="border border-secondary rounded p-1" th:text="*{email}"></span>
-                </div>
-                <div class="personal-information-items">
-                    <strong>Driving license</strong><br/>
-                    <input type="text" name="drivingLicense" th:field="*{drivingLicense}"/>
-                    <p th:errors="*{drivingLicense}" class="text-danger"
-                       th:if="${#fields.hasErrors('drivingLicense')}"></p>
-                </div>
-            </div>
-            <div class="save-information mt-3 ">
-                <button type="reset" class="btn btn-warning">Discard</button>
+            <div class="text-center">
+                <button type="reset" class="btn btn-secondary">Discard</button>
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
-        </div>
-    </form>
+            <br>
+        </form>
+    </div>
+    <!--Tab 2: User list-->
+    <div id="secondTabBtn" class="w3-container city" style="display:none">
+        <form>
+            <div class="row justify-content p-4">
+                <div class="col-md-5">
+                    <h4><b>Reset Password</b></h4>
+                    <!-- Detail Information -->
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="newPasswordInput">New Password:</label>
+                            <input type="password" id="newPasswordInput" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="confirmPasswordInput">Confirm Password:</label>
+                            <input type="password" id="confirmPasswordInput" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="reset" class="btn btn-secondary">Discard</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+            <br>
+        </form>
+    </div>
+
 </div>
 
-<!-- ChangePassword -->
-<div class="security">
-    <h5>Change password</h5>
-    <div class="reset-password">
-        <div class="">
-            <strong>New password</strong><br/>
-            <input class="mb-3" type="password"/>
-            <br/>
-            <strong>Confirm password</strong><br/>
-            <input class="mb-3" type="password"/>
-        </div>
-    </div>
-    <div class="save-information mt-3 ">
-        <a href="#" class="discard-link mr-3">Discard</a>
-        <a href="#" class="btn btn-primary">Save</a>
-    </div>
-
-</div>
-<footer class="bg-secondary text-light mt-3">
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-md-4">
-                <h5>Links</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-light">Home</a></li>
-                    <li><a href="#" class="text-light">About Us</a></li>
-                    <li><a href="#" class="text-light">Services</a></li>
-                    <li><a href="#" class="text-light">Contact</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <h5>Contact Us</h5>
-                <p class="text-light">Address: 123 Street, City, Country</p>
-                <p class="text-light">Email: info@example.com</p>
-                <p class="text-light">Phone: +1234567890</p>
-            </div>
-            <div class="col-md-4">
-                <h5>Follow Us</h5>
-                <ul class="list-inline">
-                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-facebook-f"></i></a>
-                    </li>
-                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-twitter"></i></a></li>
-                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
-                    </li>
-                    <li class="list-inline-item"><a href="#" class="text-light"><i class="fab fa-linkedin"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="bg-light text-dark text-center py-3">
-        <p class="mb-0">&copy; 2024 Your Company. All rights reserved.</p>
-    </div>
-</footer>
+<footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -172,6 +211,20 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script th:inline="javascript">
+    function changeTab(evt, tab) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("city");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" w3-grey", "");
+        }
+        document.getElementById(tab).style.display = "block";
+        evt.currentTarget.className += " w3-grey";
+    }
+
     let city = [[${updateProfileDto.city}]];
     let district = [[${updateProfileDto.city}]];
     let ward = [[${updateProfileDto.city}]];
@@ -251,22 +304,8 @@
             }, 0);
         }
     }
-
-    let personalInformation = document.querySelector('.personal-information');
-    let security = document.querySelector('.security');
-    let personalBtn = document.getElementById('personalBtn');
-    let securityBtn = document.getElementById('securityBtn');
-    securityBtn.addEventListener('click', function () {
-        // personalInformation.classList.add("hide");
-        personalInformation.style.display = 'none';
-        security.style.display = 'block';
-    });
-
-    // Hiển thị lại phần tử personalInformation khi bấm vào nút personalBtn
-    personalBtn.addEventListener('click', function () {
-        security.style.display = 'none';
-        personalInformation.style.display = 'block';
-    });
 </script>
+
+
 </body>
 </html>
