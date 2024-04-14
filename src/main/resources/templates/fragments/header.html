@@ -1,6 +1,6 @@
 <nav th:fragment="header" class="navbar navbar-expand-lg navbar-light bg-secondary">
     <div class="container">
-        <a class="navbar-brand text-light" href="#">
+        <a class="navbar-brand text-light" th:href="@{/home}">
             <i class="fas fa-car"></i>
             RentN'Go
         </a>
@@ -15,12 +15,15 @@
                 </li>
                 <li class="nav-item" th:unless="${#authorization.expression('isAuthenticated()')}">
                     <!-- Content for authenticated users -->
-                    <a class="nav-link text-light" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
+                    <a class="nav-link text-light" th:href="@{/login-signup}">Login</a>
                 </li>
                 <li class="nav-item" th:unless="${#authorization.expression('isAuthenticated()')}">
-                    <a class="nav-link text-light" href="#" data-toggle="modal" data-target="#signupModal">Sign Up</a>
+                    <a class="nav-link text-light" th:href="@{/login-signup}">Sign Up</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item" th:unless="${#authorization.expression('isAuthenticated()')}">
+                    <a class="nav-link text-light" th:href="@{/login-signup}">Welcome</a>
+                </li>
+                <li class="nav-item dropdown" th:if="${#authorization.expression('isAuthenticated()')}">
                     <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Welcome

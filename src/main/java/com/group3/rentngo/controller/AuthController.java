@@ -16,10 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -71,14 +68,20 @@ public class AuthController {
                 return "redirect:/customer/home";
             }
         }
+        return "home-page";
+    }
 
-        UserDto userDto = new UserDto();
+    /**
+     * @author phinx
+     * @description redirect to home page for each actor
+     */
+    @GetMapping(value = "/home/login-signup")
+    public String showLoginSignupPage(Model model) {
         SignupDto signupDto = new SignupDto();
 
-        model.addAttribute("userDto", userDto);
+        model.addAttribute("email", "");
         model.addAttribute("signupDto", signupDto);
-
-        return "home-page";
+        return "login-sign-up-page";
     }
 
     /**
@@ -109,11 +112,10 @@ public class AuthController {
 
         if (result.hasErrors()) {
             UserDto userDto = new UserDto();
-          
+
             model.addAttribute("userDto", userDto);
             model.addAttribute("signupDto", signupDto);
-            model.addAttribute("errors", result.getAllErrors());
-            return "home-page";
+            return "login-sign-up-page";
         } else {
             userService.saveUser(signupDto);
             return "redirect:/home";
@@ -125,20 +127,25 @@ public class AuthController {
      * @description get input email, check existed to reset password
      */
     @PostMapping("/home/check-existed-email")
-    public String checkExistedEmail(@Valid @ModelAttribute("userDto") UserDto userDto,
-                                    BindingResult result,
+    public String checkExistedEmail(@RequestParam("email") String email,
                                     Model model) {
-        if (userService.findUserByEmail(userDto.getEmail()) == null) {
-            result.rejectValue("email", null, "Email address does not exist in the system.");
-        }
-        result.getAllErrors();
-        if (result.hasErrors()) {
-            model.addAttribute("userDto", userDto);
-            model.addAttribute("errors", result.getAllErrors());
-            return "home-page";
+        if (email.isEmpty()) {
+            model.addAttribute("emailError", "Email cannot be empty");
+            SignupDto signupDto = new SignupDto();
+
+            model.addAttribute("email", "");
+            model.addAttribute("signupDto", signupDto);
+            return "login-sign-up-page";
+        } else if (userService.findUserByEmail(email) == null) {
+            model.addAttribute("emailError", "Email address does not exist in the system.");
+            SignupDto signupDto = new SignupDto();
+
+            model.addAttribute("email", "");
+            model.addAttribute("signupDto", signupDto);
+            return "login-sign-up-page";
         } else {
-            userService.sendComplexEmail(userDto.getEmail(), "<a href=\"http://localhost:8080/reset-password/" + userDto.getEmail() + "\">Reset password link</a>");
-            return "redirect:/home";
+            userService.sendComplexEmail(email, "<a href=\"http://localhost:8080/reset-password/" + email + "\">Reset password link</a>");
+            return "redirect:/home/login-signup";
         }
     }
 
