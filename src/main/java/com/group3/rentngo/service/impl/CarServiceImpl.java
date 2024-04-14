@@ -92,4 +92,28 @@ public class CarServiceImpl implements CarService {
     public void addCarImage(CarImage carImage) {
         carImageRepository.save(carImage);
     }
+
+    @Override
+    public CarDto tranferToCarDto(Car car) {
+        CarDto dto = new CarDto();
+        dto.setId(car.getId());
+        dto.setName(car.getName());
+        dto.setLicensePlate(car.getLicensePlate());
+        dto.setBrand(car.getBrand());
+        dto.setModel(car.getModel());
+        dto.setColor(car.getColor());
+        dto.setNumberOfSeats(car.getNumberOfSeats());
+        dto.setProductionYear(car.getProductionYear());
+        dto.setTransmissionType(car.getTransmissionType());
+        dto.setFuelType(car.getFuelType());
+        dto.setMileage(car.getMileage());
+        dto.setFuelConsumption(car.getFuelConsumption());
+        dto.setBasePrice(car.getBasePrice());
+        dto.setDeposit(car.getDeposit());
+        dto.setAddress(car.getAddress());
+        dto.setDescription(car.getDescription());
+        dto.setAdditionalFunctions(car.getAdditionalFunctions());
+        dto.setTermOfUse(car.getTermOfUse());
+        return dto;
+    }
 }

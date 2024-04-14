@@ -23,55 +23,71 @@ import java.util.List;
 public class CarDto implements Serializable {
 
     private Long id;
-
+    @NotNull(message = "Mandatory information.")
     @NotBlank(message = "Mandatory information.")
     String name;
 
+    @NotNull(message = "Mandatory information.")
     @NotBlank(message = "Mandatory information.")
     String licensePlate;
 
+    @NotNull(message = "Mandatory information.")
     @NotBlank(message = "Mandatory information.")
     String brand;
 
+    @NotNull(message = "Mandatory information.")
     @NotBlank(message = "Mandatory information.")
     String model;
 
+    @NotNull(message = "Mandatory information.")
     @NotBlank(message = "Mandatory information.")
     String color;
 
+    @NotNull(message = "Mandatory information.")
     @Positive(message = "Must be positive number.")
     int numberOfSeats;
 
+    @NotNull(message = "Mandatory information.")
     @Positive(message = "Must be positive number.")
     int productionYear;
 
+    @NotNull(message = "Mandatory information.")
     @NotBlank(message = "Mandatory information.")
     String transmissionType;
 
+    @NotNull(message = "Mandatory information.")
     @NotBlank(message = "Mandatory information.")
     String fuelType;
 
+    @NotNull(message = "Mandatory information.")
     @Positive(message = "Must be positive number.")
     long mileage;
 
+    @NotNull(message = "Mandatory information.")
     @NotBlank(message = "Mandatory information.")
     String fuelConsumption;
 
+    @NotNull(message = "Mandatory information.")
     @Positive(message = "Must be positive number.")
     double basePrice;
 
+    @NotNull(message = "Mandatory information.")
     @Positive(message = "Must be positive number.")
     double deposit;
 
+    @NotNull(message = "Mandatory information.")
     @NotBlank(message = "Mandatory information.")
     String address;
 
+    @NotNull(message = "Mandatory information.")
     @NotBlank(message = "Mandatory information.")
     String description;
 
+    @NotNull(message = "Mandatory information.")
     @NotBlank(message = "Mandatory information.")
     String additionalFunctions;
 
+    @NotNull(message = "Mandatory information.")
     @NotBlank(message = "Mandatory information.")
     String termOfUse;
 

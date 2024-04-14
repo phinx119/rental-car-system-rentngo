@@ -41,13 +41,13 @@
                                     </ol>
                                     <div class="carousel-inner">
                                         <div class="carousel-item active">
-                                             <img th:src="@{car.}" class="card-img" alt="Car Image">
+                                             <img th:src="@{/images/car/a.jpg}" class="card-img" alt="Car Image">
                                         </div>
                                         <div class="carousel-item">
-                                            <img src="car-image2.jpg" class="card-img" alt="Car Image 2">
+                                            <img th:src="@{${car.carImage.backImagePath}}"  class="card-img" alt="Car Image 2">
                                         </div>
                                         <div class="carousel-item">
-                                            <img src="car-image3.jpg" class="card-img" alt="Car Image 3">
+                                            <img th:src="@{${car.carImage.leftImagePath}}" class="card-img" alt="Car Image 3">
                                         </div>
                                     </div>
                                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">

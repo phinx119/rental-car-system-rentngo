@@ -48,12 +48,12 @@ public class CarOwnerController {
      * @author phinx
      * @description show home page for role car owner
      */
-    @GetMapping({"/home"})
+    @GetMapping("/home")
     public String viewCarOwnerHome(Model model) {
         CustomUserDetails userDetails = userService.getUserDetail();
         if (userDetails != null) {
-            long id = userDetails.getId();
-            model.addAttribute("id", id);
+            String username = userDetails.getUsername();
+            model.addAttribute("username", username);
         }
         return "home-page-as-car-owner";
     }
@@ -90,10 +90,12 @@ public class CarOwnerController {
      * @author thiendd
      * @description show list car of owner
      */
-    @GetMapping("/view-list-car/{id}")
-    public String listCarOfOwner(Model model, @PathVariable long id) {
-        CarOwner carOwner = carOwnerService.findCarOwnerByIdUser(id);
+    @GetMapping("/view-list-car")
+    public String listCarOfOwner(Model model) {
+        UserDetails userDetails = userService.getUserDetail();
+        CarOwner carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
         List<Car> list = carService.listCarOfOwner(carOwner.getId());
+        System.out.println(list.get(0).getCarImage().getBackImagePath());
         model.addAttribute("list", list);
         return "list-car-page";
     }
@@ -127,9 +129,11 @@ public class CarOwnerController {
     public String editCarDetail(Model model, @PathVariable long id) {
         Optional<Car> carOptional = carService.findbyId(id);
         Car car = carOptional.orElse(null);
-
-        model.addAttribute("car", car);
-        return "edit-car-detial-page";
+        CarDto carDto = carService.tranferToCarDto(car);
+        System.out.println(car);
+        System.out.println(carDto);
+        model.addAttribute("carDto", carDto);
+        return "edit-car-detail-page";
     }
 
     /**

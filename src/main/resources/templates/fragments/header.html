@@ -34,7 +34,7 @@
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
                            th:href="@{/admin/list-user}">Admin Dashboard</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}"
-                           th:href="@{'/car-owner/view-list-car/' + ${id}}">My Car</a>
+                           th:href="@{'/car-owner/view-list-car'}">My Car</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}"
                            href="#">My Booking</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}"

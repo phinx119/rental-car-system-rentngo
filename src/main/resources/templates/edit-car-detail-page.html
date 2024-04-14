@@ -57,7 +57,7 @@
                         </div>
                         <div class="col-md-6 align-self-center">
                             <div class="card-body">
-                                <h5 class="card-title">Car Name</h5>
+                                <h5 class="card-title" th:text="${carDto.name}"></h5>
                                 <ul class="list-unstyled">
                                     <li>Rating:
                                         <span class="fa fa-star checked"></span>
@@ -66,11 +66,11 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                     </li>
-                                    <li>No. of Rides: 100</li>
-                                    <li>Price: $50</li>
-                                    <li>Location: City, Country</li>
+                                    <li th:text="'No. of Rides: ' +  ${carDto.numberOfSeats}"> 100</li>
+                                    <li th:text="'Price: ' +  ${carDto.basePrice}" >Price: $50</li>
+                                    <li th:text="'Location: ' +  ${carDto.address}" ></li>
                                     <li>
-                                        <label for="status">Status:</label>
+                                        <label for="status"  ></label>
                                         <select id="status" class="form-control">
                                             <option class="text-success" value="Available">Available</option>
                                             <option class="text-danger" value="Stopped">Stopped</option>
@@ -106,16 +106,16 @@
         <div class="row justify-content p-4">
             <div class="col-md-6">
                 <!-- Car Information -->
-                <h4>Car Information</h4>
+                <h4 th:text="${carDto.name}"></h4>
                 <ul class="list-unstyled">
-                    <li><strong>License Plate:</strong> ABC123</li>
-                    <li><strong>Brand Name:</strong> Example Brand</li>
-                    <li><strong>Production Year:</strong> 2022</li>
-                    <li><strong>Transmission:</strong> Automatic</li>
-                    <li><strong>Color:</strong> Red</li>
-                    <li><strong>Model:</strong> Example Model</li>
-                    <li><strong>No. of Seats:</strong> 5</li>
-                    <li><strong>Fuel:</strong> Petrol</li>
+                    <li><strong th:text="'License Plate:' +${carDto.licensePlate}"></strong> </li>
+                    <li><strong th:text="'Brand Name:' +${carDto.brand}"></strong></li>
+                    <li><strong th:text="'Production Year:' +${carDto.productionYear}" ></strong> </li>
+                    <li><strong th:text="'Transmission:' +${carDto.transmissionType}" >:</strong> </li>
+                    <li><strong th:text="'Color:' +${carDto.color}">:</strong> </li>
+                    <li><strong th:text="'Example Model:' +${carDto.model}"></strong> </li>
+                    <li><strong th:text="'No. of Seats:'+${carDto.numberOfSeats}"></strong> </li>
+                    <li><strong th:text="'Fuel: '+${carDto.fuelType}"></strong> </li>
                 </ul>
             </div>
             <div class="col-md-6">
@@ -134,19 +134,19 @@
                     <tr>
                         <td>1</td>
                         <td>Registration</td>
-                        <td>Note about registration</td>
+                        <td id="Registration">Not available</td>
                         <td><a href="#">Link to registration document</a></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Certificate</td>
-                        <td>Note about certificate</td>
+                        <td id="Certificate">Not available</td>
                         <td><a href="#">Link to certificate document</a></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>Insurance</td>
-                        <td>Note about insurance</td>
+                        <td id="Insurance">Not available</td>
                         <td><a href="#">Link to insurance document</a></td>
                     </tr>
                     </tbody>
@@ -318,7 +318,7 @@
 
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
-<script>
+<script th:inline="javascript">
     function changeTab(evt, tab) {
         var i, x, tablinks;
         x = document.getElementsByClassName("city");
@@ -332,6 +332,9 @@
         document.getElementById(tab).style.display = "block";
         evt.currentTarget.className += " w3-grey";
     }
+    ///// Document
+     var carDto = /*[[ ${carDto} ]]*/;
+    console.log(carDto);
 
 </script>
 

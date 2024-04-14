@@ -15,4 +15,6 @@ public interface CarService {
     void addCar(CarDto carDto, CarImage carImage);
 
     void addCarImage(CarImage carImage );
+
+    CarDto tranferToCarDto (Car car );
 }

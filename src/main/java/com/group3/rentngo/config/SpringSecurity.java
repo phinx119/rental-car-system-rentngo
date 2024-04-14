@@ -53,7 +53,7 @@ public class SpringSecurity {
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                //.deleteCookies("JSESSIONID")
+                                .deleteCookies("JSESSIONID")
                                 .logoutSuccessHandler(logoutSuccessHandler())
                 ).exceptionHandling(
                         httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
