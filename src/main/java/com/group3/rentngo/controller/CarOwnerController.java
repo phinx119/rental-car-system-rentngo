@@ -117,7 +117,7 @@ public class CarOwnerController {
      * @description
      */
     @GetMapping("/edit-car/{id}")
-    public String editCarDetail(Model model, @PathVariable Long id) {
+    public String editCarDetail(@PathVariable Long id, Model model) {
         Optional<Car> carOptional = carService.findById(id);
         Car car = carOptional.orElse(null);
 

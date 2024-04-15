@@ -66,6 +66,15 @@ public class CarServiceImpl implements CarService {
 
     /**
      * @author phinx
+     * @description get car list
+     */
+    @Override
+    public List<Car> findAllCar() {
+        return carRepository.findAll();
+    }
+
+    /**
+     * @author phinx
      * @description get car detail form car dto
      */
     @Override

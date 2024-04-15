@@ -29,18 +29,32 @@
                         Welcome
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}"
-                           th:href="@{/car-owner/view-car-owner-detail}">My Profile</a>
+                        <!--Admin-->
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
                            th:href="@{/admin/list-user}">Admin Dashboard</a>
+                        <!--Admin-->
+
+                        <!--Car Owner-->
+                        <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}"
+                           th:href="@{/car-owner/view-car-owner-detail}">My Profile</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}"
                            th:href="@{/car-owner/view-list-car}">My Car</a>
-                        <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}"
-                           href="#">My Booking</a>
                         <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CAR_OWNER'')')}"
                            href="#">My Report</a>
+                        <!--Car Owner-->
+
+                        <!--Customer-->
+                        <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}"
+                           th:href="@{/customer/view-customer-detail}">My Profile</a>
+                        <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}"
+                           th:href="@{/customer/view-car-list}">Car List</a>
+                        <a class="dropdown-item" th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}"
+                           th:href="@{/customer/view-booking}">My Booking</a>
+                        <!--Customer-->
+
                         <a class="dropdown-item" th:unless="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
                            th:href="@{/vnpay/view-wallet}">My Wallet</a>
+
                         <div class="dropdown-divider"></div>
                         <a id="logoutBtn" class="dropdown-item" th:href="@{/logout}">Log Out</a>
                     </div>
