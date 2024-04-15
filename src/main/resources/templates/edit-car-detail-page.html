@@ -21,7 +21,7 @@
     </ol>
 </nav>
 
-
+<form  role="form" th:action="@{/car-owner/edit-car-detail/{id}(id=${carDto.getId()})}" th:object="${carDto}">
 <div class="container-fluid bg-white mt-4">
     <h3 class="profile-header">Edit car details</h3>
 </div>
@@ -29,7 +29,7 @@
 <div class="container-fluid bg-white mt-4">
     <div class="row justify-content p-4">
         <div class="col-md-12 mb-3">
-            <form>
+
                 <div class="card">
                     <div class="row no-gutters">
                         <div class="col-md-4">
@@ -57,7 +57,7 @@
                         </div>
                         <div class="col-md-6 align-self-center">
                             <div class="card-body">
-                                <h5 class="card-title">Car Name</h5>
+                                <h5 class="card-title" th:text="${carDto.getName()}" ></h5>
                                 <ul class="list-unstyled">
                                     <li>Rating:
                                         <span class="fa fa-star checked"></span>
@@ -66,9 +66,11 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                     </li>
-                                    <li>No. of Rides: 100</li>
-                                    <li>Price: $50</li>
-                                    <li>Location: City, Country</li>
+                                    <li th:text="'No. of Rides: ' +${carDto.getNumberOfSeats()}"> /li>
+
+                                    <li th:text="'Price: $' + ${carDto.getBasePrice()} "></li>
+
+                                    <li th:text="'Location: ' + ${address}">City, Country</li>
                                     <li>
                                         <label for="status">Status:</label>
                                         <select id="status" class="form-control">
@@ -87,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+
         </div>
     </div>
 </div>
@@ -96,9 +98,9 @@
 <div class="w3-container">
     <h2>Manage user</h2>
     <div class="w3-bar w3-light-grey">
-        <button class="w3-bar-item w3-button tablink w3-grey" onclick="changeTab(event,'firstTabBtn')">Car Information</button>
-        <button class="w3-bar-item w3-button tablink" onclick="changeTab(event,'secondTabBtn')">Car Details</button>
-        <button class="w3-bar-item w3-button tablink" onclick="changeTab(event,'thirdTabBtn')">Car Pricing</button>
+        <button type="button" class="w3-bar-item w3-button tablink w3-grey" onclick="changeTab(event,'firstTabBtn')">Car Information</button>
+        <button type="button" class="w3-bar-item w3-button tablink" onclick="changeTab(event,'secondTabBtn')">Car Details</button>
+        <button type="button" class="w3-bar-item w3-button tablink" onclick="changeTab(event,'thirdTabBtn')">Car Pricing</button>
 
     </div>
     <!--Tab 1: car information-->
@@ -106,17 +108,51 @@
         <div class="row justify-content p-4">
             <div class="col-md-6">
                 <!-- Car Information -->
-                <h4>Car Information</h4>
+                <h4 th:text="${carDto.name}"></h4>
                 <ul class="list-unstyled">
-                    <li><strong>License Plate:</strong> ABC123</li>
-                    <li><strong>Brand Name:</strong> Example Brand</li>
-                    <li><strong>Production Year:</strong> 2022</li>
-                    <li><strong>Transmission:</strong> Automatic</li>
-                    <li><strong>Color:</strong> Red</li>
-                    <li><strong>Model:</strong> Example Model</li>
-                    <li><strong>No. of Seats:</strong> 5</li>
-                    <li><strong>Fuel:</strong> Petrol</li>
+                    <li>
+                        <label for="licensePlateInput">License Plate:</label>
+                        <input type="text" id="licensePlateInput" class="form-control" th:value="${carDto.licensePlate}" th:field="*{licensePlate}">
+                        <p th:errors="*{licensePlate}" class="text-danger" th:if="${#fields.hasErrors('licensePlate')}"></p>
+                    </li>
+                    <li>
+                        <label for="brandInput">Brand Name:</label>
+                        <input type="text" id="brandInput" class="form-control" th:value="${carDto.brand}" th:field="*{brand}">
+                        <p th:errors="*{brand}" class="text-danger" th:if="${#fields.hasErrors('brand')}"></p>
+                    </li>
+                    <li>
+                        <label for="productionYearInput">Production Year:</label>
+                        <input type="text" id="productionYearInput" class="form-control" th:value="${carDto.productionYear}" th:field="*{productionYear}">
+                        <p th:errors="*{productionYear}" class="text-danger" th:if="${#fields.hasErrors('productionYear')}"></p>
+                    </li>
+                    <li>
+                        <label for="transmissionTypeInput">Transmission:</label>
+                        <input type="text" id="transmissionTypeInput" class="form-control" th:value="${carDto.transmissionType}" th:field="*{transmissionType}">
+                        <p th:errors="*{transmissionType}" class="text-danger" th:if="${#fields.hasErrors('transmissionType')}"></p>
+                    </li>
+                    <li>
+                        <label for="colorInput">Color:</label>
+                        <input type="text" id="colorInput" class="form-control" th:value="${carDto.color}" th:field="*{color}">
+                        <p th:errors="*{color}" class="text-danger" th:if="${#fields.hasErrors('color')}"></p>
+                    </li>
+                    <li>
+                        <label for="modelInput">Example Model:</label>
+                        <input type="text" id="modelInput" class="form-control" th:value="${carDto.model}" th:field="*{model}">
+                        <p th:errors="*{model}" class="text-danger" th:if="${#fields.hasErrors('model')}"></p>
+                    </li>
+                    <li>
+                        <label for="numberOfSeatsInput">No. of Seats:</label>
+                        <input type="text" id="numberOfSeatsInput" class="form-control" th:value="${carDto.numberOfSeats}" th:field="*{numberOfSeats}">
+                        <p th:errors="*{numberOfSeats}" class="text-danger" th:if="${#fields.hasErrors('numberOfSeats')}"></p>
+                    </li>
+                    <li>
+                        <label for="fuelTypeInput">Fuel:</label>
+                        <input type="text" id="fuelTypeInput" class="form-control" th:value="${carDto.fuelType}" th:field="*{fuelType}">
+                        <p th:errors="*{fuelType}" class="text-danger" th:if="${#fields.hasErrors('fuelType')}"></p>
+                    </li>
                 </ul>
+
+
             </div>
             <div class="col-md-6">
                 <!-- Document Table -->
@@ -134,19 +170,19 @@
                     <tr>
                         <td>1</td>
                         <td>Registration</td>
-                        <td>Note about registration</td>
+                        <td id="Registration">Not available</td>
                         <td><a href="#">Link to registration document</a></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>Certificate</td>
-                        <td>Note about certificate</td>
+                        <td id="Certificate">Not available</td>
                         <td><a href="#">Link to certificate document</a></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>Insurance</td>
-                        <td>Note about insurance</td>
+                        <td id="Insurance">Not available</td>
                         <td><a href="#">Link to insurance document</a></td>
                     </tr>
                     </tbody>
@@ -157,152 +193,86 @@
     </div>
     <!--Tab 2: car detail-->
     <div id="secondTabBtn" class="w3-container w3-border city" style="display:none">
-        <form>
+
             <div class="row justify-content-between p-4">
                 <div class="col-md-5">
                     <!-- Detail Information -->
                     <h4>Detail Information</h4>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label for="mileageInput">Mileage:</label>
-                            <input type="text" id="mileageInput" class="form-control">
+                            <label for="mileageInput">Mileage: </label>
+                            <input type="text" id="mileageInput" class="form-control" th:value="${carDto.mileage}" th:field="*{mileage}">
+                            <p th:errors="*{mileage}" class="text-danger" th:if="${#fields.hasErrors('mileage')}"></p>
                         </div>
                         <div class="col-md-6">
-                            <label for="fuelConsumptionInput">Fuel Consumption (L/100km):</label>
-                            <input type="text" id="fuelConsumptionInput" class="form-control">
+                            <label for="fuelConsumptionInput">Fuel Consumption (L/100km): </label>
+                            <input type="text" id="fuelConsumptionInput" class="form-control" th:value="${carDto.fuelConsumption}" th:field="*{fuelConsumption}">
+                            <p th:errors="*{fuelConsumption}" class="text-danger" th:if="${#fields.hasErrors('fuelConsumption')}"></p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="addressInput">Address:</label>
-                        <input type="text" id="addressInput" class="form-control">
+                        <label for="addressInput">Address: </label>
+                        <input type="text" id="addressInput" class="form-control" th:value="${address}" >
                     </div>
                     <div class="form-group">
-                        <label for="cityInput">City:</label>
-                        <input type="text" id="cityInput" class="form-control">
+                        <label for="cityInput">City: </label>
+                        <input type="text" id="cityInput" class="form-control" th:value="${carDto.city}" th:field="*{city}">
+                        <p th:errors="*{city}" class="text-danger" th:if="${#fields.hasErrors('city')}"></p>
                     </div>
                     <div class="form-group">
-                        <label for="districtInput">District:</label>
-                        <input type="text" id="districtInput" class="form-control">
+                        <label for="districtInput">District: </label>
+                        <input type="text" id="districtInput" class="form-control" th:value="${carDto.district}" th:field="*{district}">
+                        <p th:errors="*{district}" class="text-danger" th:if="${#fields.hasErrors('district')}"></p>
                     </div>
                     <div class="form-group">
-                        <label for="wardInput">Ward:</label>
-                        <input type="text" id="wardInput" class="form-control">
+                        <label for="wardInput">Ward: </label>
+                        <input type="text" id="wardInput" class="form-control" th:value="${carDto.ward}" th:field="*{ward}">
+                        <p th:errors="*{ward}" class="text-danger" th:if="${#fields.hasErrors('ward')}"></p>
                     </div>
                     <div class="form-group">
-                        <label for="houseNumberInput">House number:</label>
-                        <input type="text" id="houseNumberInput" class="form-control">
+                        <label for="houseNumberInput">House number: </label>
+                        <input type="text" id="houseNumberInput" class="form-control" th:value="${carDto.houseNumberAndStreet}" th:field="*{houseNumberAndStreet}">
+                        <p th:errors="*{houseNumberAndStreet}" class="text-danger" th:if="${#fields.hasErrors('houseNumberAndStreet')}"></p>
                     </div>
                     <div class="form-group">
-                        <label for="descriptionInput">Description:</label>
-                        <textarea type="text" id="descriptionInput" class="form-control"></textarea>
+                        <label for="descriptionInput">Description: </label>
+                        <textarea type="text" id="descriptionInput" class="form-control" th:text="${carDto.description}" th:field="*{description}"></textarea>
+                        <p th:errors="*{description}" class="text-danger" th:if="${#fields.hasErrors('description')}"></p>
                     </div>
                 </div>
+
                 <div class="col-md-5">
                     <!-- Additional Functions -->
-                    <h4>Additional Functions</h4>
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <input type="checkbox" id="bluetoothCheckbox">
-                            <label for="bluetoothCheckbox">Bluetooth</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="checkbox" id="gpsCheckbox">
-                            <label for="gpsCheckbox">GPS</label>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <input type="checkbox" id="cameraCheckbox">
-                            <label for="cameraCheckbox">Camera</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="checkbox" id="sunRoofCheckbox">
-                            <label for="sunRoofCheckbox">Sun Roof</label>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <input type="checkbox" id="childSeatCheckbox">
-                            <label for="childSeatCheckbox">Child Seat</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="checkbox" id="childLockCheckbox">
-                            <label for="childLockCheckbox">Child Lock</label>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <input type="checkbox" id="dvdCheckbox">
-                            <label for="dvdCheckbox">DVD</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="checkbox" id="usbCheckbox">
-                            <label for="usbCheckbox">USB</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="frontImage">Front Image:</label>
-                        <input type="file" class="form-control-file" id="frontImage" name="frontImage">
-                    </div>
-                    <div class="form-group">
-                        <label for="backImage">Back Image:</label>
-                        <input type="file" class="form-control-file" id="backImage" name="backImage">
-                    </div>
-                    <div class="form-group">
-                        <label for="leftImage">Left Image:</label>
-                        <input type="file" class="form-control-file" id="leftImage" name="leftImage">
-                    </div>
-                    <div class="form-group">
-                        <label for="rightImage">Right Image:</label>
-                        <input type="file" class="form-control-file" id="rightImage" name="rightImage">
-                    </div>
-                    <div class="text-center">
-                        <button type="reset" class="btn btn-secondary">Discard</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
+
                 </div>
             </div>
-        </form>
+
     </div>
     <!--Tab 3: car pricing-->
     <div id="thirdTabBtn" class="w3-container w3-border city" style="display:none">
-        <form>
+
             <div class="row justify-content-between p-4">
                 <div class="col-md-5">
                     <!-- Detail Information -->
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label for="basePriceInput">Base price:</label>
-                            <input type="text" id="basePriceInput" class="form-control"> VND/day
+                            <input type="text" id="basePriceInput" class="form-control" th:value="${carDto.basePrice}" th:field="*{basePrice}"> VND/day
+                            <p th:errors="*{basePrice}" class="text-danger" th:if="${#fields.hasErrors('basePrice')}"></p>
                         </div>
                         <div class="col-md-6">
                             <label for="requireDepositInput">Required deposit:</label>
-                            <input type="text" id="requireDepositInput" class="form-control"> VND
+                            <input type="text" id="requireDepositInput" class="form-control" th:value="${carDto.deposit}" th:field="*{deposit}"> VND
+                            <p th:errors="*{deposit}" class="text-danger" th:if="${#fields.hasErrors('deposit')}"></p>
                         </div>
                     </div>
+
                 </div>
                 <div class="col-md-5">
                     <!-- Term of use -->
-                    <h4>Term of use</h4>
+
                     <div class="form-group row">
-                        <div class="col-md-6">
-                            <input type="checkbox" id="noSmokeCheckbox">
-                            <label for="noSmokeCheckbox">No smoking</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="checkbox" id="noPetCheckbox">
-                            <label for="noPetCheckbox">No pet</label>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <input type="checkbox" id="noFoodCheckbox">
-                            <label for="noFoodCheckbox">No food in car</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="checkbox" id="otherCheckbox">
-                            <label for="otherCheckbox">Other</label>
-                        </div>
+
                         <hr class="my-4">
                         <div class="text-center">
                             <button type="reset" class="btn btn-secondary">Discard</button>
@@ -311,14 +281,22 @@
                     </div>
                 </div>
             </div>
-        </form>
+
     </div>
 </div>
-
+</form>
 
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
-<script>
+
+
+<script th:src="@{/js/script.js}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+<script th:inline="javascript">
+
     function changeTab(evt, tab) {
         var i, x, tablinks;
         x = document.getElementsByClassName("city");
@@ -332,12 +310,32 @@
         document.getElementById(tab).style.display = "block";
         evt.currentTarget.className += " w3-grey";
     }
+    //document
+    let certificate = [[ ${certificate} ]];
+    let insurance = [[ ${insurance} ]];
+    let registration = [[ ${registration} ]];
 
+    if(certificate != null){
+        document.getElementById("Certificate").innerHTML = "Available";
+    }
+    if(insurance != null){
+        document.getElementById("Insurance").innerHTML = "Available";
+    }
+    if(registration != null){
+        document.getElementById("Registration").innerHTML = "Available";
+    }
+    var carOptionString = [[${carOption}]];
+    var carTermString = [[${carTerm}]];
+    var carOptions = carOptionString.split(",");
+
+    var carTerm = carTermString.split(",");
+    var checkboxes = document.querySelectorAll("input[type='checkbox']");
+    checkboxes.forEach(function(checkbox) {
+        var labelText = checkbox.nextElementSibling.textContent.trim();
+        if (carOptions.includes(labelText) || carTerm.includes(labelText)) {
+            checkbox.checked = true; // Đánh dấu checkbox nếu nằm trong danh sách
+        }
+    });
 </script>
 
-<script th:src="@{/js/script.js}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
 </html>

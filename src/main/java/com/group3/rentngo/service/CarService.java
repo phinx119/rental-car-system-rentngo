@@ -14,7 +14,10 @@ public interface CarService {
 
     Car getCarFromDto(CarDto carDto);
 
+    CarDto getCarDtoFromCar(Car car);
     void addCar(CarDto carDto);
 
     public String storeFile(String rootPath, String saveLocation, MultipartFile file);
+
+    void editCar(Car car, CarDto carDto);
 }

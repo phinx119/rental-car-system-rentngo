@@ -27,28 +27,19 @@ public class CarServiceImpl implements CarService {
     private final UserService userService;
     private final CarOwnerService carOwnerService;
     private final CarRepository carRepository;
-    private final CarOwnerRepository carOwnerRepository;
-    private final BookingRepository bookingRepository;
-    private final CarImageRepository carImageRepository;
 
     @Autowired
     public CarServiceImpl(UserService userService,
                           CarOwnerService carOwnerService,
-                          CarRepository carRepository,
-                          CarOwnerRepository carOwnerRepository,
-                          BookingRepository bookingRepository,
-                          CarImageRepository carImageRepository) {
+                          CarRepository carRepository){
         this.userService = userService;
         this.carOwnerService = carOwnerService;
         this.carRepository = carRepository;
-        this.carOwnerRepository = carOwnerRepository;
-        this.bookingRepository = bookingRepository;
-        this.carImageRepository = carImageRepository;
     }
 
     /**
      * @author thiendd
-     * @description
+     * @description print list car of owner
      */
     @Override
     public List<Car> listCarOfOwner(Long id) {
@@ -57,7 +48,7 @@ public class CarServiceImpl implements CarService {
 
     /**
      * @author thiendd
-     * @description
+     * @description find car by id
      */
     @Override
     public Optional<Car> findById(Long id) {
@@ -105,6 +96,47 @@ public class CarServiceImpl implements CarService {
     }
 
     /**
+     * @author thiendd
+     * @description tranfer car to carDto
+     */
+    @Override
+    public CarDto getCarDtoFromCar(Car car) {
+        CarDto dto = new CarDto();
+        dto.setId(car.getId());
+        dto.setName(car.getName());
+        dto.setLicensePlate(car.getLicensePlate());
+        dto.setBrand(car.getBrand());
+        dto.setModel(car.getModel());
+        dto.setColor(car.getColor());
+        dto.setNumberOfSeats(car.getNumberOfSeats());
+        dto.setProductionYear(car.getProductionYear());
+        dto.setTransmissionType(car.getTransmissionType());
+        dto.setFuelType(car.getFuelType());
+        dto.setMileage(car.getMileage());
+        dto.setFuelConsumption(car.getFuelConsumption());
+        dto.setBasePrice(car.getBasePrice());
+        dto.setDeposit(car.getDeposit());
+        String address = car.getAddress();
+        String[] arrAddress = address.split("[-]");
+        dto.setHouseNumberAndStreet(arrAddress[0]);
+        dto.setWard(arrAddress[1]);
+        dto.setDistrict(arrAddress[2]);
+        dto.setCity(arrAddress[3]);
+        dto.setDescription(car.getDescription());
+        dto.setAdditionalFunctions(car.getAdditionalFunctions());
+        dto.setTermOfUse(car.getTermOfUse());
+
+        dto.setRegistrationPaperPath(car.getRegistrationPaperPath());
+        dto.setCertificateOfInspection(car.getCertificateOfInspection());
+        dto.setInsurance(car.getInsurance());
+        dto.setCarOwner(car.getCarOwner());
+        dto.setCertificateOfInspectionPath(car.getCertificateOfInspectionPath());
+        dto.setInsurancePath(car.getInsurancePath());
+        dto.setCarImage(car.getCarImage());
+        return dto;
+    }
+
+    /**
      * @author tiennq
      * @description
      */
@@ -121,6 +153,7 @@ public class CarServiceImpl implements CarService {
         }
         return saveLocation + "/" + newName;
     }
+
 
     /**
      * @author tiennq
@@ -152,5 +185,34 @@ public class CarServiceImpl implements CarService {
         Car car = getCarFromDto(carDto);
 
         carRepository.save(car);
+    }
+
+    /**
+     * @author thiendd
+     * @description edit infomation car
+     */
+    @Override
+    public void editCar(Car car, CarDto carDto) {
+        car.setBrand(carDto.getBrand());
+        car.setModel(carDto.getModel());
+        car.setColor(carDto.getColor());
+        car.setLicensePlate(carDto.getLicensePlate());
+        car.setNumberOfSeats(carDto.getNumberOfSeats());
+        car.setProductionYear(carDto.getProductionYear());
+        car.setTransmissionType(carDto.getTransmissionType());
+        car.setFuelType(carDto.getFuelType());
+        car.setMileage(carDto.getMileage());
+        car.setFuelConsumption(carDto.getFuelConsumption());
+        car.setBasePrice(carDto.getBasePrice());
+        car.setDeposit(carDto.getDeposit());
+        car.setAddress(carDto.getHouseNumberAndStreet()
+                .concat("-")
+                .concat(carDto.getWard())
+                .concat("-")
+                .concat(carDto.getDistrict())
+                .concat("-")
+                .concat(carDto.getCity()));
+        car.setDescription(carDto.getDescription());
+        carRepository.saveAndFlush(car);
     }
 }
