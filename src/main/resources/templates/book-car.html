@@ -14,216 +14,519 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Book Car</li>
-
+        <li class="breadcrumb-item active" aria-current="page">Book car</li>
     </ol>
 </nav>
 
-<div class="booking">
-    <div class="booking-detail">
-        <strong>Booking car</strong>
-        <span><i class="fa-solid fa-pen-to-square"></i>Change details</span>
+<div class="container-fluid py-4">
+    <div class="p-5 mb-4 bg border rounded">
+        <div class="booking-detail">
+            <strong>Booking car</strong>
+            <span class="float-right">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <a href="#" id="changeDetailsLink" data-toggle="modal" data-target="#changeDetailsModal">Change details</a>
+            </span>
+        </div>
+        <ul>
+            <li>Pick-up location: Trung kinh, Cau Giay, Ha Noi</li>
+            <li>Pick-up date and time: 13/02/2022-12:00PM</li>
+            <li>Return date and time :23/02/2022-14:00PM</li>
+        </ul>
     </div>
-    <ul>
-        <li>Pick-up location: Trung kinh, Cau Giay, Ha Noi</li>
-        <li>Pick-up date and time: 13/02/2022-12:00PM </li>
-        <li>Return date and time :23/02/2022-14:00PM</li>
-    </ul>
 </div>
 
-<div class="process-step">
-    <button id="step1" type="button" class="btn btn-light">Step 1</button>
-    <button id="step2" type="button" class="btn btn-light">Step 2</button>
-    <button id="step3" type="button" class="btn btn-light">Step 3</button>
-</div>
-<div class="row booking-info">
-    <div class="col-md-6" style="border-right: 1px solid black ;">
-        <img src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png" alt=""><br/>
-        <strong>Nguyễn Xuân Phi 2017</strong>
-        <table class="info-detail">
-            <tr>
-                <td><strong>Ratings:</strong></td>
-                <td>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
+<!--Popup modal-->
+<div class="modal fade" id="changeDetailsModal" tabindex="-1" aria-labelledby="changeDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeDetailsModalLabel">Change Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="searchForm">
+                    <div class="form-group">
+                        <label for="pickupLocation">Pickup Location</label>
+                        <input type="text" class="form-control" id="pickupLocation" placeholder="Enter pickup location">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="pickupDate">Pickup Date</label>
+                            <input type="date" class="form-control" id="pickupDate">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="pickupTime">Pickup Time</label>
+                            <input type="time" class="form-control" id="pickupTime">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="dropOffDate">Drop-off Date</label>
+                            <input type="date" class="form-control" id="dropOffDate">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="dropOffTime">Drop-off Time</label>
+                            <input type="time" class="form-control" id="dropOffTime">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button id="searchBtn" type="submit" class="btn btn-primary">Search</button>
+                    </div>
 
-                </td>
-            </tr>
-            <tr>
-                <td><strong>No.of rides:</strong></td>
-                <td>
-                    <strong>0</strong>
-
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Price:</strong></td>
-                <td>
-                    <strong>900k/day</strong>
-
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Location:</strong></td>
-                <td>
-                    <strong>Cau giay, Ha Noi</strong>
-
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Status:</strong></td>
-                <td>
-                    <strong>Avaliable</strong>
-
-                </td>
-            </tr>
-
-        </table>
-    </div>
-    <div class="col-md-6">
-        <strong>Booking Summary</strong>
-        <div class="booking-summary">
-            <span><strong>Number of days: 15</strong></span><br/>
-            <span><strong>Price perday day: 900,00VND</strong></span><br/>
-            <hr/>
-            <span><strong>Total:13,500,000VND</strong></span><br/>
-            <span><strong>Deposit: 15,000,000ND</strong></span><br/>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-<form action="#" class="container">
-    <!-- Step 1 -->
-    <div class="personal-information">
-        <strong style="font-size: 20px;">Renter's infomation</strong>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="personal-information-items">
-                    <strong>Full Name</strong><br/>
-                    <input type="text" />
+
+
+<div class="container-fluid bg-white mt-4">
+    <a href="">Back</a>
+    <div class="row p-4">
+        <div class="col-4">
+            <button class="btn btn-primary btn-arrow-right btn-block active" id="basicBtn"><a class="text-light" href="#">Step 1: Booking information</a></button>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary btn-arrow-right btn-block" id="detailBtn"><a class="text-light" href="#">Step 2: Payment</a></button>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary btn-arrow-right btn-block" id="pricingBtn"><a class="text-light" href="#">Step 3: Finish</a></button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6" style="border-right: 1px solid black;">
+            <img height="100" width="150" src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png" alt="" class="img-fluid"><br/>
+            <br><h4><strong>Car name</strong></h4>
+            <table class="table">
+                <tr>
+                    <td><strong>Ratings:</strong></td>
+                    <td>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>No.of rides:</strong></td>
+                    <td><strong>0</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Price:</strong></td>
+                    <td><strong>900k/day</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Location:</strong></td>
+                    <td><strong>Cau giay, Ha Noi</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Status:</strong></td>
+                    <td><strong>Available</strong></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <strong>Booking Summary</strong>
+            <div class="booking-summary">
+                <span><strong>Number of days: 15</strong></span><br/>
+                <span><strong>Price per day: 900,00VND</strong></span><br/>
+                <hr/>
+                <span><strong>Total: 13,500,000VND</strong></span><br/>
+                <span><strong>Deposit: 15,000,000ND</strong></span><br/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-light mt-4">
+    <div class="row justify-content-center p-4">
+        <form class="col-md-10" id="carForm" enctype="multipart/form-data">
+
+            <!-- Form Inputs -->
+            <div id="step1" class="">
+
+                <h4 class="mb-4">Renter's information</h4>
+
+                <div class="col-md-12 mt-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nameRenter">Full Name:</label>
+                                <input type="text" class="form-control" id="nameRenter" name="nameRenter">
+                            </div>
+                            <div class="form-group">
+                                <label for="phonenumberRenter">Phone Number:</label>
+                                <input type="tel" class="form-control" id="phonenumberRenter" name="phonenumberRenter">
+                            </div>
+                            <div class="form-group">
+                                <label for="nationalidRenter">National ID:</label>
+                                <input type="text" class="form-control" id="nationalidRenter" name="nationalidRenter">
+                            </div>
+                            <div class="form-group">
+                                <h4>Address</h4>
+                                <label for="city">City:</label>
+                                <select id="city" name="city" class="form-control" th:field="*{city}">
+                                    <option value="" selected hidden>City</option>
+                                </select>
+                                <p th:errors="*{city}" class="text-danger"
+                                   th:if="${#fields.hasErrors('city')}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="district">District:</label>
+                                <select id="district" name="district" class="form-control" th:field="*{district}">
+                                    <option value="" selected hidden>District</option>
+                                </select>
+                                <p th:errors="*{district}" class="text-danger"
+                                   th:if="${#fields.hasErrors('district')}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="ward">Ward:</label>
+                                <select id="ward" name="ward" class="form-control" th:field="*{ward}">
+                                    <option value="" selected hidden>Ward</option>
+                                </select>
+                                <p th:errors="*{ward}" class="text-danger"
+                                   th:if="${#fields.hasErrors('ward')}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="house-number-and-street">House Number:</label>
+                                <input type="text" class="form-control" id="house-number-and-street"
+                                       name="house-number-and-street"
+                                       placeholder="House number, Street" th:field="*{houseNumberAndStreet}">
+                                <p th:errors="*{houseNumberAndStreet}" class="text-danger"
+                                   th:if="${#fields.hasErrors('houseNumberAndStreet')}"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="dobRenter">Date of Birth:</label>
+                                <input type="date" class="form-control" id="dobRenter" name="dobRenter">
+                            </div>
+                            <div class="form-group">
+                                <label for="emailRenter">Email:</label>
+                                <input type="email" class="form-control" id="emailRenter" name="emailRenter">
+                            </div>
+                            <div class="form-group">
+                                <label for="drivinglicenseRenter">Driving License:</label>
+                                <input type="file" class="form-control-file" id="drivinglicenseRenter" name="drivinglicenseRenter">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="personal-information-items">
-                    <strong>Phone number</strong><br/>
-                    <input type="text" />
+
+                <h4>Driver's information</h4>
+                <div class="col-md-12 mt-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="fullnameDriver">Full Name:</label>
+                                <input type="text" class="form-control" id="fullnameDriver" name="fullnameDriver">
+                            </div>
+                            <div class="form-group">
+                                <label for="phonenumberDriver">Phone Number:</label>
+                                <input type="tel" class="form-control" id="phonenumberDriver" name="phonenumberDriver">
+                            </div>
+                            <div class="form-group">
+                                <label for="nationalidDriver">National ID:</label>
+                                <input type="text" class="form-control" id="nationalidDriver" name="nationalidDriver">
+                            </div>
+                            <div class="form-group">
+                                <h4>Address</h4>
+                                <label for="city">City:</label>
+                                <select id="city" name="city" class="form-control" th:field="*{city}">
+                                    <option value="" selected hidden>City</option>
+                                </select>
+                                <p th:errors="*{city}" class="text-danger"
+                                   th:if="${#fields.hasErrors('city')}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="district">District:</label>
+                                <select id="district" name="district" class="form-control" th:field="*{district}">
+                                    <option value="" selected hidden>District</option>
+                                </select>
+                                <p th:errors="*{district}" class="text-danger"
+                                   th:if="${#fields.hasErrors('district')}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="ward">Ward:</label>
+                                <select id="ward" name="ward" class="form-control" th:field="*{ward}">
+                                    <option value="" selected hidden>Ward</option>
+                                </select>
+                                <p th:errors="*{ward}" class="text-danger"
+                                   th:if="${#fields.hasErrors('ward')}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="house-number-and-street">House Number:</label>
+                                <input type="text" class="form-control" id="house-number-and-street"
+                                       name="house-number-and-street"
+                                       placeholder="House number, Street" th:field="*{houseNumberAndStreet}">
+                                <p th:errors="*{houseNumberAndStreet}" class="text-danger"
+                                   th:if="${#fields.hasErrors('houseNumberAndStreet')}"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="dobDriver">Date of Birth:</label>
+                                <input type="date" class="form-control" id="dobDriver" name="dobDriver">
+                            </div>
+                            <div class="form-group">
+                                <label for="emailDriver">Email:</label>
+                                <input type="email" class="form-control" id="emailDriver" name="emailDriver">
+                            </div>
+                            <div class="form-group">
+                                <label for="drivinglicenseDriver">Driving License:</label>
+                                <input type="file" class="form-control-file" id="drivinglicenseDriver" name="drivinglicenseDriver">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="personal-information-items">
-                    <strong>National ID No</strong><br/>
-                    <input type="text" />
-                </div>
-                <div class="address">
-                    <strong>Address</strong><br/>
-                    <select >
-                        <option  disabled selected hidden>city/prince</option>
-                        <option value="Ha Noi">Ha Noi</option>
-                        <option value="Ho Chi Minh">Ho Chi Minh</option>
-                        <option value="Da Nang">Da Nang</option>
-                        <option value="Ha Long">Ha Long</option>
-                    </select>
-                    <br/>
-                    <select>
-                        <option  disabled selected hidden>district</option>
-                        <option value="Ha Noi">Ha Noi</option>
-                        <option value="Ho Chi Minh">Ho Chi Minh</option>
-                        <option value="Da Nang">Da Nang</option>
-                        <option value="Ha Long">Ha Long</option>
-                    </select>
-                    <br/>
-                    <select>
-                        <option  disabled selected hidden>ward</option>
-                        <option value="Ha Noi">Ha Noi</option>
-                        <option value="Ho Chi Minh">Ho Chi Minh</option>
-                        <option value="Da Nang">Da Nang</option>
-                        <option value="Ha Long">Ha Long</option>
-                    </select>
-                    <br/>
-                    <input class="street" type="text" placeholder="House number,Street">
-                </div>
+
             </div>
 
-            <div class="col-md-6">
-                <div class="personal-information-items">
-                    <strong>Date of birth</strong><br/>
-                    <input type="date" />
-                    <i class="fa-regular fa-calendar-days"></i>
+            <!-- Step 2 - Details (Visible by default) -->
+            <div id="step2" class="row">
+                <strong>Please select your payment method</strong><br/>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="wallet">
+                    <label class="form-check-label" for="wallet">
+                        My wallet
+                    </label>
+                    <br/>
+                    <span style="font-size: 14px;">Current balance: <span class="text-danger">20,000,000 VND</span></span>
                 </div>
-                <div class="personal-information-items">
-                    <strong>Email Address</strong><br/>
-                    <input type="text" />
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="cash">
+                    <label class="form-check-label" for="cash">
+                        Cash
+                    </label>
+                    <br/>
+                    <span style="font-size: 14px;">Current balance: <span>Our operator will contact you for further instruction</span></span>
                 </div>
-                <div class="personal-information-items">
-                    <strong>Driving Scense</strong><br/>
-                    <input type="text" />
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer">
+                    <label class="form-check-label" for="bankTransfer">
+                        Bank transfer
+                    </label>
+                    <br/>
+                    <span style="font-size: 14px;">Current balance: <span>Our operator will contact you for further instruction</span></span>
                 </div>
             </div>
-            <div class="save-information mt-3 ">
-                <a href="#" class="discard-link mr-3">Discard</a>
-                <a id="next" href="#" class="btn btn-primary">Next</a>
+            <!-- Buttons -->
+            <div class="col-md-12 text-center mt-4">
+                <button type="button" id="prevBtn" class="btn btn-secondary mr-2">Previous</button>
+                <button type="button" id="nextBtn" class="btn btn-primary">Next</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="display: none;">Confirm payment</button>
+            </div>
+        </form>
+        <!-- Step 3 - Pricing and Terms (Hidden by default) -->
+        <div id="step3" class="row" style="display: none;">
+            <br/>
+            <strong>You've successfully booked Nissan Navara EI2017 from 13/02/2022 - 12:00PM - 14:00PM</strong><br/><br/>
+            <strong>Your booking number is 012345</strong><br/><br/>
+            <strong>Our operator will contact you with further guidance about pickup</strong>
+            <div class="btn-book mt-3">
+                <button type="button" id="homepageBtn" class="btn btn-secondary">Homepage</button>
+                <button type="button" id="bookAnotherBtn" class="btn btn-primary">Book Another Car</button>
+                <button type="button" id="viewBookingBtn" class="btn btn-info">View Booking</button>
             </div>
 
         </div>
     </div>
-    <!-- End Step 1 -->
-    <!-- Step 2 -->
-    <div class="payment" style="display: none;" >
-        <strong>Please select your payment method</strong><br/>
-        <input type="radio" name="" id=""> <span>My wallet</span> <br/>
-        <span style="font-size: 14px;" >Current balance: <span style="margin-left: 15px; color: red;">20,000,000 VND</span> </span><br/>
-        <input type="radio" name="" id=""> <span>Cash</span> <br/>
-        <span style="font-size: 14px;" >Current balance: <span>Our operator will contact you for further instruction</span> </span><br/>
-        <input type="radio" name="" id=""> <span>Bank tranfer</span> <br/>
-        <span style="font-size: 14px;" >Current balance: <span>Our operator will contact you for further instruction</span> </span><br/>
-        <div class="confirm mt-3 ">
-            <a href="#" class="discard-link mr-3">Cancel</a>
-            <a id="confirm" href="#" class="btn btn-primary">Confirm payment</a>
-        </div>
-    </div>
-    <!-- End Step 2 -->
+</div>
 
-    <!-- Step 3 -->
-    <div class="finish" style="display: none;">
-        <br/>
-        <strong>You've successfully booked Nissan Navara EI2017 from 13/02/2022 - 12:00PM - 14:00PM</strong><br/><br/>
-        <strong>Your booking  number is 012345 </strong><br/><br/>
-        <strong>Our operator will contact you with further guidance about pickup</strong>
-        <div class="btn-book">
-            <a href="#">Go to homepage</a>
-            <button class="btn btn-primary">Book another car</button>
-            <button class="btn btn-success">View Booking</button>
-        </div>
-    </div>
-    <!-- Step 3 -->
-</form>
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
-<script>
-    let personalinformation = document.querySelector(".personal-information");
-    let payment = document.querySelector(".payment");
-    let finish = document.querySelector(".finish");
 
-    let step1 = document.getElementById("step1");
-    let step2 = document.getElementById("step2");
-    let step3 = document.getElementById("step3");
-    let next = document.getElementById("next");
-    let confirm = document.getElementById("confirm");
-
-    next.addEventListener("click", function() {
-        personalinformation.style.display = "none";
-        payment.style.display = "block";
-        finish.style.display = "none";
+<script th:inline="javascript">
+    let cities = document.getElementById('city');
+    let districts = document.getElementById('district');
+    let wards = document.getElementById('ward');
+    let Parameter = {
+        url: 'https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json',
+        method: 'GET',
+        responseType: 'application/json',
+    };
+    let promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
     });
 
-    confirm.addEventListener("click", function() {
-        personalinformation.style.display = "none";
-        payment.style.display = "none";
-        finish.style.display = "block";
-    });
+    function renderCity(data) {
+        // Render options for cities
+        for (const x of data) {
+            cities.options[cities.options.length] = new Option(x.Name, x.Name);
+        }
 
-    // finish.addEventListener("click", function() {
-    //     infodetail.style.display = "none";
-    //     details.style.display = "none";
-    //     term.style.display = "block";
-    // });
+        // Select city based on value from carDto
+        let cityValue = [[${carDto.city}]];
+        if (cityValue) {
+            cities.value = cityValue;
+        }
+
+        // Render districts for selected city
+        cities.onchange = function () {
+            districts.length = 1;
+            wards.length = 1;
+            if (this.value != "") {
+                const result = data.find(n => n.Name === this.value);
+                if (result) {
+                    for (const k of result.Districts) {
+                        districts.options[districts.options.length] = new Option(k.Name, k.Name);
+                    }
+                }
+            }
+        };
+
+        // Select district based on value from carDto
+        let districtValue = [[${carDto.district}]];
+        if (districtValue) {
+            cities.dispatchEvent(new Event('change')); // Trigger change event to render districts
+            setTimeout(() => { // Wait for districts to render
+                districts.value = districtValue;
+                districts.dispatchEvent(new Event('change')); // Trigger change event to render wards
+            }, 0);
+        }
+
+        // Render wards for selected district
+        districts.onchange = function () {
+            wards.length = 1;
+            const selectedCity = data.find((n) => n.Name === cities.value);
+            if (this.value != "") {
+                const selectedDistrict = selectedCity.Districts.find(n => n.Name === this.value);
+                if (selectedDistrict) {
+                    for (const w of selectedDistrict.Wards) {
+                        wards.options[wards.options.length] = new Option(w.Name, w.Name);
+                    }
+                }
+            }
+        };
+
+        // Select ward based on value from carDto
+        let wardValue = [[${carDto.ward}]];
+        if (wardValue) {
+            cities.dispatchEvent(new Event('change')); // Trigger change event to render districts
+            setTimeout(() => { // Wait for districts to render
+                districts.dispatchEvent(new Event('change')); // Trigger change event to render wards
+                setTimeout(() => { // Wait for wards to render
+                    wards.value = wardValue;
+                }, 0);
+            }, 0);
+        }
+    }
 </script>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const homepageBtn = document.getElementById('homepageBtn');
+        const bookAnotherBtn = document.getElementById('bookAnotherBtn');
+        const viewBookingBtn = document.getElementById('viewBookingBtn');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const basicBtn = document.getElementById('basicBtn');
+        const detailBtn = document.getElementById('detailBtn');
+        const pricingBtn = document.getElementById('pricingBtn');
+        const walletRadio = document.getElementById('wallet');
+        const cashRadio = document.getElementById('cash');
+        const bankTransferRadio = document.getElementById('bankTransfer');
+
+        // Hide Step 2, Step 3, and all buttons initially except Next button
+        step2.style.display = 'none';
+        step3.style.display = 'none';
+        submitBtn.style.display = 'none';
+        homepageBtn.style.display = 'none';
+        bookAnotherBtn.style.display = 'none';
+        viewBookingBtn.style.display = 'none';
+
+        // Event listener for Next button - Step 1 to Step 2, Step 2 to Step 3
+        nextBtn.addEventListener('click', function () {
+            if (step1.style.display !== 'none') {
+                step1.style.display = 'none';
+                step2.style.display = 'block';
+                basicBtn.classList.remove('btn-primary');
+                basicBtn.classList.add('btn-secondary');
+                basicBtn.classList.remove('active');
+                detailBtn.classList.remove('btn-secondary');
+                detailBtn.classList.add('btn-primary');
+                detailBtn.classList.add('active');
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            }
+        });
+
+        // Event listener for Previous button - Step 2 to Step 1, Step 3 to Step 2
+        prevBtn.addEventListener('click', function () {
+            if (step2.style.display !== 'none') {
+                step2.style.display = 'none';
+                step1.style.display = 'block';
+                basicBtn.classList.remove('btn-secondary');
+                basicBtn.classList.add('btn-primary');
+                basicBtn.classList.add('active');
+                detailBtn.classList.remove('btn-primary');
+                detailBtn.classList.add('btn-secondary');
+                detailBtn.classList.remove('active');
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+        });
+
+
+        $("#carForm").submit(function(event) {
+            event.preventDefault();
+            submitForm();
+        });
+
+        function submitForm(){
+
+            if (walletRadio.checked) {
+                const confirmed = confirm('The deposit amount will be deducted from your wallet. Click "OK" to confirm payment and go to the next step.');
+                if (!confirmed) {
+                    return false;
+                }
+            } else if (!walletRadio.checked && !cashRadio.checked && !bankTransferRadio.checked) {
+                alert("Please choose a payment method");
+                return false;
+            }
+
+            step2.style.display = 'none';
+            step3.style.display = 'block';
+            detailBtn.classList.remove('btn-primary');
+            detailBtn.classList.add('btn-secondary');
+            detailBtn.classList.remove('active');
+            pricingBtn.classList.remove('btn-secondary');
+            pricingBtn.classList.add('btn-primary');
+            pricingBtn.classList.add('active');
+            prevBtn.style.display = 'none';
+            submitBtn.style.display = 'none';
+            homepageBtn.style.display = 'inline-block';
+            bookAnotherBtn.style.display = 'inline-block';
+            viewBookingBtn.style.display = 'inline-block';
+
+            return true; // Allow form submission
+        }
+
+        $("#searchForm").submit(function(event) {
+            event.preventDefault();
+            searchForm();
+        });
+
+        function searchForm() {
+            var pickupLocation = $("#pickupLocation").val();
+            var pickupDate = $("#pickupDate").val();
+            var pickupTime = $("#pickupTime").val();
+            var dropOffDate = $("#dropOffDate").val();
+            var dropOffTime = $("#dropOffTime").val();
+
+            $("#changeDetailsModal").modal("hide");
+        }
+    });
+
+</script>
+
 </body>
 </html>
