@@ -27,33 +27,19 @@ public class CarServiceImpl implements CarService {
     private final UserService userService;
     private final CarOwnerService carOwnerService;
     private final CarRepository carRepository;
-    private final CarOwnerRepository carOwnerRepository;
-    private final BookingRepository bookingRepository;
-    private final CarImageRepository carImageRepository;
 
     @Autowired
     public CarServiceImpl(UserService userService,
                           CarOwnerService carOwnerService,
-                          CarRepository carRepository,
-                          CarOwnerRepository carOwnerRepository,
-                          BookingRepository bookingRepository,
-                          CarImageRepository carImageRepository) {
+                          CarRepository carRepository){
         this.userService = userService;
         this.carOwnerService = carOwnerService;
         this.carRepository = carRepository;
-        this.carOwnerRepository = carOwnerRepository;
-        this.bookingRepository = bookingRepository;
-        this.carImageRepository = carImageRepository;
-    }
-
-    @Override
-    public Car saveCar(Car car) {
-        return carRepository.saveAndFlush(car);
     }
 
     /**
      * @author thiendd
-     * @description
+     * @description print list car of owner
      */
     @Override
     public List<Car> listCarOfOwner(Long id) {
@@ -62,7 +48,7 @@ public class CarServiceImpl implements CarService {
 
     /**
      * @author thiendd
-     * @description
+     * @description find car by id
      */
     @Override
     public Optional<Car> findById(Long id) {
@@ -109,6 +95,10 @@ public class CarServiceImpl implements CarService {
         return car;
     }
 
+    /**
+     * @author thiendd
+     * @description tranfer car to carDto
+     */
     @Override
     public CarDto getCarDtoFromCar(Car car) {
         CarDto dto = new CarDto();
@@ -195,5 +185,34 @@ public class CarServiceImpl implements CarService {
         Car car = getCarFromDto(carDto);
 
         carRepository.save(car);
+    }
+
+    /**
+     * @author thiendd
+     * @description edit infomation car
+     */
+    @Override
+    public void editCar(Car car, CarDto carDto) {
+        car.setBrand(carDto.getBrand());
+        car.setModel(carDto.getModel());
+        car.setColor(carDto.getColor());
+        car.setLicensePlate(carDto.getLicensePlate());
+        car.setNumberOfSeats(carDto.getNumberOfSeats());
+        car.setProductionYear(carDto.getProductionYear());
+        car.setTransmissionType(carDto.getTransmissionType());
+        car.setFuelType(carDto.getFuelType());
+        car.setMileage(carDto.getMileage());
+        car.setFuelConsumption(carDto.getFuelConsumption());
+        car.setBasePrice(carDto.getBasePrice());
+        car.setDeposit(carDto.getDeposit());
+        car.setAddress(carDto.getHouseNumberAndStreet()
+                .concat("-")
+                .concat(carDto.getWard())
+                .concat("-")
+                .concat(carDto.getDistrict())
+                .concat("-")
+                .concat(carDto.getCity()));
+        car.setDescription(carDto.getDescription());
+        carRepository.saveAndFlush(car);
     }
 }

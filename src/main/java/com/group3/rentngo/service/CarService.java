@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CarService {
-    Car saveCar(Car car);
     List<Car> listCarOfOwner(Long id);
 
     Optional<Car> findById(Long id);
@@ -20,4 +19,5 @@ public interface CarService {
 
     public String storeFile(String rootPath, String saveLocation, MultipartFile file);
 
+    void editCar(Car car, CarDto carDto);
 }

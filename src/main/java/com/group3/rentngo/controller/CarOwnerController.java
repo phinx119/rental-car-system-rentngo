@@ -154,28 +154,7 @@ public class CarOwnerController {
             return "edit-car-detail-page";
         } else {
             Car car = findCar.orElse(null);
-            car.setBrand(carDto.getBrand());
-            car.setModel(carDto.getModel());
-            car.setColor(carDto.getColor());
-            car.setLicensePlate(carDto.getLicensePlate());
-            car.setNumberOfSeats(carDto.getNumberOfSeats());
-            car.setProductionYear(carDto.getProductionYear());
-            car.setTransmissionType(carDto.getTransmissionType());
-            car.setFuelType(carDto.getFuelType());
-            car.setMileage(carDto.getMileage());
-            car.setFuelConsumption(carDto.getFuelConsumption());
-            car.setBasePrice(carDto.getBasePrice());
-            car.setDeposit(carDto.getDeposit());
-            car.setAddress(carDto.getHouseNumberAndStreet()
-                    .concat("-")
-                    .concat(carDto.getWard())
-                    .concat("-")
-                    .concat(carDto.getDistrict())
-                    .concat("-")
-                    .concat(carDto.getCity()));
-            car.setDescription(carDto.getDescription());
-
-           carService.saveCar(car);
+            carService.editCar(car,carDto);
             return "redirect:/car-owner/view-list-car";
         }
 
