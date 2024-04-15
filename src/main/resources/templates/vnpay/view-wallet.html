@@ -190,13 +190,13 @@
                 <td colspan="7">No payment history available.</td>
             </tr>
             <tr th:each="paymentHistory : ${paymentHistoryList}">
-                <td th:text="${paymentHistory.getId()}"></td>
-                <td th:text="${#numbers.formatDecimal(paymentHistory.getAmount(), 0, 'COMMA', paymentHistory.getAmount() % 1 == 0 ? 0 : 2, 'POINT')}"></td>
-                <td th:text="${paymentHistory.getType()}"></td>
-                <td th:text="${paymentHistory.getCreateDate()}"></td>
-                <td th:text="${paymentHistory.getBooking() != null ? paymentHistory.getBooking().getId() : 'N/A'}"></td>
-                <td th:text="${paymentHistory.getBooking() != null && paymentHistory.getBooking().getCar() != null ? paymentHistory.getBooking().getCar().getBrand() : 'N/A'}"></td>
-                <td th:text="${paymentHistory.getNote()}"></td>
+                <td th:text="${paymentHistory.id}"></td>
+                <td th:text="${#numbers.formatDecimal(paymentHistory.amount, 0, 'COMMA', paymentHistory.amount % 1 == 0 ? 0 : 2, 'POINT')}"></td>
+                <td th:text="${paymentHistory.type}"></td>
+                <td th:text="${paymentHistory.createDate}"></td>
+                <td th:text="${paymentHistory.booking != null ? paymentHistory.booking.id : 'N/A'}"></td>
+                <td th:text="${paymentHistory.booking != null && paymentHistory.booking.car != null ? paymentHistory.booking.car.name : 'N/A'}"></td>
+                <td th:text="${paymentHistory.note}"></td>
             </tr>
             </tbody>
         </table>
