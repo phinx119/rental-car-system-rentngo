@@ -46,6 +46,11 @@ public class CarServiceImpl implements CarService {
         this.carImageRepository = carImageRepository;
     }
 
+    @Override
+    public Car saveCar(Car car) {
+        return carRepository.saveAndFlush(car);
+    }
+
     /**
      * @author thiendd
      * @description
@@ -104,6 +109,43 @@ public class CarServiceImpl implements CarService {
         return car;
     }
 
+    @Override
+    public CarDto getCarDtoFromCar(Car car) {
+        CarDto dto = new CarDto();
+        dto.setId(car.getId());
+        dto.setName(car.getName());
+        dto.setLicensePlate(car.getLicensePlate());
+        dto.setBrand(car.getBrand());
+        dto.setModel(car.getModel());
+        dto.setColor(car.getColor());
+        dto.setNumberOfSeats(car.getNumberOfSeats());
+        dto.setProductionYear(car.getProductionYear());
+        dto.setTransmissionType(car.getTransmissionType());
+        dto.setFuelType(car.getFuelType());
+        dto.setMileage(car.getMileage());
+        dto.setFuelConsumption(car.getFuelConsumption());
+        dto.setBasePrice(car.getBasePrice());
+        dto.setDeposit(car.getDeposit());
+        String address = car.getAddress();
+        String[] arrAddress = address.split("[-]");
+        dto.setHouseNumberAndStreet(arrAddress[0]);
+        dto.setWard(arrAddress[1]);
+        dto.setDistrict(arrAddress[2]);
+        dto.setCity(arrAddress[3]);
+        dto.setDescription(car.getDescription());
+        dto.setAdditionalFunctions(car.getAdditionalFunctions());
+        dto.setTermOfUse(car.getTermOfUse());
+
+        dto.setRegistrationPaperPath(car.getRegistrationPaperPath());
+        dto.setCertificateOfInspection(car.getCertificateOfInspection());
+        dto.setInsurance(car.getInsurance());
+        dto.setCarOwner(car.getCarOwner());
+        dto.setCertificateOfInspectionPath(car.getCertificateOfInspectionPath());
+        dto.setInsurancePath(car.getInsurancePath());
+        dto.setCarImage(car.getCarImage());
+        return dto;
+    }
+
     /**
      * @author tiennq
      * @description
@@ -121,6 +163,7 @@ public class CarServiceImpl implements CarService {
         }
         return saveLocation + "/" + newName;
     }
+
 
     /**
      * @author tiennq

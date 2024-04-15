@@ -42,15 +42,15 @@
                                     </ol>
                                     <div class="carousel-inner">
                                         <div class="carousel-item active">
-                                            <img th:src="${car.carImage.frontImagePath}" class="card-img"
+                                            <img th:src="${car.carImage.getFrontImagePath()}" class="card-img"
                                                  alt="Front Image">
                                         </div>
                                         <div class="carousel-item">
-                                            <img th:src="${car.carImage.leftImagePath}" class="card-img"
+                                            <img th:src="${car.carImage.getLeftImagePath()}" class="card-img"
                                                  alt="Left Image">
                                         </div>
                                         <div class="carousel-item">
-                                            <img th:src="${car.carImage.rightImagePath}" class="card-img"
+                                            <img th:src="${car.carImage.getRightImagePath()}" class="card-img"
                                                  alt="Right Image">
                                         </div>
                                     </div>

@@ -26,7 +26,7 @@ public class CarDto implements Serializable {
 
     private Long id;
 
-    @NotBlank(message = "Name is required.")
+
     private String name;
 
     @NotBlank(message = "License plate is required.")
@@ -79,37 +79,37 @@ public class CarDto implements Serializable {
 
     private String description;
 
-    @NotBlank(message = "Additional functions are required.")
+
     private String additionalFunctions;
 
-    @NotBlank(message = "Term of use is required.")
+
     private String termOfUse;
 
-    @NotNull(message = "Registration paper is required.")
+
     private MultipartFile registrationPaper;
     private String registrationPaperPath;
 
-    @NotNull(message = "Certificate of inspection is required.")
+
     private MultipartFile certificateOfInspection;
     private String certificateOfInspectionPath;
 
-    @NotNull(message = "Insurance document is required.")
+
     private MultipartFile insurance;
     private String insurancePath;
 
-    @NotNull(message = "Front image is required.")
+
     private MultipartFile frontImage;
     private String frontImagePath;
 
-    @NotNull(message = "Back image is required.")
+
     private MultipartFile backImage;
     private String backImagePath;
 
-    @NotNull(message = "Left image is required.")
+
     private MultipartFile leftImage;
     private String leftImagePath;
 
-    @NotNull(message = "Right image is required.")
+
     private MultipartFile rightImage;
     private String rightImagePath;
 

@@ -2,6 +2,7 @@ package com.group3.rentngo.controller;
 
 import com.group3.rentngo.model.dto.CarDto;
 import com.group3.rentngo.model.dto.UpdateProfileDto;
+import com.group3.rentngo.model.dto.UserDto;
 import com.group3.rentngo.model.entity.Car;
 import com.group3.rentngo.model.entity.CarOwner;
 import com.group3.rentngo.model.entity.CustomUserDetails;
@@ -120,11 +121,65 @@ public class CarOwnerController {
     public String editCarDetail(Model model, @PathVariable Long id) {
         Optional<Car> carOptional = carService.findById(id);
         Car car = carOptional.orElse(null);
-
-        model.addAttribute("car", car);
+        CarDto carDto = carService.getCarDtoFromCar(car);
+        String address = carDto.getHouseNumberAndStreet().concat("-")
+                        .concat(carDto.getWard()).concat("-")
+                        .concat(carDto.getDistrict()).concat("-")
+                        .concat(carDto.getCity());
+        String carTerm = car.getTermOfUse();
+        String carOption = car.getAdditionalFunctions();
+        model.addAttribute("carOption", carOption);
+        model.addAttribute("address", address);
+        model.addAttribute("carDto", carDto);
+        System.out.println( carDto.getCertificateOfInspectionPath());
+        model.addAttribute("certificate", carDto.getCertificateOfInspectionPath());
+        model.addAttribute("insurance", carDto.getInsurancePath());
+        model.addAttribute("registration", carDto.getRegistrationPaperPath());
+        model.addAttribute("carTerm", carTerm);
         return "edit-car-detail-page";
     }
 
+    @GetMapping("/edit-car-detail/{id}")
+    public String editCar(Model model, @PathVariable Long id,
+                          @Valid @ModelAttribute("carDto") CarDto carDto,
+                          BindingResult result) {
+        Optional<Car> findCar = carService.findById(id);
+        Car findByLicensePLate = carOwnerService.findCarByLicensePlate(carDto.getLicensePlate());
+        if(findByLicensePLate !=null && !carDto.getLicensePlate().equalsIgnoreCase(findCar.get().getLicensePlate()) ){
+            result.rejectValue("licensePlate",null,"The License Plate is wrong");
+        }
+        if (result.hasErrors()) {
+            System.out.println("123");
+            model.addAttribute("carDto", carDto);
+            return "edit-car-detail-page";
+        } else {
+            Car car = findCar.orElse(null);
+            car.setBrand(carDto.getBrand());
+            car.setModel(carDto.getModel());
+            car.setColor(carDto.getColor());
+            car.setLicensePlate(carDto.getLicensePlate());
+            car.setNumberOfSeats(carDto.getNumberOfSeats());
+            car.setProductionYear(carDto.getProductionYear());
+            car.setTransmissionType(carDto.getTransmissionType());
+            car.setFuelType(carDto.getFuelType());
+            car.setMileage(carDto.getMileage());
+            car.setFuelConsumption(carDto.getFuelConsumption());
+            car.setBasePrice(carDto.getBasePrice());
+            car.setDeposit(carDto.getDeposit());
+            car.setAddress(carDto.getHouseNumberAndStreet()
+                    .concat("-")
+                    .concat(carDto.getWard())
+                    .concat("-")
+                    .concat(carDto.getDistrict())
+                    .concat("-")
+                    .concat(carDto.getCity()));
+            car.setDescription(carDto.getDescription());
+
+           carService.saveCar(car);
+            return "redirect:/car-owner/view-list-car";
+        }
+
+    }
     /**
      * @author tiennq
      * @description show add car form
