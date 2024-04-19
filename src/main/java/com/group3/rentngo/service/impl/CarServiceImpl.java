@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -221,7 +222,37 @@ public class CarServiceImpl implements CarService {
                 .concat(carDto.getDistrict())
                 .concat("-")
                 .concat(carDto.getCity()));
+        String termOfUse = carDto.getTermOfUse();
+        System.out.println(termOfUse);
+        String[] arrTermOfUse = termOfUse.split(",");
+        for (int i = 0;i<arrTermOfUse.length;i++){
+            if(arrTermOfUse[i].equalsIgnoreCase("noSmoking")){
+                arrTermOfUse[i] = "No Smoking";
+            }
+            if(arrTermOfUse[i].equalsIgnoreCase("noPet")){
+                arrTermOfUse[i] = "No Pet";
+            }
+            if(arrTermOfUse[i].equalsIgnoreCase("noFood")){
+                arrTermOfUse[i] = "No Food";
+            }
+            if(arrTermOfUse[i].equalsIgnoreCase("other")){
+                arrTermOfUse[i] = "Other";
+            }
+        }
+        String result ="";
+        for (int i = 0;i<arrTermOfUse.length;i++){
+            if(arrTermOfUse.length-1 == i ){
+                result += arrTermOfUse[i] ;
+            }
+            else result += arrTermOfUse[i] + ",";
+        }
+        car.setTermOfUse(result);
         car.setDescription(carDto.getDescription());
         carRepository.saveAndFlush(car);
+    }
+
+    @Override
+    public List<Car> findAvailableCars(LocalDateTime startDateTime, LocalDateTime endDateTime, String location) {
+        return carRepository.findAvailableCars(startDateTime, endDateTime,location);
     }
 }
