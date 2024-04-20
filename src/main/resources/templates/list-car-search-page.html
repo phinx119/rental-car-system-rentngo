@@ -182,7 +182,7 @@
                 <tr th:each="car : ${carList}">
                     <th scope="row">1</th>
                     <td th:text="${car.name}">Car Name</td>
-                    <td><img th:src="${car.carImage.leftImagePath}" alt="Car Image" style="max-width: 100px;"></td>
+                    <td><img th:src="${car.carImage.leftImagePath}" alt="Car Image" style="max-width: 120px; max-height: 80px;"></td>
                     <td>No ratings</td>
                     <td th:text="${car.numberOfSeats}">100</td>
                     <td th:text="${car.basePrice} + '$'">$50</td>

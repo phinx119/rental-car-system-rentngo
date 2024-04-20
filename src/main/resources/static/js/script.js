@@ -13,19 +13,3 @@ document.addEventListener('DOMContentLoaded', function () {
 $(document).ready(function () {
     $('#signupLinkWhenError').trigger('click');
 });
-
-//Change between thumbnail view and list view
-const thumbnailViewBtn = document.getElementById('thumbnailViewBtn');
-const listViewBtn = document.getElementById('listViewBtn');
-const thumbnailView = document.getElementById('thumbnailView');
-const listView = document.getElementById('listView');
-
-thumbnailViewBtn.addEventListener('click', () => {
-    thumbnailView.style.display = 'block';
-    listView.style.display = 'none';
-});
-
-listViewBtn.addEventListener('click', () => {
-    thumbnailView.style.display = 'none';
-    listView.style.display = 'block';
-});
