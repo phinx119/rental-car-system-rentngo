@@ -191,27 +191,39 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="registrationPaper">Registration Paper:</label>
-                                <input type="file" class="form-control-file" id="registrationPaper"
-                                       name="registrationPaper" th:field="*{registrationPaper}">
+                                <label class="btn btn-secondary w-75" for="registrationPaper">
+                                    <span class="field p-5">Registration Paper</span>
+                                    <input type="file" accept=".png, .jpg, .jpeg" class="form-control-file"
+                                           name="registrationPaper" id="registrationPaper" th:field="*{registrationPaper}"
+                                           onchange="loadFile(event, 'registrationPaperImage')" hidden>
+                                    <img id="registrationPaperImage" class="shadow" style="display: none">
+                                </label>
                                 <p th:errors="*{registrationPaper}" class="text-danger"
                                    th:if="${#fields.hasErrors('registrationPaper')}"></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="inspectionCertificate">Certification of Inspection:</label>
-                                <input type="file" class="form-control-file" id="inspectionCertificate"
-                                       name="inspectionCertificate" th:field="*{certificateOfInspection}">
+                                <label class="btn btn-secondary w-100" for="inspectionCertificate">
+                                    <span class="field p-5">Certification of Inspection</span>
+                                    <input type="file" accept=".png, .jpg, .jpeg" class="form-control-file"
+                                           name="inspectionCertificate" id="inspectionCertificate" th:field="*{certificateOfInspection}"
+                                           onchange="loadFile(event, 'inspectionCertificateImage')" hidden>
+                                    <img id="inspectionCertificateImage" class="shadow" style="display: none">
+                                </label>
                                 <p th:errors="*{certificateOfInspection}" class="text-danger"
                                    th:if="${#fields.hasErrors('certificateOfInspection')}"></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="insurance">Insurance:</label>
-                                <input type="file" class="form-control-file" id="insurance"
-                                       name="insurance" th:field="*{insurance}">
+                                <label class="btn btn-secondary w-75" for="insurance">
+                                    <span class="field p-5">Insurance</span>
+                                    <input type="file" accept=".png, .jpg, .jpeg" class="form-control-file"
+                                           name="insurance" id="insurance" th:field="*{insurance}"
+                                           onchange="loadFile(event, 'insuranceImage')" hidden>
+                                    <img id="insuranceImage" class="shadow" style="display: none">
+                                </label>
                                 <p th:errors="*{insurance}" class="text-danger"
                                    th:if="${#fields.hasErrors('insurance')}"></p>
                             </div>
@@ -350,32 +362,48 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="frontImage">Front Image:</label>
-                                <input type="file" class="form-control-file" id="frontImage" name="frontImage"
-                                       th:field="*{frontImage}">
+                                <label class="btn btn-secondary w-100" for="front">
+                                    <span class="field p-5">Front Image</span>
+                                    <input type="file" accept=".png, .jpg, .jpeg" class="form-control-file"
+                                           name="frontImage" id="front" th:field="*{frontImage}"
+                                           onchange="loadFile(event, 'frontImage')" hidden>
+                                    <img id="frontImage" class="shadow" style="display: none">
+                                </label>
                                 <p th:errors="*{frontImage}" class="text-danger"
                                    th:if="${#fields.hasErrors('frontImage')}"></p>
                             </div>
                             <div class="form-group">
-                                <label for="backImage">Back Image:</label>
-                                <input type="file" class="form-control-file" id="backImage" name="backImage"
-                                       th:field="*{backImage}">
+                                <label class="btn btn-secondary w-100" for="back">
+                                    <span class="field p-5">Back Image</span>
+                                    <input type="file" accept=".png, .jpg, .jpeg" class="form-control-file"
+                                           name="backImage" id="back" th:field="*{backImage}"
+                                           onchange="loadFile(event, 'backImage')" hidden>
+                                    <img id="backImage" class="shadow" style="display: none">
+                                </label>
                                 <p th:errors="*{backImage}" class="text-danger"
                                    th:if="${#fields.hasErrors('backImage')}"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="leftImage">Left Image:</label>
-                                <input type="file" class="form-control-file" id="leftImage" name="leftImage"
-                                       th:field="*{leftImage}">
+                                <label class="btn btn-secondary w-100" for="left">
+                                    <span class="field p-5">Left Image</span>
+                                    <input type="file" accept=".png, .jpg, .jpeg" class="form-control-file"
+                                           name="leftImage" id="left" th:field="*{leftImage}"
+                                           onchange="loadFile(event, 'leftImage')" hidden>
+                                    <img id="leftImage" class="shadow" style="display: none">
+                                </label>
                                 <p th:errors="*{leftImage}" class="text-danger"
                                    th:if="${#fields.hasErrors('leftImage')}"></p>
                             </div>
                             <div class="form-group">
-                                <label for="rightImage">Right Image:</label>
-                                <input type="file" class="form-control-file" id="rightImage" name="rightImage"
-                                       th:field="*{rightImage}">
+                                <label class="btn btn-secondary w-100" for="right">
+                                    <span class="field p-5">Right Image</span>
+                                    <input type="file" accept=".png, .jpg, .jpeg" class="form-control-file"
+                                           name="rightImage" id="right" th:field="*{rightImage}"
+                                           onchange="loadFile(event, 'rightImage')" hidden>
+                                    <img id="rightImage" class="shadow" style="display: none">
+                                </label>
                                 <p th:errors="*{rightImage}" class="text-danger"
                                    th:if="${#fields.hasErrors('rightImage')}"></p>
                             </div>
@@ -523,6 +551,20 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    let loadFile = function (event, id) {
+        let output = document.getElementById(id);
+        output.style.display = 'block';
+        output.style.width = '250px';
+        output.style.borderRadius = '5px';
+        output.style.margin = '15px auto';
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src); // free memory
+        }
+    };
+</script>
 
 <script th:inline="javascript">
     let cities = document.getElementById('city');

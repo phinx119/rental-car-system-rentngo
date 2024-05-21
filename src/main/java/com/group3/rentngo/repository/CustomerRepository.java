@@ -31,4 +31,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             update Customer c set c.name = ?1, c.dateOfBirth = ?2, c.nationalId = ?3, c.phone = ?4, c.address = ?5, c.drivingLicense = ?6
             where c.id = ?7""")
     int updateProfile(String name, Date dateOfBirth, String nationalId, String phone, String address, String drivingLicense, Long id);
+
 }

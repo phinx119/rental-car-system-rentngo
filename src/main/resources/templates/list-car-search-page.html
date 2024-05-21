@@ -10,7 +10,7 @@
     }
 
     img {
-        height: 300px;
+        height: 350px;
         object-fit: cover;
     }
 </style>
@@ -67,7 +67,7 @@
         <!-- Search Result Header -->
         <div class="col-md-12">
             <h3>Search Results</h3>
-            <p th:text="'There are ' + ${numberOfCars} + '  cars available for you.' "></p>
+            <p th:text="${'There are ' + carList.size() + ' cars available for you.'}"></p>
             <div class="d-flex justify-content-end">
                 <!-- View Options Buttons -->
                 <button class="btn btn-light mr-2 active" id="thumbnailViewBtn"><i class="fas fa-th"></i></button>
@@ -99,8 +99,8 @@
                                                  alt="Left Image">
                                         </div>
                                         <div class="carousel-item">
-                                            <img th:src="${car.carImage.rightImagePath}" class="card-img"
-                                                 alt="Right Image">
+                                            <img th:src="${car.carImage.backImagePath}" class="card-img"
+                                                 alt="Back Image">
                                         </div>
                                     </div>
                                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
@@ -130,7 +130,7 @@
                                         </tr>
                                         <tr>
                                             <td>Price:</td>
-                                            <td th:text="${#numbers.formatDecimal(car.basePrice, 0, 'COMMA', car.basePrice % 1 == 0 ? 0 : 2, 'POINT')} + '$'"></td>
+                                            <td th:text="${#numbers.formatDecimal(car.basePrice, 0, 'COMMA', 0, 'POINT')} + 'VND'"></td>
                                         </tr>
                                         <tr>
                                             <td>Location:</td>
@@ -175,12 +175,12 @@
                 </thead>
                 <tbody>
                 <tr th:each="car : ${carList}">
-                    <th scope="row">1</th>
+                    <th scope="row" th:text="${car.id}"></th>
                     <td th:text="${car.name}">Car Name</td>
                     <td><img th:src="${car.carImage.leftImagePath}" alt="Car Image" style="max-width: 120px; max-height: 80px;"></td>
                     <td>No ratings</td>
                     <td th:text="${car.numberOfSeats}">100</td>
-                    <td th:text="${car.basePrice} + '$'">$50</td>
+                    <td th:text="${#numbers.formatDecimal(car.basePrice, 0, 'COMMA', 0, 'POINT')} + 'VND'">$50</td>
                     <td th:text="${car.address}">City, Country</td>
                     <td>Available</td>
                     <td>

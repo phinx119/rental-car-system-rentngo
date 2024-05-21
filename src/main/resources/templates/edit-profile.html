@@ -31,6 +31,10 @@
 
 <header th:insert="~{fragments/header.html :: header}"></header>
 
+<div th:if="${param.incompleteProfileInformation}">
+    <div class="alert alert-warning">You have to complete your profile first.</div>
+</div>
+
 <!-- start breadcrumb -->
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -90,7 +94,6 @@
                     <div class="form-group row">
                         <div class="col-md-8">
                             <!-- City -->
-                            <input type="hidden" id="city-input" th:value="*{city}">
                             <label for="city"><strong>Address</strong></label><br>
                             <select id="city" name="city" th:field="*{city}" class="form-control">
                                 <option value="" selected hidden>City</option>
@@ -99,7 +102,6 @@
                             <br>
 
                             <!-- District -->
-                            <input type="hidden" id="district-input" th:value="*{district}">
                             <select id="district" name="district" th:field="*{district}" class="form-control">
                                 <option value="" selected hidden>District</option>
                             </select>
@@ -107,7 +109,6 @@
                             <br>
 
                             <!-- Ward -->
-                            <input type="hidden" id="ward-input" th:value="*{ward}">
                             <select id="ward" name="ward" th:field="*{ward}" class="form-control">
                                 <option value="" selected hidden>Ward</option>
                             </select>
