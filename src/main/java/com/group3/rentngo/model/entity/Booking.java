@@ -36,7 +36,7 @@ public class Booking implements Serializable {
     private String paymentMethod;
 
     @Column(nullable = false)
-    private boolean status;
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "car_id")

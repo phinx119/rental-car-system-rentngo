@@ -2,7 +2,6 @@ package com.group3.rentngo.controller;
 
 import com.group3.rentngo.model.dto.CarDto;
 import com.group3.rentngo.model.dto.UpdateProfileDto;
-import com.group3.rentngo.model.dto.UserDto;
 import com.group3.rentngo.model.entity.Car;
 import com.group3.rentngo.model.entity.CarOwner;
 import com.group3.rentngo.model.entity.CustomUserDetails;
@@ -67,13 +66,9 @@ public class CarOwnerController {
     @GetMapping("/view-car-owner-detail")
     public String viewCarOwnerDetail(Model model) {
         UserDetails userDetails = userService.getUserDetail();
-
         CarOwner carOwner = carOwnerService.findCarOwnerByEmail(userDetails.getUsername());
-
         UpdateProfileDto updateProfileDto = carOwnerService.getDtoFromCarOwner(carOwner);
-
         model.addAttribute("updateProfileDto", updateProfileDto);
-
         return "edit-profile";
     }
 

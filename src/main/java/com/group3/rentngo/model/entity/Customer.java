@@ -9,7 +9,7 @@ import org.hibernate.annotations.Nationalized;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -29,7 +29,7 @@ public class Customer implements Serializable {
     private String name;
 
     @Column
-    private LocalDate dateOfBirth;
+    private Date dateOfBirth;
 
     @Column(unique = true)
     private String nationalId;

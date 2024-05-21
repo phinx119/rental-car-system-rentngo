@@ -78,7 +78,7 @@ public class AdminController {
         Optional<Customer> customerDetail = customerService.findCustomerById(customerId);
         Customer customer = customerDetail.orElse(null);
 
-        UpdateProfileDto updateProfileDto = customerService.getDtoFromCustomer(customer);
+        UpdateProfileDto updateProfileDto = customerService.getUpdateProfileDtoFromCustomer(customer);
 
         //model.addAttribute("role", updateProfileDto.getRole());
         model.addAttribute("updateProfileDto", updateProfileDto);

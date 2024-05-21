@@ -1,5 +1,6 @@
 package com.group3.rentngo.service;
 
+import com.group3.rentngo.model.dto.CustomerDto;
 import com.group3.rentngo.model.dto.UpdateProfileDto;
 import com.group3.rentngo.model.entity.Customer;
 
@@ -20,5 +21,7 @@ public interface CustomerService {
 
     void updateWallet(String email, String totalPrice);
 
-    UpdateProfileDto getDtoFromCustomer(Customer customer);
+    CustomerDto getRenterFromCustomer(Customer customer);
+
+    UpdateProfileDto getUpdateProfileDtoFromCustomer(Customer customer);
 }

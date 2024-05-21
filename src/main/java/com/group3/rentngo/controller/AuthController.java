@@ -238,7 +238,7 @@ public class AuthController {
                 return "redirect:/car-owner/view-car-owner-detail";
             }
             if (isCustomer) {
-                return "redirect:/customer/view-car-owner-detail";
+                return "redirect:/customer/view-customer-detail";
             }
         }
         return "redirect:/home";

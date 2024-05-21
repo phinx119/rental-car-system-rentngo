@@ -1,12 +1,13 @@
 package com.group3.rentngo.model.dto;
 
-import com.group3.rentngo.model.entity.*;
-import jakarta.validation.constraints.*;
-import lombok.*;
+import com.group3.rentngo.model.entity.Booking;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
 
 /**
  * DTO for {@link Booking}
@@ -20,20 +21,15 @@ public class BookingDto implements Serializable {
 
     private Long id;
 
-    @FutureOrPresent(message = "Not earlier than current date.")
-    Date startDateTime;
-
-    @Future(message = "Not earlier than current date.")
-    Date endDateTime;
+    UpdateBookingDetailDto updateBookingDetailDto;
 
     @NotNull(message = "Mandatory information.")
-    Customer customer;
+    CustomerDto customerDto;
 
-    @NotBlank(message = "Mandatory information.")
+    @NotNull(message = "Mandatory information.")
     String paymentMethod;
 
-    boolean status;
+    String status;
 
-    @NotNull(message = "Mandatory information.")
-    Collection<Car> cars;
+    Long carId;
 }

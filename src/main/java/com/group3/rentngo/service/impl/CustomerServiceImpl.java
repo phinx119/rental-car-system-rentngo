@@ -1,6 +1,7 @@
 package com.group3.rentngo.service.impl;
 
 import com.group3.rentngo.common.CommonUtil;
+import com.group3.rentngo.model.dto.CustomerDto;
 import com.group3.rentngo.model.dto.UpdateProfileDto;
 import com.group3.rentngo.model.entity.Customer;
 import com.group3.rentngo.model.entity.Role;
@@ -75,6 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void updateProfile(UpdateProfileDto updateProfileDto) throws ParseException {
         String name = updateProfileDto.getName();
         Date dateOfBirth = commonUtil.parseDate(updateProfileDto.getDateOfBirth());
+
         String nationalId = updateProfileDto.getNationalId();
         String phone = updateProfileDto.getPhone();
         String address = updateProfileDto.getHouseNumberAndStreet()
@@ -109,7 +111,35 @@ public class CustomerServiceImpl implements CustomerService {
      * @description map data from dto to customer
      */
     @Override
-    public UpdateProfileDto getDtoFromCustomer(Customer customer) {
+    public CustomerDto getRenterFromCustomer(Customer customer) {
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setId(customer.getId());
+
+        customerDto.setName(customer.getName());
+        customerDto.setDateOfBirth(String.valueOf(customer.getDateOfBirth()));
+        customerDto.setNationalId(customer.getNationalId());
+        customerDto.setPhone(customer.getPhone());
+        customerDto.setEmail(customer.getEmail());
+
+        if (customer.getAddress() != null) {
+            String[] address = customer.getAddress().split("-");
+            customerDto.setCity(address[3]);
+            customerDto.setDistrict(address[2]);
+            customerDto.setWard(address[1]);
+            customerDto.setHouseNumberAndStreet(address[0]);
+        }
+
+        customerDto.setDrivingLicense(customer.getDrivingLicense());
+        customerDto.setWallet(customer.getWallet());
+        return customerDto;
+    }
+
+    /**
+     * @author phinx
+     * @description map data from customer to update profile dto
+     */
+    @Override
+    public UpdateProfileDto getUpdateProfileDtoFromCustomer(Customer customer) {
         UpdateProfileDto updateProfileDto = new UpdateProfileDto();
         updateProfileDto.setId(customer.getId());
 

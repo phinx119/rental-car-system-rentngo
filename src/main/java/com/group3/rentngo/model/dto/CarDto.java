@@ -4,7 +4,6 @@ import com.group3.rentngo.model.entity.Car;
 import com.group3.rentngo.model.entity.CarImage;
 import com.group3.rentngo.model.entity.CarOwner;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +25,7 @@ public class CarDto implements Serializable {
 
     private Long id;
 
-
+    @NotBlank(message = "Name is required.")
     private String name;
 
     @NotBlank(message = "License plate is required.")
@@ -79,36 +78,29 @@ public class CarDto implements Serializable {
 
     private String description;
 
-
+    @NotBlank(message = "Additional functions are required.")
     private String additionalFunctions;
 
-
+    @NotBlank(message = "Term of use is required.")
     private String termOfUse;
-
 
     private MultipartFile registrationPaper;
     private String registrationPaperPath;
 
-
     private MultipartFile certificateOfInspection;
     private String certificateOfInspectionPath;
-
 
     private MultipartFile insurance;
     private String insurancePath;
 
-
     private MultipartFile frontImage;
     private String frontImagePath;
-
 
     private MultipartFile backImage;
     private String backImagePath;
 
-
     private MultipartFile leftImage;
     private String leftImagePath;
-
 
     private MultipartFile rightImage;
     private String rightImagePath;

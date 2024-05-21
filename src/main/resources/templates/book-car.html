@@ -19,24 +19,28 @@
 </nav>
 
 <div class="container-fluid py-4">
-    <div class="p-5 mb-4 bg border rounded">
+    <div class="p-3 bg border rounded">
         <div class="booking-detail">
             <strong>Booking car</strong>
             <span class="float-right">
                 <i class="fa-solid fa-pen-to-square"></i>
-                <a href="#" id="changeDetailsLink" data-toggle="modal" data-target="#changeDetailsModal">Change details</a>
+                <a href="#" id="changeDetailsLink" data-toggle="modal"
+                   data-target="#changeDetailsModal">Change details</a>
             </span>
         </div>
         <ul>
-            <li>Pick-up location: Trung kinh, Cau Giay, Ha Noi</li>
-            <li>Pick-up date and time: 13/02/2022-12:00PM</li>
-            <li>Return date and time :23/02/2022-14:00PM</li>
+            <li>Pick-up location: <span id="pick-up-location" class="text-success">N/A</span></li>
+            <li>Pick-up date and time: <span id="pick-up-date-time" class="text-success">N/A</span></li>
+            <li>Return date and time: <span id="return-date-time" class="text-success">N/A</span></li>
         </ul>
+        <div id="greenMessage" class="text-success"></div>
+        <div id="redMessage" class="text-danger"></div>
     </div>
 </div>
 
 <!--Popup modal-->
-<div class="modal fade" id="changeDetailsModal" tabindex="-1" aria-labelledby="changeDetailsModalLabel" aria-hidden="true">
+<div class="modal fade" id="changeDetailsModal" tabindex="-1" aria-labelledby="changeDetailsModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -46,35 +50,44 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="searchForm">
+                <form id="changeDetailForm" method="post"
+                      th:action="@{/customer/change-booking-detail}"
+                      th:object="${updateBookingDetailDto}">
                     <div class="form-group">
-                        <label for="pickupLocation">Pickup Location</label>
-                        <input type="text" class="form-control" id="pickupLocation" placeholder="Enter pickup location">
+                        <label for="pickUpCity">Pickup Location</label>
+                        <select id="pickUpCity" name="city" class="form-control"
+                                th:field="*{pickUpLocation}">
+                            <option value="" selected hidden>Location</option>
+                        </select>
+                        <p id="pickUpLocation-error" class="text-danger"></p>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="pickupDate">Pickup Date</label>
-                            <input type="date" class="form-control" id="pickupDate">
+                            <label for="pickUpDate">Pickup Date</label>
+                            <input type="date" class="form-control" id="pickUpDate" th:field="*{pickUpDate}">
+                            <p id="pickUpDate-error" class="text-danger"></p>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="pickupTime">Pickup Time</label>
-                            <input type="time" class="form-control" id="pickupTime">
+                            <label for="pickUpTime">Pickup Time</label>
+                            <input type="time" class="form-control" id="pickUpTime" th:field="*{pickUpTime}">
+                            <p id="pickUpTime-error" class="text-danger"></p>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="dropOffDate">Drop-off Date</label>
-                            <input type="date" class="form-control" id="dropOffDate">
+                            <input type="date" class="form-control" id="dropOffDate" th:field="*{dropOffDate}">
+                            <p id="dropOffDate-error" class="text-danger"></p>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="dropOffTime">Drop-off Time</label>
-                            <input type="time" class="form-control" id="dropOffTime">
+                            <input type="time" class="form-control" id="dropOffTime" th:field="*{dropOffTime}">
+                            <p id="dropOffTime-error" class="text-danger"></p>
                         </div>
                     </div>
                     <div class="text-center">
-                        <button id="searchBtn" type="submit" class="btn btn-primary">Search</button>
+                        <button id="changeBookingDetailBtn" type="submit" class="btn btn-primary">Submit</button>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -82,26 +95,36 @@
 </div>
 
 
-<div class="container-fluid bg-white mt-4">
+<div class="container-fluid bg-white">
     <a href="">Back</a>
     <div class="row p-4">
         <div class="col-4">
-            <button class="btn btn-primary btn-arrow-right btn-block active" id="basicBtn"><a class="text-light" href="#">Step 1: Booking information</a></button>
+            <button class="btn btn-primary btn-arrow-right btn-block active" id="basicBtn">
+                <a class="text-light" href="#">Step 1: Booking information</a>
+            </button>
         </div>
         <div class="col-4">
-            <button class="btn btn-secondary btn-arrow-right btn-block" id="detailBtn"><a class="text-light" href="#">Step 2: Payment</a></button>
+            <button class="btn btn-secondary btn-arrow-right btn-block" id="detailBtn">
+                <a class="text-light" href="#">Step 2: Payment</a>
+            </button>
         </div>
         <div class="col-4">
-            <button class="btn btn-secondary btn-arrow-right btn-block" id="pricingBtn"><a class="text-light" href="#">Step 3: Finish</a></button>
+            <button class="btn btn-secondary btn-arrow-right btn-block" id="pricingBtn">
+                <a class="text-light" href="#">Step 3: Finish</a>
+            </button>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6" style="border-right: 1px solid black;">
-            <img height="100" width="150" src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png" alt="" class="img-fluid"><br/>
-            <br><h4><strong>Car name</strong></h4>
+    <div class="row m-1 bg border rounded">
+        <div class="col-md-6" style="border-right: 1px solid #dee2e6;">
+            <img width="400" class="img-fluid border rounded mt-3"
+                 th:src="${car.carImage.frontImagePath}" alt="Car Image">
+            <br>
+            <h4>
+                <b th:text="${car.name}"></b>
+            </h4>
             <table class="table">
                 <tr>
-                    <td><strong>Ratings:</strong></td>
+                    <td><b>Ratings:</b></td>
                     <td>
                         <span class="fa fa-star checked"></span>
                         <span class="fa fa-star checked"></span>
@@ -111,193 +134,220 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><strong>No.of rides:</strong></td>
-                    <td><strong>0</strong></td>
+                    <td><b>No.of rides:</b></td>
+                    <td th:text="${car.bookings.size()}"></td>
                 </tr>
                 <tr>
-                    <td><strong>Price:</strong></td>
-                    <td><strong>900k/day</strong></td>
+                    <td><b>Price:</b></td>
+                    <td th:text="${#numbers.formatDecimal(car.basePrice, 0, 'COMMA', 0, 'POINT')} + 'VND/day'"></td>
                 </tr>
                 <tr>
-                    <td><strong>Location:</strong></td>
-                    <td><strong>Cau giay, Ha Noi</strong></td>
+                    <td><b>Location:</b></td>
+                    <td style="width: 550px" th:text="${car.address}"></td>
                 </tr>
                 <tr>
-                    <td><strong>Status:</strong></td>
-                    <td><strong>Available</strong></td>
+                    <td><b>Status:</b></td>
+                    <td>Available</td>
                 </tr>
             </table>
         </div>
-        <div class="col-md-6">
-            <strong>Booking Summary</strong>
-            <div class="booking-summary">
-                <span><strong>Number of days: 15</strong></span><br/>
-                <span><strong>Price per day: 900,00VND</strong></span><br/>
-                <hr/>
-                <span><strong>Total: 13,500,000VND</strong></span><br/>
-                <span><strong>Deposit: 15,000,000ND</strong></span><br/>
-            </div>
+        <div class="col-md-6 mt-2">
+            <h4>
+                <b>Booking Summary</b>
+            </h4>
+            <table class="table">
+                <tr>
+                    <td><b>Number of days:</b></td>
+                    <td style="width: 550px" id="numberOfDays"></td>
+                </tr>
+                <tr>
+                    <td><b>Price per day:</b></td>
+                    <td th:text="${#numbers.formatDecimal(car.basePrice, 0, 'COMMA', 0, 'POINT')} + 'VND'"></td>
+                </tr>
+                <tr>
+                    <td><b>Total:</b></td>
+                    <td id="totalAmount"></td>
+                </tr>
+                <tr>
+                    <td><b>Deposit:</b></td>
+                    <td th:text="${#numbers.formatDecimal(car.deposit, 0, 'COMMA', 0, 'POINT')} + 'VND'"></td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
 
-<div class="container-fluid bg-light mt-4">
+<div class="container-fluid bg-light">
     <div class="row justify-content-center p-4">
-        <form class="col-md-10" id="carForm" enctype="multipart/form-data">
-
+        <form class="col-md-10" id="carForm" method="post"
+              th:action="@{/customer/create-new-booking}"
+              th:object="${bookingDto}">
             <!-- Form Inputs -->
             <div id="step1" class="">
 
-                <h4 class="mb-4">Renter's information</h4>
+                <h4 class="mb-4"><b>Renter's information</b></h4>
 
                 <div class="col-md-12 mt-4">
                     <div class="row">
                         <div class="col-md-6">
+                            <input type="hidden" th:field="*{carId}">
                             <div class="form-group">
                                 <label for="nameRenter">Full Name:</label>
-                                <input type="text" class="form-control" id="nameRenter" name="nameRenter">
+                                <input type="text" class="form-control" id="nameRenter" name="nameRenter"
+                                       th:field="*{customerDto.name}">
                             </div>
                             <div class="form-group">
-                                <label for="phonenumberRenter">Phone Number:</label>
-                                <input type="tel" class="form-control" id="phonenumberRenter" name="phonenumberRenter">
+                                <label for="phoneNumberRenter">Phone Number:</label>
+                                <input type="tel" class="form-control" id="phoneNumberRenter" name="phoneNumberRenter"
+                                       th:field="*{customerDto.phone}">
                             </div>
                             <div class="form-group">
-                                <label for="nationalidRenter">National ID:</label>
-                                <input type="text" class="form-control" id="nationalidRenter" name="nationalidRenter">
+                                <label for="nationalIdRenter">National ID:</label>
+                                <input type="text" class="form-control" id="nationalIdRenter" name="nationalIdRenter"
+                                       th:field="*{customerDto.nationalId}">
                             </div>
                             <div class="form-group">
                                 <h4>Address</h4>
                                 <label for="city">City:</label>
-                                <select id="city" name="city" class="form-control" th:field="*{city}">
+                                <select id="city" name="city" class="form-control"
+                                        th:field="*{customerDto.city}">
                                     <option value="" selected hidden>City</option>
                                 </select>
-                                <p th:errors="*{city}" class="text-danger"
-                                   th:if="${#fields.hasErrors('city')}"></p>
                             </div>
                             <div class="form-group">
                                 <label for="district">District:</label>
-                                <select id="district" name="district" class="form-control" th:field="*{district}">
+                                <select id="district" name="district" class="form-control"
+                                        th:field="*{customerDto.district}">
                                     <option value="" selected hidden>District</option>
                                 </select>
-                                <p th:errors="*{district}" class="text-danger"
-                                   th:if="${#fields.hasErrors('district')}"></p>
                             </div>
                             <div class="form-group">
                                 <label for="ward">Ward:</label>
-                                <select id="ward" name="ward" class="form-control" th:field="*{ward}">
+                                <select id="ward" name="ward" class="form-control"
+                                        th:field="*{customerDto.ward}">
                                     <option value="" selected hidden>Ward</option>
                                 </select>
-                                <p th:errors="*{ward}" class="text-danger"
-                                   th:if="${#fields.hasErrors('ward')}"></p>
                             </div>
                             <div class="form-group">
                                 <label for="house-number-and-street">House Number:</label>
                                 <input type="text" class="form-control" id="house-number-and-street"
                                        name="house-number-and-street"
-                                       placeholder="House number, Street" th:field="*{houseNumberAndStreet}">
-                                <p th:errors="*{houseNumberAndStreet}" class="text-danger"
-                                   th:if="${#fields.hasErrors('houseNumberAndStreet')}"></p>
+                                       placeholder="House number, Street"
+                                       th:field="*{customerDto.houseNumberAndStreet}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="dobRenter">Date of Birth:</label>
-                                <input type="date" class="form-control" id="dobRenter" name="dobRenter">
+                                <input type="date" class="form-control" id="dobRenter" name="dobRenter"
+                                       th:field="*{customerDto.dateOfBirth}">
                             </div>
                             <div class="form-group">
                                 <label for="emailRenter">Email:</label>
-                                <input type="email" class="form-control" id="emailRenter" name="emailRenter">
+                                <input type="email" class="form-control" id="emailRenter" name="emailRenter"
+                                       th:field="*{customerDto.email}">
                             </div>
                             <div class="form-group">
-                                <label for="drivinglicenseRenter">Driving License:</label>
-                                <input type="file" class="form-control-file" id="drivinglicenseRenter" name="drivinglicenseRenter">
+                                <label for="drivingLicenseRenter">Driving License:</label>
+                                <input type="text" class="form-control" id="drivingLicenseRenter"
+                                       name="drivingLicenseRenter"
+                                       th:field="*{customerDto.drivingLicense}">
                             </div>
+                            <input type="hidden" th:field="*{customerDto.wallet}">
                         </div>
                     </div>
                 </div>
 
-                <h4>Driver's information</h4>
-                <div class="col-md-12 mt-4">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="fullnameDriver">Full Name:</label>
-                                <input type="text" class="form-control" id="fullnameDriver" name="fullnameDriver">
-                            </div>
-                            <div class="form-group">
-                                <label for="phonenumberDriver">Phone Number:</label>
-                                <input type="tel" class="form-control" id="phonenumberDriver" name="phonenumberDriver">
-                            </div>
-                            <div class="form-group">
-                                <label for="nationalidDriver">National ID:</label>
-                                <input type="text" class="form-control" id="nationalidDriver" name="nationalidDriver">
-                            </div>
-                            <div class="form-group">
-                                <h4>Address</h4>
-                                <label for="city">City:</label>
-                                <select id="city" name="city" class="form-control" th:field="*{city}">
-                                    <option value="" selected hidden>City</option>
-                                </select>
-                                <p th:errors="*{city}" class="text-danger"
-                                   th:if="${#fields.hasErrors('city')}"></p>
-                            </div>
-                            <div class="form-group">
-                                <label for="district">District:</label>
-                                <select id="district" name="district" class="form-control" th:field="*{district}">
-                                    <option value="" selected hidden>District</option>
-                                </select>
-                                <p th:errors="*{district}" class="text-danger"
-                                   th:if="${#fields.hasErrors('district')}"></p>
-                            </div>
-                            <div class="form-group">
-                                <label for="ward">Ward:</label>
-                                <select id="ward" name="ward" class="form-control" th:field="*{ward}">
-                                    <option value="" selected hidden>Ward</option>
-                                </select>
-                                <p th:errors="*{ward}" class="text-danger"
-                                   th:if="${#fields.hasErrors('ward')}"></p>
-                            </div>
-                            <div class="form-group">
-                                <label for="house-number-and-street">House Number:</label>
-                                <input type="text" class="form-control" id="house-number-and-street"
-                                       name="house-number-and-street"
-                                       placeholder="House number, Street" th:field="*{houseNumberAndStreet}">
-                                <p th:errors="*{houseNumberAndStreet}" class="text-danger"
-                                   th:if="${#fields.hasErrors('houseNumberAndStreet')}"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="dobDriver">Date of Birth:</label>
-                                <input type="date" class="form-control" id="dobDriver" name="dobDriver">
-                            </div>
-                            <div class="form-group">
-                                <label for="emailDriver">Email:</label>
-                                <input type="email" class="form-control" id="emailDriver" name="emailDriver">
-                            </div>
-                            <div class="form-group">
-                                <label for="drivinglicenseDriver">Driving License:</label>
-                                <input type="file" class="form-control-file" id="drivinglicenseDriver" name="drivinglicenseDriver">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!--                <h4>Driver's information</h4>-->
+                <!--                <div class="col-md-12 mt-4">-->
+                <!--                    <div class="row">-->
+                <!--                        <div class="col-md-6">-->
+                <!--                            <div class="form-group">-->
+                <!--                                <label for="fullnameDriver">Full Name:</label>-->
+                <!--                                <input type="text" class="form-control" id="fullnameDriver" name="fullnameDriver">-->
+                <!--                            </div>-->
+                <!--                            <div class="form-group">-->
+                <!--                                <label for="phonenumberDriver">Phone Number:</label>-->
+                <!--                                <input type="tel" class="form-control" id="phonenumberDriver" name="phonenumberDriver">-->
+                <!--                            </div>-->
+                <!--                            <div class="form-group">-->
+                <!--                                <label for="nationalidDriver">National ID:</label>-->
+                <!--                                <input type="text" class="form-control" id="nationalidDriver" name="nationalidDriver">-->
+                <!--                            </div>-->
+                <!--                            <div class="form-group">-->
+                <!--                                <h4>Address</h4>-->
+                <!--                                <label for="city">City:</label>-->
+                <!--                                <select id="city" name="city" class="form-control" th:field="*{city}">-->
+                <!--                                    <option value="" selected hidden>City</option>-->
+                <!--                                </select>-->
+                <!--                                <p th:errors="*{city}" class="text-danger"-->
+                <!--                                   th:if="${#fields.hasErrors('city')}"></p>-->
+                <!--                            </div>-->
+                <!--                            <div class="form-group">-->
+                <!--                                <label for="district">District:</label>-->
+                <!--                                <select id="district" name="district" class="form-control" th:field="*{district}">-->
+                <!--                                    <option value="" selected hidden>District</option>-->
+                <!--                                </select>-->
+                <!--                                <p th:errors="*{district}" class="text-danger"-->
+                <!--                                   th:if="${#fields.hasErrors('district')}"></p>-->
+                <!--                            </div>-->
+                <!--                            <div class="form-group">-->
+                <!--                                <label for="ward">Ward:</label>-->
+                <!--                                <select id="ward" name="ward" class="form-control" th:field="*{ward}">-->
+                <!--                                    <option value="" selected hidden>Ward</option>-->
+                <!--                                </select>-->
+                <!--                                <p th:errors="*{ward}" class="text-danger"-->
+                <!--                                   th:if="${#fields.hasErrors('ward')}"></p>-->
+                <!--                            </div>-->
+                <!--                            <div class="form-group">-->
+                <!--                                <label for="house-number-and-street">House Number:</label>-->
+                <!--                                <input type="text" class="form-control" id="house-number-and-street"-->
+                <!--                                       name="house-number-and-street"-->
+                <!--                                       placeholder="House number, Street" th:field="*{houseNumberAndStreet}">-->
+                <!--                                <p th:errors="*{houseNumberAndStreet}" class="text-danger"-->
+                <!--                                   th:if="${#fields.hasErrors('houseNumberAndStreet')}"></p>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                        <div class="col-md-6">-->
+                <!--                            <div class="form-group">-->
+                <!--                                <label for="dobDriver">Date of Birth:</label>-->
+                <!--                                <input type="date" class="form-control" id="dobDriver" name="dobDriver">-->
+                <!--                            </div>-->
+                <!--                            <div class="form-group">-->
+                <!--                                <label for="emailDriver">Email:</label>-->
+                <!--                                <input type="email" class="form-control" id="emailDriver" name="emailDriver">-->
+                <!--                            </div>-->
+                <!--                            <div class="form-group">-->
+                <!--                                <label for="drivinglicenseDriver">Driving License:</label>-->
+                <!--                                <input type="file" class="form-control-file" id="drivinglicenseDriver" name="drivinglicenseDriver">-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                </div>-->
 
             </div>
 
             <!-- Step 2 - Details (Visible by default) -->
             <div id="step2" class="row">
-                <strong>Please select your payment method</strong><br/>
+                <h4 class="mb-1"><b>Please select your payment method</b></h4>
+                <br/>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="wallet">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="wallet"
+                           th:field="*{paymentMethod}" value="Wallet">
                     <label class="form-check-label" for="wallet">
                         My wallet
                     </label>
                     <br/>
-                    <span style="font-size: 14px;">Current balance: <span class="text-danger">20,000,000 VND</span></span>
+                    <span style="font-size: 14px;">Current balance:
+                        <span id="customer-wallet"
+                            class="text-success"
+                            th:text="${#numbers.formatDecimal(bookingDto.customerDto.wallet, 0, 'COMMA', 0, 'POINT')} + 'VND'">
+                        </span>
+                    </span>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="cash">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="cash"
+                           th:field="*{paymentMethod}" value="Cash">
                     <label class="form-check-label" for="cash">
                         Cash
                     </label>
@@ -305,40 +355,63 @@
                     <span style="font-size: 14px;">Current balance: <span>Our operator will contact you for further instruction</span></span>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer"
+                           th:field="*{paymentMethod}" value="Back Transfer">
                     <label class="form-check-label" for="bankTransfer">
                         Bank transfer
                     </label>
                     <br/>
                     <span style="font-size: 14px;">Current balance: <span>Our operator will contact you for further instruction</span></span>
                 </div>
+                <div id="payment-method-error" class="text-danger"></div>
             </div>
             <!-- Buttons -->
             <div class="col-md-12 text-center mt-4">
                 <button type="button" id="prevBtn" class="btn btn-secondary mr-2">Previous</button>
                 <button type="button" id="nextBtn" class="btn btn-primary">Next</button>
-                <button type="submit" id="submitBtn" class="btn btn-primary" style="display: none;">Confirm payment</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="display: none;">Confirm payment
+                </button>
             </div>
         </form>
         <!-- Step 3 - Pricing and Terms (Hidden by default) -->
         <div id="step3" class="row" style="display: none;">
-            <br/>
-            <strong>You've successfully booked Nissan Navara EI2017 from 13/02/2022 - 12:00PM - 14:00PM</strong><br/><br/>
-            <strong>Your booking number is 012345</strong><br/><br/>
-            <strong>Our operator will contact you with further guidance about pickup</strong>
-            <div class="btn-book mt-3">
-                <button type="button" id="homepageBtn" class="btn btn-secondary">Homepage</button>
-                <button type="button" id="bookAnotherBtn" class="btn btn-primary">Book Another Car</button>
-                <button type="button" id="viewBookingBtn" class="btn btn-info">View Booking</button>
+            <table class="table">
+                <tr>
+                    <td>
+                        <b>You've successfully booked <span id="car-name"></span> from <span id="start"></span> to <span id="end"></span></b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Your booking number is <span id="booking-number"></span></b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Our operator will contact you with further guidance about pickup</b>
+                    </td>
+                </tr>
+            </table>
+            <div class="btn-book m-5">
+                <a th:href="@{/home}" id="homepageBtn" class="btn btn-secondary">Homepage</a>
+                <a th:href="@{/customer/view-car-list}" id="bookAnotherBtn" class="btn btn-primary">Book Another Car</a>
+                <a href="#" id="viewBookingBtn" class="btn btn-info">View Booking</a>
             </div>
-
         </div>
     </div>
 </div>
 
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script th:inline="javascript">
+    let pickUpCities = document.getElementById('pickUpCity');
+
     let cities = document.getElementById('city');
     let districts = document.getElementById('district');
     let wards = document.getElementById('ward');
@@ -353,13 +426,22 @@
     });
 
     function renderCity(data) {
+        for (const x of data) {
+            pickUpCities.options[pickUpCities.options.length] = new Option(x.Name, x.Name);
+        }
+
+        let pickUpCityValue = [[${updateBookingDetailDto.pickUpLocation}]];
+        if (pickUpCityValue) {
+            pickUpCities.value = pickUpCityValue;
+        }
+
         // Render options for cities
         for (const x of data) {
             cities.options[cities.options.length] = new Option(x.Name, x.Name);
         }
 
         // Select city based on value from carDto
-        let cityValue = [[${carDto.city}]];
+        let cityValue = [[${bookingDto.customerDto.city}]];
         if (cityValue) {
             cities.value = cityValue;
         }
@@ -379,7 +461,7 @@
         };
 
         // Select district based on value from carDto
-        let districtValue = [[${carDto.district}]];
+        let districtValue = [[${bookingDto.customerDto.district}]];
         if (districtValue) {
             cities.dispatchEvent(new Event('change')); // Trigger change event to render districts
             setTimeout(() => { // Wait for districts to render
@@ -403,7 +485,7 @@
         };
 
         // Select ward based on value from carDto
-        let wardValue = [[${carDto.ward}]];
+        let wardValue = [[${bookingDto.customerDto.ward}]];
         if (wardValue) {
             cities.dispatchEvent(new Event('change')); // Trigger change event to render districts
             setTimeout(() => { // Wait for districts to render
@@ -417,8 +499,7 @@
 </script>
 
 <script>
-
-    document.addEventListener("DOMContentLoaded", function () {
+    $(document).ready(function () {
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const submitBtn = document.getElementById('submitBtn');
@@ -430,10 +511,6 @@
         const step3 = document.getElementById('step3');
         const basicBtn = document.getElementById('basicBtn');
         const detailBtn = document.getElementById('detailBtn');
-        const pricingBtn = document.getElementById('pricingBtn');
-        const walletRadio = document.getElementById('wallet');
-        const cashRadio = document.getElementById('cash');
-        const bankTransferRadio = document.getElementById('bankTransfer');
 
         // Hide Step 2, Step 3, and all buttons initially except Next button
         step2.style.display = 'none';
@@ -474,15 +551,41 @@
                 submitBtn.style.display = 'none';
             }
         });
+    });
+</script>
 
+<script th:inline="javascript">
+    $(document).ready(function () {
+        const prevBtn = document.getElementById('prevBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const homepageBtn = document.getElementById('homepageBtn');
+        const bookAnotherBtn = document.getElementById('bookAnotherBtn');
+        const viewBookingBtn = document.getElementById('viewBookingBtn');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const detailBtn = document.getElementById('detailBtn');
+        const pricingBtn = document.getElementById('pricingBtn');
+        const walletRadio = document.getElementById('wallet');
+        const cashRadio = document.getElementById('cash');
+        const bankTransferRadio = document.getElementById('bankTransfer');
 
-        $("#carForm").submit(function(event) {
-            event.preventDefault();
-            submitForm();
+        $("#carForm").submit(function (event) {
+            let numberOfDay = $('#numberOfDays').text();
+            let pricePerDay = [[${car.basePrice}]];
+            let totalAmount = numberOfDay * pricePerDay;
+            let customerWallet = [[${bookingDto.customerDto.wallet}]];
+            if ($('#wallet').is(':checked') && customerWallet < totalAmount){
+                window.location.href = "http://localhost:8080/customer/view-wallet?notEnough";
+            } else {
+                event.preventDefault();
+                setDefaultMessage();
+                if (confirmSubmitForm()) {
+                    submitForm();
+                }
+            }
         });
 
-        function submitForm(){
-
+        function confirmSubmitForm() {
             if (walletRadio.checked) {
                 const confirmed = confirm('The deposit amount will be deducted from your wallet. Click "OK" to confirm payment and go to the next step.');
                 if (!confirmed) {
@@ -492,7 +595,44 @@
                 alert("Please choose a payment method");
                 return false;
             }
+            return true; // Allow form submission
+        }
 
+        function submitForm() {
+            let formData = $('#carForm').serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: '/customer/create-new-booking',
+                data: formData,
+                success: function (responseJSON) {
+                    //let responseJSON = JSON.parse(response);
+                    //console.log(response);
+                    console.log(responseJSON);
+                    if (responseJSON.success) {
+                        let bookingDto = responseJSON.bookingDto;
+                        $('#car-name').text([[${car.name}]]);
+                        $('#start').text(bookingDto.updateBookingDetailDto.pickUpDate + ' ' + bookingDto.updateBookingDetailDto.pickUpTime);
+                        $('#end').text(bookingDto.updateBookingDetailDto.dropOffDate + ' ' + bookingDto.updateBookingDetailDto.dropOffTime);
+                        $('#booking-number').text(bookingDto.id);
+                        $('#viewBookingBtn').attr('href', 'http://localhost:8080/customer/display-booking-detail/' + bookingDto.id);
+                        goToStep3();
+                    } else if (responseJSON.error) {
+                        // Display error message
+                        let errorObject = responseJSON.errors;
+                        $('#redMessage').text(errorObject.updateBookingDetailDto);
+                        $('#payment-method-error').text(errorObject.paymentMethod);
+                        console.log(errorObject);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText); // Log the responseText for debugging
+                    alert('An error occurred while processing your request. Please try again later.');
+                }
+            });
+        }
+
+        function goToStep3() {
             step2.style.display = 'none';
             step3.style.display = 'block';
             detailBtn.classList.remove('btn-primary');
@@ -506,26 +646,102 @@
             homepageBtn.style.display = 'inline-block';
             bookAnotherBtn.style.display = 'inline-block';
             viewBookingBtn.style.display = 'inline-block';
-
-            return true; // Allow form submission
         }
 
-        $("#searchForm").submit(function(event) {
-            event.preventDefault();
-            searchForm();
-        });
-
-        function searchForm() {
-            var pickupLocation = $("#pickupLocation").val();
-            var pickupDate = $("#pickupDate").val();
-            var pickupTime = $("#pickupTime").val();
-            var dropOffDate = $("#dropOffDate").val();
-            var dropOffTime = $("#dropOffTime").val();
-
-            $("#changeDetailsModal").modal("hide");
+        function setDefaultMessage() {
+            $('#redMessage').text('');
         }
     });
+</script>
 
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $('#changeDetailForm').submit(function (event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            setDefaultMessage();
+
+            let formData = $(this).serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: '/customer/change-booking-detail',
+                data: formData,
+                success: function (responseJSON) {
+                    console.log(responseJSON);
+                    //let responseJSON = JSON.parse(response);
+                    if (responseJSON.success) {
+                        // Parse JSON response and display the updateBookingDetailDto object
+                        let updateBookingDetailDto = responseJSON.updateBookingDetailDto;
+
+                        $('#pick-up-location').text(updateBookingDetailDto.pickUpLocation);
+                        $('#pick-up-date-time').text(updateBookingDetailDto.pickUpDate + ' ' + updateBookingDetailDto.pickUpTime);
+                        $('#return-date-time').text(updateBookingDetailDto.dropOffDate + ' ' + updateBookingDetailDto.dropOffTime);
+                        let numberOfDay = calculateDaysDifference(updateBookingDetailDto.pickUpDate, updateBookingDetailDto.pickUpTime, updateBookingDetailDto.dropOffDate, updateBookingDetailDto.dropOffTime);
+
+                        $('#numberOfDays').text(numberOfDay);
+                        let pricePerDay = [[${car.basePrice}]];
+                        let totalAmount = numberOfDay * pricePerDay;
+                        $('#totalAmount').text(new Intl.NumberFormat('en-US', {maximumSignificantDigits: 21}).format(totalAmount) + 'VND');
+
+                        let customerWallet = [[${bookingDto.customerDto.wallet}]];
+                        if (customerWallet < totalAmount) {
+                            $('#customer-wallet').removeClass('text-success').addClass('text-danger');
+                        }
+
+                        $('#changeDetailsModal').modal('hide');
+                    } else if (responseJSON.error) {
+                        // Display error message
+                        let errorObject = responseJSON.errors;
+                        $('#pickUpLocation-error').text(errorObject.pickUpLocation);
+                        $('#pickUpDate-error').text(errorObject.pickUpDate);
+                        $('#pickUpTime-error').text(errorObject.pickUpTime);
+                        $('#dropOffDate-error').text(errorObject.dropOffDate);
+                        $('#dropOffTime-error').text(errorObject.dropOffTime);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText); // Log the responseText for debugging
+                    alert('An error occurred while processing your request. Please try again later.');
+                }
+            });
+        });
+
+        function setDefaultMessage() {
+            $('#pick-up-location').text('N/A');
+            $('#pick-up-date-time').text('N/A');
+            $('#return-date-time').text('N/A');
+
+            $('#pickUpLocation-error').text('');
+            $('#pickUpDate-error').text('');
+            $('#pickUpTime-error').text('');
+            $('#dropOffDate-error').text('');
+            $('#dropOffTime-error').text('');
+        }
+
+        function calculateDaysDifference(pickUpDate, pickUpTime, dropOffDate, dropOffTime) {
+            console.log(pickUpDate, pickUpTime, dropOffDate, dropOffTime);
+            // Convert string dates and times to Date objects
+            var pickUpDateTime = new Date(pickUpDate + "T" + pickUpTime);
+            var dropOffDateTime = new Date(dropOffDate + "T" + dropOffTime);
+
+            console.log(pickUpDateTime);
+            console.log(dropOffDateTime);
+
+            // Calculate the difference in milliseconds
+            var timeDifference = dropOffDateTime - pickUpDateTime;
+
+            // Convert milliseconds to days
+            var daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+
+            // Return the number of days rounded to the nearest whole number
+            if (daysDifference >= 1){
+                return Math.round(daysDifference);
+            } else {
+                return 1;
+            }
+        }
+    });
 </script>
 
 </body>
