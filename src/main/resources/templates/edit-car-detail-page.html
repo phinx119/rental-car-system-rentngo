@@ -270,7 +270,27 @@
                 </div>
                 <div class="col-md-5">
                     <!-- Term of use -->
-
+                    <h4>Term of use</h4>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="checkbox" id="noSmokeCheckbox"  th:field="*{termOfUse}"  th:value="noSmoking" th:checked="${carDto.getTermOfUse().contains('No Smoking')}" />
+                            <label for="noSmokeCheckbox">No Smoking</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="noPetCheckbox" th:field="*{termOfUse}" th:value="noPet" th:checked="${carDto.getTermOfUse().contains('No Pet')}"/>
+                            <label for="noPetCheckbox">No Pet</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="checkbox" id="noFoodCheckbox" th:field="*{termOfUse}" th:value="noFood" th:checked="${carDto.getTermOfUse().contains('No Food')}" />
+                            <label for="noFoodCheckbox">No Food</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" id="otherCheckbox" th:field="*{termOfUse}"  th:value="other" th:checked="${carDto.getTermOfUse().contains('Other')}" />
+                            <label for="otherCheckbox">Other</label>
+                        </div>
+                    </div>
                     <div class="form-group row">
 
                         <hr class="my-4">
@@ -324,18 +344,7 @@
     if(registration != null){
         document.getElementById("Registration").innerHTML = "Available";
     }
-    var carOptionString = [[${carOption}]];
-    var carTermString = [[${carTerm}]];
-    var carOptions = carOptionString.split(",");
 
-    var carTerm = carTermString.split(",");
-    var checkboxes = document.querySelectorAll("input[type='checkbox']");
-    checkboxes.forEach(function(checkbox) {
-        var labelText = checkbox.nextElementSibling.textContent.trim();
-        if (carOptions.includes(labelText) || carTerm.includes(labelText)) {
-            checkbox.checked = true; // Đánh dấu checkbox nếu nằm trong danh sách
-        }
-    });
 </script>
 
 </html>
