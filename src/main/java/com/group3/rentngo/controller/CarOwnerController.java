@@ -145,6 +145,8 @@ public class CarOwnerController {
         }
         if (result.hasErrors()) {
             System.out.println("123");
+            model.addAttribute("carOption", carDto.getAdditionalFunctions());
+            model.addAttribute("carTerm", carDto.getTermOfUse());
             model.addAttribute("carDto", carDto);
             return "edit-car-detail-page";
         } else {

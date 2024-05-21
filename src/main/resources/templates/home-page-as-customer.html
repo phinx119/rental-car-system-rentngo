@@ -30,29 +30,33 @@
         </div>
         <div class="col-md-6">
             <div class="h-100 p-5 bg-light border rounded">
-                <form id="searchForm">
+                <form id="searchForm"  onsubmit="return validateForm()" action="/customer/search-car">
+                    <div id="error-message" style="display: none; color: red;">Please fill in all fields.</div>
                     <div class="form-group">
-                        <label for="pickupLocation">Pickup Location</label>
-                        <input type="text" class="form-control" id="pickupLocation" placeholder="Enter pickup location">
+                        <label for="city">Pickup Location</label>
+                        <select id="city" name="city" class="form-control" >
+                            <option value="" selected hidden>City</option>
+                        </select>
+
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="pickupDate">Pickup Date</label>
-                            <input type="date" class="form-control" id="pickupDate">
+                            <input type="date" class="form-control" id="pickupDate" name="pickupDate">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="pickupTime">Pickup Time</label>
-                            <input type="time" class="form-control" id="pickupTime">
+                            <input type="time" class="form-control" id="pickupTime" name="pickupTime">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="dropOffDate">Drop-off Date</label>
-                            <input type="date" class="form-control" id="dropOffDate">
+                            <input type="date" class="form-control" id="dropOffDate" name="dropOffDate">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="dropOffTime">Drop-off Time</label>
-                            <input type="time" class="form-control" id="dropOffTime">
+                            <input type="time" class="form-control" id="dropOffTime" name="dropOffTime">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Search</button>
@@ -269,9 +273,64 @@
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
 <script th:src="@{/js/script.js}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script th:inline="javascript">
+        function validateForm() {
+        var pickupLocation = document.getElementById("city").value;
+        var pickupTime = document.getElementById("pickupTime").value;
+        var dropOffTime = document.getElementById("dropOffTime").value;
 
+            var pickupDate = new Date(document.getElementById("pickupDate").value);
+            var dropOffDate = new Date(document.getElementById("dropOffDate").value);
+
+            if (pickupDate > dropOffDate) {
+                // Hiển thị thông báo lỗi
+                alert("Drop-off date must be after pickup date");
+                // Ngăn người dùng gửi form đi
+                return false;
+            }
+            var pickupTimeObject = new Date("2000-01-01T" + pickupTime);
+            var dropOffTimeObject = new Date("2000-01-01T" + dropOffTime);
+            // if(pickupDate === dropOffDate && pickupTimeObject >= dropOffTimeObject   ){
+            //     // Hiển thị thông báo lỗi
+            //     alert("Drop-off time must be after pickup time");
+            //     // Ngăn người dùng gửi form đi
+            //     return false;
+            // }
+            if (pickupLocation === "" || pickupDate === "" || pickupTime === "" || dropOffDate === "" || dropOffTime === "") {
+            document.getElementById("error-message").style.display = "block";
+            return false;
+            } else {
+                document.getElementById("error-message").style.display = "none";
+                return true;
+              }
+            }
+
+        let cities = document.getElementById('city');
+        let Parameter = {
+            url: 'https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json',
+            method: 'GET',
+            responseType: 'application/json',
+        };
+        let promise = axios(Parameter);
+        promise.then(function (result) {
+            renderCity(result.data);
+        });
+
+        function renderCity(data) {
+            // Render options for cities
+            for (const x of data) {
+                cities.options[cities.options.length] = new Option(x.Name, x.Name);
+            }
+
+            // Select city based on value from carDto
+
+        }
+
+
+</script>
 </body>
 </html>

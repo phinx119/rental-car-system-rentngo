@@ -4,7 +4,6 @@
 <head>
     <title>RentN'Go</title>
     <th:block th:insert="~{fragments/styles.html :: headFragment}"></th:block>
-    <link rel="stylesheet" th:href="@{/css/car-detail.css}">
 </head>
 
 <style>
@@ -12,251 +11,245 @@
         color: orange;
     }
 </style>
+
 <body>
 <header th:insert="~{fragments/header.html :: header}"></header>
-<!-- start breadcrumb -->
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Search Results</li>
-        <li class="breadcrumb-item active" aria-current="page">Car details</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="#">My car</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit details</li>
     </ol>
 </nav>
-<h3 class="ml-5">Car Details</h3>
-<div class=" row card-information ">
-    <div class="col-md-6 card-image">
-        <img src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png">
+
+
+<div class="container-fluid bg-white mt-4">
+    <h3 class="profile-header">Car details</h3>
+</div>
+
+<div class="container-fluid bg-white mt-4">
+    <div class="row justify-content p-4">
+        <div class="col-md-12 mb-3">
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="car-image.jpg" class="card-img" alt="Car Image">
+                    </div>
+                    <div class="col-md-6 align-self-center">
+                        <div class="card-body">
+                            <h3 class="card-title" ><b th:text="${car.name}"></b></h3>
+                            <ul class="list-unstyled">
+                                <li><b>Rating:</b>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                </li>
+                                <li ><b th:text="'No. of Rides: ' + ${car.numberOfSeats}"></b></li>
+                                <li ><b th:text="'Price: $' + ${car.basePrice}+ '/day' "></b></li>
+                                <li ><b th:text="'Location: ' + ${car.address}"></b></li>
+                                <li><b>Status: Available</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6">
-        <h3 th:text="${car.name}"></h3>
-        <table class="info-car">
-            <tr>
-                <td><strong>Ratings:</strong></td>
-                <td>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-
-                </td>
-            </tr>
-            <tr>
-                <td><strong>No.of rides:</strong></td>
-                <td>
-                    <strong th:text="${car.numberOfSeats}"></strong>
-
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Price:</strong></td>
-                <td>
-                    <strong th:text="${car.basePrice}+ '/day'"></strong>
-
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Location:</strong></td>
-                <td>
-                    <strong th:text="${car.address}"></strong>
-
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Status:</strong></td>
-                <td>
-                    <strong >Avaliable</strong>
-
-                </td>
-            </tr>
-
-        </table>
-
-    </div>
-
 </div>
 
 
-<div class=" row mt-5 ml-5">
-    <button id="infolBtn" style="border-right: none;"><a href="#">Basic information</a></button>
-    <button id="detailyBtn" ><a href="#">Details</a></button>
-    <button id="termBtn" style="border-right: none;"><a href="#">Term of use</a></button>
-</div>
-<div class="info-detail row ml-5 mt-4">
-    <div class="col-md-6 info-detail-items ">
-        <div>
-            <strong>License plate: </strong>
-            <strong th:text="${car.licensePlate}"></strong>
+<div class="w3-container">
+    <div class="w3-bar w3-light-grey">
+        <button class="w3-bar-item w3-button tablink w3-grey" onclick="changeTab(event,'firstTabBtn')">Basic Information</button>
+        <button class="w3-bar-item w3-button tablink" onclick="changeTab(event,'secondTabBtn')">Details</button>
+        <button class="w3-bar-item w3-button tablink" onclick="changeTab(event,'thirdTabBtn')">Term of use</button>
+
+    </div>
+    <!--Tab 1: car information-->
+    <div id="firstTabBtn" class="w3-container city">
+        <div class="row justify-content p-4">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <strong>License plate: </strong>
+                    <span class="fw-bold" th:text="${car.licensePlate}"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Brand name:</strong>
+                    <span class="fw-bold" th:text="${car.brand}"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Production year:</strong>
+                    <span class="fw-bold" th:text="${car.productionYear}"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Transmission:</strong>
+                    <span class="fw-bold" th:text="${car.transmissionType}"></span>
+                </div>
+                <hr>
+                <strong>Document</strong>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Note</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Registration paper</td>
+                        <td id="Registration">Not available</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Certificate of inspection</td>
+                        <td id="Certificate">Not available</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Insurance</td>
+                        <td id="Insurance">Not available</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <span class="text-muted">Note: Documents will be available for viewing after you've paid the deposit to rent</span>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <strong>Color:</strong>
+                    <span class="fw-bold" th:text="${car.color}"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Model:</strong>
+                    <span class="fw-bold" th:text="${car.model}"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>No. of seats:</strong>
+                    <span class="fw-bold" th:text="${car.numberOfSeats}"></span>
+                </div>
+                <div class="mb-3">
+                    <strong>Fuel:</strong>
+                    <span class="fw-bold" th:text="${car.fuelType}"></span>
+                </div>
+            </div>
         </div>
-        <div>
-            <strong>Brand name:</strong>
-            <strong th:text="${car.brand}"></strong>
+    </div>
+
+    <!--Tab 2: car detail-->
+    <div id="secondTabBtn" class="w3-container city" style="display:none">
+        <br>
+        <div class="mb-3">
+            <strong>Mileage: </strong>
+            <span class="fw-bold" th:text="${car.mileage}"></span><br/>
         </div>
-        <div>
-            <strong>Production year:</strong>
-            <strong th:text="${car.productionYear}"></strong>
+        <div class="mb-3">
+            <strong>Fuel consumption: </strong>
+            <span class="fw-bold" th:text="${car.fuelType}"></span><br/>
         </div>
-        <div>
-            <strong>Transmission:</strong>
-            <strong th:text="${car.transmissionType}"></strong>
+        <div class="mb-3">
+            <strong>Address: </strong>
+            <span class="fw-bold" th:text="${car.address}"></span><br/>
+            <span class="text-muted">Note: Full Address will be available after you've paid the deposit to rent</span>
         </div>
-        <div>
-            <strong>Document</strong>
-            <table class="table table-striped">
-                <thead>
+        <div class="mb-3">
+            <strong>Description: </strong><br/>
+            <span th:text="${car.description}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non itaque minima voluptatum eligendi consectetur sint odit! Adipisci vitae fugit doloribus
+    sunt, culpa numquam minima ab. Ad rem pariatur architecto?</span>
+        </div>
+        <hr>
+        <div class="mb-3">
+            <strong>Additional functions: </strong><br/>
+            <table class="table">
                 <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Note</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td >1</td>
-                    <td >Registration paper</td>
-                    <td id="Registration">Not available</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Certificate of inspection</td>
-                    <td id="Certificate">Not available</td>
+                    <td>Bluetooth</td>
+                    <td><input type="checkbox"></td>
+                    <td>Sun Roof</td>
+                    <td><input type="checkbox"></td>
+                    <td>DVD</td>
+                    <td><input type="checkbox"></td>
                 </tr>
                 <tr>
-                    <td>3</td>
-                    <td>Insurance</td>
-                    <td id="Insurance">Not available</td>
+                    <td>GPS</td>
+                    <td><input type="checkbox"></td>
+                    <td>Child Lock</td>
+                    <td><input type="checkbox"></td>
+                    <td>USB</td>
+                    <td><input type="checkbox"></td>
                 </tr>
-                </tbody>
+                <tr>
+                    <td>Camera</td>
+                    <td><input type="checkbox"></td>
+                    <td>Child Seat</td>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </table>
-            <span>Note: Documents will be available for viewing after you've paid the deposit to rent</span>
-        </div>
-    </div>
-    <div class="col-md-6 info-detail-items ">
-        <div>
-            <strong>Color:</strong>
-            <strong th:text="${car.color}"></strong>
-        </div>
-        <div>
-            <strong>Model:</strong>
-            <strong th:text="${car.model}"></strong>
-        </div>
-        <div>
-            <strong>No.of seats:</strong>
-            <strong th:text="${car.numberOfSeats}"></strong>
-        </div>
-        <div>
-            <strong>Fuel:</strong>
-            <strong th:text="${car.fuelType}"></strong>
-
         </div>
     </div>
 
+    <!--Tab 3: car pricing-->
+    <div id="thirdTabBtn" class="w3-container city" style="display:none">
+        <br>
+        <div class="mb-3">
+            <strong>Base price:</strong>
+            <span class="fw-bold" th:text="${car.basePrice}"></span>
+            <span>VND/Day</span>
+        </div>
+        <div class="mb-3">
+            <strong>Request deposit:</strong>
+            <span class="fw-bold" th:text="${car.deposit}"></span>
+            <span>VND/Day</span>
+        </div>
+        <hr>
+        <div class="col-md-6">
+            <strong>Terms of use:</strong>
+            <table class="table">
+                <tr>
+                    <td>
+                        <strong>No Smoking</strong>
+                    </td>
+                    <td>
+                        <input type="checkbox">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>No Pet</strong>
+                    </td>
+                    <td>
+                        <input type="checkbox">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>No Food</strong>
+                    </td>
+                    <td>
+                        <input type="checkbox">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Other</strong>
+                    </td>
+                    <td>
+                        <input type="checkbox">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
 
-<div class="details  ml-5 mt-4" style="display: none;">
-    <strong>Mileage: </strong>
-    <strong th:text="${car.mileage}"></strong><br/>
-    <strong th:text="'Fuel consumption: '+${car.fuelType} +'liters/100 km'"  >  </strong>
-    <br/>
-  <strong>Address: </strong>
- <strong th:text="${car.mileage}"></strong><br/>
-    <span>Note: Full Address will be available after you've paid the deposit to rent</span><br/>
-    <strong>Description: </strong><br/>
-    <span th:text="${car.description}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non itaque minima voluptatum eligendi consectetur sint odit! Adipisci vitae fugit doloribus
-    sunt, culpa numquam minima ab. Ad rem pariatur architecto?</span><br/>
-
-    <strong>Additional functions: </strong><br/>
-    <table class="table">
-        <tr>
-            <td>Bluetooth</td>
-            <td><input type="checkbox"></td>
-            <td>Sun Roof</td>
-            <td><input type="checkbox"></td>
-            <td>DVD</td>
-            <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-            <td>GPS</td>
-            <td><input type="checkbox"></td>
-            <td>Child Lock</td>
-            <td><input type="checkbox"></td>
-            <td>USB</td>
-            <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-            <td>Camera</td>
-            <td><input type="checkbox"></td>
-            <td>Child Seat</td>
-            <td><input type="checkbox"></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-
-</div>
-
-<div class="term ml-5 mt-4" style="display: none;">
-    <table class="table">
-        <tr>
-            <td> <strong >Base price</strong></td>
-            <td> <strong th:text="${car.basePrice}">900,000</strong></td>
-            <td> <strong>VND/Day</strong></td>
-        </tr>
-        <tr>
-            <td> <strong>Request deposit</strong></td>
-            <td> <strong th:text="${car.deposit}" >900,000</strong></td>
-            <td> <strong>VND/Day</strong></td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Terms of use</strong>
-            </td>
-        </tr>
-        <tr>
-            <td> <strong>No Smoking</strong></td>
-            <td><input type="checkbox"></td>
-
-
-            <td> <strong>No Pet</strong></td>
-            <td><input type="checkbox"></td>
-
-
-            <td> <strong>No Food</strong></td>
-            <td><input type="checkbox"></td>
-            <td> <strong>Other</strong></td>
-            <td><input type="checkbox"></td>
-        </tr>
-    </table>
-</div>
 
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
 <script th:inline="javascript">
-    let infodetail = document.querySelector(".info-detail");
-    let details = document.querySelector(".details");
-    let term = document.querySelector(".term");
-
-    let infolBtn = document.getElementById("infolBtn");
-    let detailyBtn = document.getElementById("detailyBtn");
-    let termBtn = document.getElementById("termBtn");
-
-    infolBtn.addEventListener("click", function() {
-        infodetail.style.display = "block";
-        details.style.display = "none";
-        term.style.display = "none";
-    });
-
-    detailyBtn.addEventListener("click", function() {
-        infodetail.style.display = "none";
-        details.style.display = "block";
-        term.style.display = "none";
-    });
-
-    termBtn.addEventListener("click", function() {
-        infodetail.style.display = "none";
-        details.style.display = "none";
-        term.style.display = "block";
-    });
     document.addEventListener("DOMContentLoaded", function() {
         // Lấy giá trị của carOption từ model.addAttribute("carOption",carOption);
         var carOptionString = [[${carOption}]];
@@ -290,6 +283,23 @@
     });
 
 </script>
+
+<script>
+    function changeTab(evt, tab) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("city");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" w3-grey", "");
+        }
+        document.getElementById(tab).style.display = "block";
+        evt.currentTarget.className += " w3-grey";
+    }
+</script>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

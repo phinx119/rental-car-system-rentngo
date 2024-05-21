@@ -27,41 +27,36 @@
 
 <div class="container-fluid py-4">
     <div class="p-5 mb-4 bg-secondary border rounded text-light">
-        <form id="searchForm">
+        <form id="searchForm"  onsubmit="return validateForm()" action="/customer/search-car">
+            <div id="error-message" style="display: none; color: red;">Please fill in all fields.</div>
             <div class="form-group">
-                <label for="pickupLocation">Pickup Location</label>
-                <input type="text" class="form-control" id="pickupLocation" placeholder="Enter pickup location">
+                <label for="city">Pickup Location</label>
+                <select id="city" name="city" class="form-control" >
+                    <option value="" selected hidden>City</option>
+                </select>
+
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="pickupDate">Pickup Date</label>
-                    <input type="date" class="form-control" id="pickupDate">
+                    <input type="date" class="form-control" id="pickupDate" name="pickupDate">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="pickupTime">Pickup Time</label>
-                    <input type="time" class="form-control" id="pickupTime">
+                    <input type="time" class="form-control" id="pickupTime" name="pickupTime">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="dropOffDate">Drop-off Date</label>
-                    <input type="date" class="form-control" id="dropOffDate">
+                    <input type="date" class="form-control" id="dropOffDate" name="dropOffDate">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="dropOffTime">Drop-off Time</label>
-                    <input type="time" class="form-control" id="dropOffTime">
+                    <input type="time" class="form-control" id="dropOffTime" name="dropOffTime">
                 </div>
             </div>
-
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-light btn-block">Search</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
         </form>
     </div>
 </div>
@@ -83,7 +78,7 @@
         <!-- Search Results Content (Thumbnail View) -->
         <div class="col-md-12 mt-4" id="thumbnailView">
             <div class="row">
-                <div class="col-md-12 mb-3" th:each="car : ${carList}">
+                <div class="col-md-12 mb-3" th:each="car : ${availableCars}">
                     <div class="card">
                         <div class="row no-gutters">
                             <div class="col-md-4">
@@ -222,6 +217,7 @@
 <footer th:insert="~{fragments/footer.html :: footer}"></footer>
 
 <script th:src="@{/js/script.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -247,6 +243,78 @@
         listViewBtn.classList.add('active');
     });
 </script>
+<script th:inline="javascript">
+    function validateForm() {
+        var pickupLocation = document.getElementById("pickupLocation").value;
+        var pickupDate = document.getElementById("pickupDate").value;
+        var pickupTime = document.getElementById("pickupTime").value;
+        var dropOffDate = document.getElementById("dropOffDate").value;
+        var dropOffTime = document.getElementById("dropOffTime").value;
 
+        if (pickupLocation === "" || pickupDate === "" || pickupTime === "" || dropOffDate === "" || dropOffTime === "") {
+            document.getElementById("error-message").style.display = "block";
+            return false;
+        } else {
+            document.getElementById("error-message").style.display = "none";
+            return true;
+        }
+    }
+
+    let cities = document.getElementById('city');
+    let Parameter = {
+        url: 'https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json',
+        method: 'GET',
+        responseType: 'application/json',
+    };
+    let promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        // Render options for cities
+        for (const x of data) {
+            cities.options[cities.options.length] = new Option(x.Name, x.Name);
+        }
+
+        // Select city based on value from carDto
+
+    }
+    function validateForm() {
+        var pickupLocation = document.getElementById("city").value;
+        var pickupDate = document.getElementById("pickupDate").value;
+        var pickupTime = document.getElementById("pickupTime").value;
+        var dropOffDate = document.getElementById("dropOffDate").value;
+        var dropOffTime = document.getElementById("dropOffTime").value;
+        var currentDate = new Date(); // Ngày hiện tại
+        var pickupDate = new Date(document.getElementById("pickupDate").value);
+        var dropOffDate = new Date(document.getElementById("dropOffDate").value);
+
+        if (pickupDate < currentDate) {
+
+            alert("Pickup date must be greater than or equal to current date");
+           
+            return false;
+        }
+        if (pickupDate >= dropOffDate) {
+            // Hiển thị thông báo lỗi
+            alert("Drop-off date must be after pickup date");
+            // Ngăn người dùng gửi form đi
+            return false;
+        }
+
+        if (pickupLocation === "" || pickupDate === "" || pickupTime === "" || dropOffDate === "" || dropOffTime === "") {
+            document.getElementById("error-message").style.display = "block";
+            return false;
+        } else {
+            document.getElementById("error-message").style.display = "none";
+            return true;
+        }
+
+    }
+
+
+
+</script>
 </body>
 </html>

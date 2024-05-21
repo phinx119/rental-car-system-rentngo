@@ -19,6 +19,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.*;
 
 /**
@@ -266,5 +269,26 @@ public class CustomerController {
         model.addAttribute("paymentHistoryList", paymentHistoryList);
 
         return "vnpay/view-wallet";
+    }
+
+    @GetMapping("/search-car")
+    public String searchCarHome(
+            @RequestParam("city") String city,
+            @RequestParam("pickupDate") String pickupDate,
+            @RequestParam("pickupTime") String pickupTime,
+            @RequestParam("dropOffDate") String dropOffDate,
+            @RequestParam("dropOffTime") String dropOffTime,
+            Model model
+    ){
+        // Tạo đối tượng LocalDateTime từ dữ liệu ngày và giờ của người dùng
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime pickupDateTime = LocalDateTime.parse(pickupDate + " " + pickupTime, formatter);
+        LocalDateTime dropOffDateTime = LocalDateTime.parse(dropOffDate + " " + dropOffTime, formatter);
+        List<Car> availableCars = carService.findAvailableCars(pickupDateTime, dropOffDateTime, city);
+        System.out.println(availableCars);
+        // Chuyển kết quả tìm kiếm vào model để hiển thị trên trang kết quả
+        model.addAttribute("numberOfCars", availableCars.size());
+        model.addAttribute("availableCars", availableCars);
+        return "list-car-search-page";
     }
 }
